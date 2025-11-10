@@ -1,0 +1,138 @@
+---
+spring.profiles: local
+#spring.config.activate.on-profile: local
+
+server.port: 8080
+
+domain.sordar.internal: https://sodaralp.syrup.co.kr
+domain.syrupfriends.api: https://skp.pointda.com
+syrupfriends.api.key: 8wKykFdqc4mRgESA
+sms.test.domain: https://sk.planet.com/eventMeta.do
+web.event.domain: 192.168.1.218:8081
+
+future.sense.api.host: https://api.dev.knx.exchange/v1/nft/klaytn
+future.sense.api.access.key: 496689CAB5D9D7D1
+future.sense.api.secret.key: noD1M1VugljENO4I*+C=
+
+nft.contract.address: '0x0cc28502567a27613ef4db4f2d7dacec92487fbd'
+nft.webhook.url: https://playardev.syrup.co.kr/api/v1/web-event-front/nft/klaytn/webhook
+
+sms.send.number: '0261190114'
+
+encryption.use.yn: Y
+domain.sodar.ia.admin: https://sodaradmindev.syrup.co.kr
+domain.sodar.ma.admin: https://sodardev.syrup.co.kr
+
+
+#위치기반 조회를 위한 정보
+bsm:
+  search:
+    domain: https://bsmsapidev.syrup.co.kr
+    uri: /v1/proximity/event-search
+    absolute:
+      uri: /v1/proximity/absolute-search
+  auth:
+    key: DpawBxtxjPlpYXtLVgei3d6djiaDRqG8
+
+#기프티콘 발송 api
+gifticon:
+  domain: https://nstglsend.gifticon.com
+
+sms:
+  send:
+    url: https://sodardev.syrup.co.kr:443/v3/web-event/testSend
+
+spring:
+  aop:
+    proxy-target-class: true
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://172.22.241.104:3306/wevt?rewriteBatchedStatements=true&autoReconnect=true
+#    url: jdbc:mysql://192.168.31.190:3306/db?rewriteBatchedStatements=true&autoReconnect=true
+    url: jdbc:mysql://127.0.0.1:3306/db?rewriteBatchedStatements=true&autoReconnect=true
+    username: 'root'
+    password: '1234'
+    hikari:
+#      jdbcUrl: jdbc:mysql://172.22.241.104:3306/wevt?autoReconnect=true&rewriteBatchedStatements=true
+#      jdbcUrl: jdbc:mysql://192.168.31.190:3306/db?autoReconnect=true&rewriteBatchedStatements=true
+      jdbcUrl: jdbc:mysql://127.0.0.1:3306/db?autoReconnect=true&rewriteBatchedStatements=true
+      poolName: HikariCP
+      maximumPoolSize: 10
+      minimumIdle: 10
+      idleTimeout: 356000
+      maxLifetime: 357000
+      connectionTimeout: 10000
+      leakDetectionThreshold: 600000
+      keepaliveTime: 30000
+  sql:
+    init:
+      mode: always
+#      data-locations: classpath*:initdata/data-mysql.sql
+
+  jpa:
+    #hibernate:
+    #      ddl-auto: update
+    #      format_sql: true
+    #    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+        order_inserts: true
+        order_updates: true
+        jdbc:
+          batch_size: 20000
+        dialect: org.hibernate.dialect.MySQL57InnoDBDialect
+        generate-ddl: true
+        show_sql: true
+
+management:
+  security:
+    enabled: false
+  context-path: /api/actuator
+
+xtrans:
+  sftp:
+    event-id: PlayAR
+    host: 10.40.128.131
+    user: aruser
+    pass: apiuser1!
+    port: 22
+    default-path: /apps/API_DATA/PlayAR
+
+#OK캐시백 API통신 키값 정의
+ocb:
+  session:
+    token:
+      siteid: 6683
+      sid: 553d8a7d04fa9edf
+      salt: 6d2c4dcb5bd61c73
+      api:
+        url: https://msg-ved.okcashbag.com/sugar/internal/session/info/partner
+  point:
+    api:
+      url: https://msg-ved.okcashbag.com/sugar/internal/point/save/partner
+
+picaso:
+  syrup:
+    api:
+      url: http://pri-picaso-dev.syrup.co.kr/apis/v2/coupon
+
+---
+required.permission.permitList:
+  ips: 127.0.0.2,192.168.1.128,14.33.197.190
+
+aes.keyvalue: "534b504c414e455457454241524445564c4f43414c"
+
+#logging:
+#  level:
+#    com.zaxxer.hikari.HikariConfig: DEBUG
+#    com.zaxxer.hikari: TRACE
+
+spring:
+  servlet:
+    multipart:
+      maxFileSize: 10MB
+      maxRequestSize: 10MB
+
+jwt:
+  secret: b23f2f4fbeb3a4338fbf975de0829fa702fc1ddd7edf13be013169d356271b6a

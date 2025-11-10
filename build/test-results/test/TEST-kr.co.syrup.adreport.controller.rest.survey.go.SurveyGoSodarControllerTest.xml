@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="kr.co.syrup.adreport.controller.rest.survey.go.SurveyGoSodarControllerTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2025-02-18T13:39:44" hostname="Mac" time="0.023">
+  <properties/>
+  <testcase name="getSurveyGoSodarData()" classname="kr.co.syrup.adreport.controller.rest.survey.go.SurveyGoSodarControllerTest" time="0.023"/>
+  <system-out><![CDATA[[2025-02-18 22:39:44,866][][Test worker][INFO ][][SpringBootTestContextBootstrapper] Neither @ContextConfiguration nor @ContextHierarchy found for test class [kr.co.syrup.adreport.controller.rest.survey.go.SurveyGoSodarControllerTest], using SpringBootContextLoader
+[2025-02-18 22:39:44,866][][Test worker][INFO ][][AbstractContextLoader] Could not detect default resource locations for test class [kr.co.syrup.adreport.controller.rest.survey.go.SurveyGoSodarControllerTest]: no resource found for suffixes {-context.xml, Context.groovy}.
+[2025-02-18 22:39:44,866][][Test worker][INFO ][][AnnotationConfigContextLoaderUtils] Could not detect default configuration classes for test class [kr.co.syrup.adreport.controller.rest.survey.go.SurveyGoSodarControllerTest]: SurveyGoSodarControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+[2025-02-18 22:39:44,867][][Test worker][INFO ][][SpringBootTestContextBootstrapper] Found @SpringBootConfiguration kr.co.syrup.adreport.BaseApplication for test class kr.co.syrup.adreport.controller.rest.survey.go.SurveyGoSodarControllerTest
+[2025-02-18 22:39:44,867][][Test worker][INFO ][][SpringBootTestContextBootstrapper] Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.event.ApplicationEventsTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener, org.springframework.test.context.event.EventPublishingTestExecutionListener]
+[2025-02-18 22:39:44,868][][Test worker][INFO ][][SpringBootTestContextBootstrapper] Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@6a2a9f43, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@3cf12cf5, org.springframework.test.context.event.ApplicationEventsTestExecutionListener@105106c1, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@70c4e50e, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@4e2aacd2, org.springframework.test.context.support.DirtiesContextTestExecutionListener@7b89a766, org.springframework.test.context.transaction.TransactionalTestExecutionListener@6376d1d8, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@344da42d, org.springframework.test.context.event.EventPublishingTestExecutionListener@2f9ac24a, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@199ee248, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@4cb318b2, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@1506b1c5, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@6c77b9bd, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener@2959ad9, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@563764b1]
+[2025-02-18 22:39:44,870][][Test worker][DEBUG][][TransactionTrackingFilter] Start transaction! ( Generate transaction id : OT1ki-uU0H4sG ) from URI "/api/v1/survey-go-sodar/detail"
+[2025-02-18 22:39:44,871][OT1ki-uU0H4sG][Test worker][DEBUG][][RequiredIpPermissionInterceptor] preHandle call end
+Hibernate: 
+    select
+        webeventba0_.id as id1_43_,
+        webeventba0_.contract_status as contract2_43_,
+        webeventba0_.created_by as created_3_43_,
+        webeventba0_.created_date as created_4_43_,
+        webeventba0_.event_end_date as event_en5_43_,
+        webeventba0_.event_id as event_id6_43_,
+        webeventba0_.event_start_date as event_st7_43_,
+        webeventba0_.event_title as event_ti8_43_,
+        webeventba0_.event_type as event_ty9_43_,
+        webeventba0_.last_modified_by as last_mo10_43_,
+        webeventba0_.last_modified_date as last_mo11_43_,
+        webeventba0_.marketing_id as marketi12_43_,
+        webeventba0_.qr_code_url as qr_code13_43_,
+        webeventba0_.real_event_end_date as real_ev14_43_,
+        webeventba0_.stp_connect_yn as stp_con15_43_ 
+    from
+        web_event_base webeventba0_ 
+    where
+        webeventba0_.event_id=?
+[2025-02-18 22:39:44,889][OT1ki-uU0H4sG][Test worker][WARN ][][SqlExceptionHelper] SQL Error: 1146, SQLState: 42S02
+[2025-02-18 22:39:44,889][OT1ki-uU0H4sG][Test worker][ERROR][][SqlExceptionHelper] Table 'db.web_event_base' doesn't exist
+[2025-02-18 22:39:44,890][OT1ki-uU0H4sG][Test worker][DEBUG][][CustomExceptionHandlerExceptionResolver] Using @ExceptionHandler kr.co.syrup.adreport.framework.controller.GlobalExceptionHandlingRestControllerAdvice#handleException(HttpServletRequest, HttpServletResponse, Exception)
+[2025-02-18 22:39:44,890][OT1ki-uU0H4sG][Test worker][ERROR][][GlobalExceptionHandlingRestControllerAdvice] could not extract ResultSet; SQL [n/a]; nested exception is org.hibernate.exception.SQLGrammarException: could not extract ResultSet
+org.springframework.dao.InvalidDataAccessResourceUsageException: could not extract ResultSet; SQL [n/a]; nested exception is org.hibernate.exception.SQLGrammarException: could not extract ResultSet
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:259)
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.translateExceptionIfPossible(HibernateJpaDialect.java:233)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.translateExceptionIfPossible(AbstractEntityManagerFactoryBean.java:551)
+	at org.springframework.dao.support.ChainedPersistenceExceptionTranslator.translateExceptionIfPossible(ChainedPersistenceExceptionTranslator.java:61)
+	at org.springframework.dao.support.DataAccessUtils.translateIfNecessary(DataAccessUtils.java:242)
+	at org.springframework.dao.support.PersistenceExceptionTranslationInterceptor.invoke(PersistenceExceptionTranslationInterceptor.java:152)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.data.jpa.repository.support.CrudMethodMetadataPostProcessor$CrudMethodMetadataPopulatingMethodInterceptor.invoke(CrudMethodMetadataPostProcessor.java:145)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:97)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:215)
+	at com.sun.proxy.$Proxy208.findByEventId(Unknown Source)
+	at kr.co.syrup.adreport.web.event.service.ArEventService.findEventBaseNoCache(ArEventService.java:1168)
+	at kr.co.syrup.adreport.web.event.service.ArEventService$$FastClassBySpringCGLIB$$db7857c8.invoke(<generated>)
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:793)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:97)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:708)
+	at kr.co.syrup.adreport.web.event.service.ArEventService$$EnhancerBySpringCGLIB$$74313636.findEventBaseNoCache(<generated>)
+	at kr.co.syrup.adreport.web.event.logic.ArEventLogic.getArEventDetailLogic(ArEventLogic.java:754)
+	at kr.co.syrup.adreport.web.event.logic.ArEventLogic$$FastClassBySpringCGLIB$$6a085fe8.invoke(<generated>)
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:793)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763)
+	at org.springframework.dao.support.PersistenceExceptionTranslationInterceptor.invoke(PersistenceExceptionTranslationInterceptor.java:137)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:708)
+	at kr.co.syrup.adreport.web.event.logic.ArEventLogic$$EnhancerBySpringCGLIB$$da38c81f.getArEventDetailLogic(<generated>)
+	at kr.co.syrup.adreport.controller.rest.survey.go.SurveyGoSodarController.getSurveyGoSodarData(SurveyGoSodarController.java:55)
+	at kr.co.syrup.adreport.controller.rest.survey.go.SurveyGoSodarController$$FastClassBySpringCGLIB$$6564d5e4.invoke(<generated>)
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:793)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763)
+	at org.springframework.aop.aspectj.MethodInvocationProceedingJoinPoint.proceed(MethodInvocationProceedingJoinPoint.java:89)
+	at kr.co.syrup.adreport.web.event.aop.TraceNoFilterAspect.afterControllerMethod(TraceNoFilterAspect.java:117)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethodWithGivenArgs(AbstractAspectJAdvice.java:634)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethod(AbstractAspectJAdvice.java:624)
+	at org.springframework.aop.aspectj.AspectJAroundAdvice.invoke(AspectJAroundAdvice.java:72)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:175)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763)
+	at org.springframework.aop.aspectj.MethodInvocationProceedingJoinPoint.proceed(MethodInvocationProceedingJoinPoint.java:89)
+	at kr.co.syrup.adreport.web.event.aop.SodarMemberSessionAspect.sodarMemberSessionMethod(SodarMemberSessionAspect.java:66)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethodWithGivenArgs(AbstractAspectJAdvice.java:634)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethod(AbstractAspectJAdvice.java:624)
+	at org.springframework.aop.aspectj.AspectJAroundAdvice.invoke(AspectJAroundAdvice.java:72)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:175)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:97)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:708)
+	at kr.co.syrup.adreport.controller.rest.survey.go.SurveyGoSodarController$$EnhancerBySpringCGLIB$$dc7ddf18.getSurveyGoSodarData(<generated>)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:205)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:150)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:895)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:808)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1067)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:963)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:898)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:655)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
+	at org.springframework.test.web.servlet.TestDispatcherServlet.service(TestDispatcherServlet.java:72)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:764)
+	at org.springframework.mock.web.MockFilterChain$ServletFilterProxy.doFilter(MockFilterChain.java:167)
+	at org.springframework.mock.web.MockFilterChain.doFilter(MockFilterChain.java:134)
+	at kr.co.syrup.adreport.framework.filters.RequestAndResponseLoggingFilter.doFilterWrapped(RequestAndResponseLoggingFilter.java:61)
+	at kr.co.syrup.adreport.framework.filters.RequestAndResponseLoggingFilter.doFilterInternal(RequestAndResponseLoggingFilter.java:52)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.springframework.mock.web.MockFilterChain.doFilter(MockFilterChain.java:134)
+	at kr.co.syrup.adreport.framework.filters.CORSFilter.doFilterInternal(CORSFilter.java:33)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.springframework.mock.web.MockFilterChain.doFilter(MockFilterChain.java:134)
+	at org.springframework.boot.actuate.metrics.web.servlet.WebMvcMetricsFilter.doFilterInternal(WebMvcMetricsFilter.java:96)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.springframework.mock.web.MockFilterChain.doFilter(MockFilterChain.java:134)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.springframework.mock.web.MockFilterChain.doFilter(MockFilterChain.java:134)
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

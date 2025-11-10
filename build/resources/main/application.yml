@@ -1,0 +1,59 @@
+---
+spring.autoconfigure.exclude:
+  - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+  - org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration
+  - org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration   # // SS-19919 Web AR / ADREPORT 보안진단결과 취약점 수정 (2022년) - springboot 버전업
+  -
+web.event.domain: https://adreportalp.syrup.co.kr
+#위치기반 조회를 위한 정보
+bsm:
+  search:
+    domain: https://ccpri-bsmsapi.syrup.co.kr
+    uri: /v1/proximity/event-search
+  auth:
+    key: DpawBxtxjPlpYXtLVgei3d6djiaDRqG8
+
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://172.22.241.104:3306/wevt
+    username: 'wevtadm_admin'
+    password: '!wevadmin.Kpruw9#'
+
+    jpa:
+      database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+      open-in-view: false
+      show-sql: true
+      hibernate:
+        format_sql: true
+        ddl-auto: true
+#    platform: mariadb
+  http:
+    multipart:
+      enabled: true
+      max-file-size: 30MB
+      max-request-size: 30MB
+  mvc:
+    favicon:
+      enabled: false
+  devtools:
+    restart:
+      enabled: true
+# Bean Overriding 활성화 https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-2.1-Release-Notes#bean-overriding
+spring.main.allow-bean-definition-overriding: true
+
+server.session.timeout: 600
+#server.error.whitelabel.enabled: false # Enable the default error page displayed in browsers in case of a server error.
+# defaultServletName 오류로 추가 https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-2.4-Release-Notes#default-servlet-registration
+server.servlet.register-default-servlet: true
+
+
+aes.keyvalue.survey.answer: "SURVEYANSWERAES1"
+
+damo:
+  service:
+    key: "SKP_ADDTC"
+  initFilePath: "/app/tomcat/scp/scpdb_agent.ini"
+
+

@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="kr.co.syrup.adreport.survey.go.mybatis.mapper.SurveyGoSodarMapper">
+
+    <update id="updateSurveyTargetAgeGenderLimit">
+        UPDATE survey_target_age_gender_limit
+        <set>
+            <if test="surveyTargetGender != '' and surveyTargetGender != null">
+                survey_target_gender = #{surveyTargetGender},
+            </if>
+            <if test="surveyTargetAge != '' and surveyTargetAge != null">
+                survey_target_age = #{surveyTargetAge},
+            </if>
+            <if test="surveyTargetLimitCount != '' and surveyTargetLimitCount != null">
+                survey_target_limit_count = #{surveyTargetLimitCount},
+            </if>
+            last_modified_date = now()
+        </set>
+        <where>
+            survey_target_age_gender_limit_id = #{surveyTargetAgeGenderLimitId}
+        </where>
+    </update>
+
+    <update id="updateSurveySubject">
+        UPDATE survey_subject
+        <set>
+            <if test="subjectTitle != '' and subjectTitle != null">
+                subject_title = #{subjectTitle},
+            </if>
+            <if test="subjectSubText != null">
+                subject_sub_text = #{subjectSubText},
+            </if>
+            <if test="imgVideoYn != '' and imgVideoYn != null">
+                img_video_yn = #{imgVideoYn},
+            </if>
+            <if test="imgVideoRegType != '' and imgVideoRegType != null">
+                img_video_reg_type = #{imgVideoRegType},
+            </if>
+            <if test="contentUrl != '' and contentUrl != null">
+                content_url = #{contentUrl},
+            </if>
+            <if test="subjectExampleType != '' and subjectExampleType != null">
+                subject_example_type = #{subjectExampleType},
+            </if>
+            <if test="exampleChoiceType != '' and exampleChoiceType != null">
+                example_choice_type = #{exampleChoiceType},
+            </if>
+            <if test="talkExampleSettingYn != '' and talkExampleSettingYn != null">
+                talk_example_setting_yn = #{talkExampleSettingYn},
+            </if>
+            <if test="multipleAnswerYn != '' and multipleAnswerYn != null">
+                multiple_answer_yn = #{multipleAnswerYn},
+            </if>
+            <if test="multipleAnswerCount > 0 and multipleAnswerCount != null">
+                multiple_answer_count = #{multipleAnswerCount},
+            </if>
+            <if test="surveyCategoryTypeCount > 0 and surveyCategoryTypeCount != null">
+                survey_category_type_count = #{surveyCategoryTypeCount},
+            </if>
+            <if test="quizAnswerSort > 0 and quizAnswerSort != null">
+                quiz_answer_sort = #{quizAnswerSort},
+            </if>
+            <if test="exampleCount > 0 and exampleCount != null">
+                example_count = #{exampleCount},
+            </if>
+            <if test="etcOpinionReceiveYn != '' and etcOpinionReceiveYn != null">
+                etc_opinion_receive_yn = #{etcOpinionReceiveYn},
+            </if>
+
+            <if test="hintImgYn != null">
+                hint_img_yn = #{hintImgYn},
+            </if>
+
+            <if test="hintImgUrl != '' and hintImgUrl != null">
+                hint_img_url = #{hintImgUrl},
+            </if>
+            <if test="hintImgUrl == ''">
+                hint_img_url = null,
+            </if>
+
+            <if test="answerDescImgYn != null">
+                answer_desc_img_yn = #{answerDescImgYn},
+            </if>
+
+            <if test="answerDescImgUrl != '' and answerDescImgUrl != null">
+                answer_desc_img_url = #{answerDescImgUrl},
+            </if>
+            <if test="answerDescImgUrl == ''">
+                answer_desc_img_url = null,
+            </if>
+
+            <if test="wrongDescImgYn != null">
+                wrong_desc_img_yn = #{wrongDescImgYn},
+            </if>
+
+            <if test="wrongDescImgUrl != '' and wrongDescImgUrl != null">
+                wrong_desc_img_url = #{wrongDescImgUrl},
+            </if>
+            <if test="wrongDescImgUrl == ''">
+                wrong_desc_img_url = null,
+            </if>
+
+            <if test="sort > 0 and sort != null">
+                sort = #{sort},
+            </if>
+            <if test="scaleText != '' and scaleText != null">
+                scale_text = #{scaleText},
+            </if>
+
+            <if test="scaleViewType !='' and scaleViewType != null">
+                scale_view_type = #{scaleViewType},
+            </if>
+            <if test="targetSubjectNumber > 0 and targetSubjectNumber != null">
+                target_subject_number = #{targetSubjectNumber},
+            </if>
+            last_modified_date = now()
+        </set>
+        <where>
+            survey_subject_id = #{surveySubjectId}
+        </where>
+    </update>
+
+    <update id="updateSurveyExample">
+        UPDATE survey_example
+        <set>
+            <if test="exampleTitle != '' and exampleTitle != null">
+                example_title = #{exampleTitle},
+            </if>
+            <if test="exampleImgUrl != '' and exampleImgUrl != null">
+                example_img_url = #{exampleImgUrl},
+            </if>
+            <if test="targetSubjectNumber > 0 and targetSubjectNumber != null">
+                target_subject_number = #{targetSubjectNumber},
+            </if>
+            <if test="exampleWeightType != '' and exampleWeightType != null">
+                example_weight_type = #{exampleWeightType},
+            </if>
+            <if test="exampleWeightValue != null">
+                example_weight_value = #{exampleWeightValue},
+            </if>
+            <if test="sort != null">
+                sort = #{sort},
+            </if>
+            last_modified_date = now()
+        </set>
+        <where>
+            survey_example_id = #{surveyExampleId}
+        </where>
+    </update>
+
+    <update id="updateSurveyExampleQuestion">
+        UPDATE survey_example_question
+        <set>
+            <if test="exampleQuestionAnswer != '' and exampleQuestionAnswer != null">
+                example_question_answer = #{exampleQuestionAnswer},
+            </if>
+            <if test="sort != null">
+                sort = #{sort},
+            </if>
+            last_modified_date = now()
+        </set>
+        <where>
+            survey_example_question_id = #{surveyExampleQuestionId}
+        </where>
+    </update>
+
+    <update id="updateSurveySubjectCategory">
+        UPDATE survey_subject_category
+        <set>
+            <if test="sort != null">
+                sort = #{sort},
+            </if>
+
+            <if test="weightMin != '' and weightMin != null">
+                weight_min = #{weightMin},
+            </if>
+            <if test="weightMax != '' and weightMax != null">
+                weight_max = #{weightMax},
+            </if>
+            <if test="categoryTitle != '' and categoryTitle != null">
+                category_title = #{categoryTitle},
+            </if>
+            <if test="categorySubText != '' and categorySubText != null">
+                category_sub_text = #{categorySubText},
+            </if>
+            <if test="categoryImgUrl != '' and categoryImgUrl != null">
+                category_img_url = #{categoryImgUrl},
+            </if>
+            <if test="categoryButtonType != '' and categoryButtonType != null">
+                category_button_type = #{categoryButtonType},
+            </if>
+            <if test="categoryButtonText != '' and categoryButtonText != null">
+                category_button_text = #{categoryButtonText},
+            </if>
+            last_modified_date = now()
+        </set>
+        <where>
+            survey_subject_category_id = #{surveySubjectCategoryId}
+        </where>
+    </update>
+
+    <update id="updateSurveySubjectPopupImage">
+        UPDATE survey_subject_popup_image
+        <set>
+            <if test="popupImgUrl != '' and popupImgUrl != null">
+                popup_img_url = #{popupImgUrl},
+            </if>
+            <if test="sort != '' and sort != null">
+                sort = #{sort},
+            </if>
+            last_modified_date = now()
+        </set>
+        <where>
+            survey_subject_popup_image_id = #{surveySubjectPopupImageId}
+        </where>
+    </update>
+</mapper>

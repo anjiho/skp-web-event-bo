@@ -1,0 +1,111 @@
+---
+spring.profiles: dev
+
+domain.sordar.internal: https://ccpri-storedev.syrup.co.kr
+domain.syrupfriends.api: https://skp.pointda.com
+syrupfriends.api.key: 8wKykFdqc4mRgESA
+sms.test.domain: https://sk.planet.com/eventMeta.do
+web.event.domain: playardev.syrup.co.kr
+future.sense.api.host: https://api.dev.knx.exchange/v1/nft/klaytn
+future.sense.api.access.key: 496689CAB5D9D7D1
+future.sense.api.secret.key: noD1M1VugljENO4I*+C=
+nft.contract.address: '0x0cc28502567a27613ef4db4f2d7dacec92487fbd'
+nft.webhook.url: https://playardev.syrup.co.kr/api/v1/web-event-front/nft/klaytn/webhook
+sms.send.number: '0261190114'
+encryption.use.yn: Y
+domain.sodar.ia.admin: https://ccpri-sodaradmindev.syrup.co.kr
+domain.sodar.ma.admin: https://ccpri-sodardev.syrup.co.kr
+
+#위치기반 조회를 위한 정보
+bsm:
+  search:
+    domain: https://ccpri-bsmsapidev.syrup.co.kr
+    uri: /v1/proximity/event-search
+    absolute:
+      uri: /v1/proximity/absolute-search
+  auth:
+    key: DpawBxtxjPlpYXtLVgei3d6djiaDRqG8
+
+#기프티콘 발송 api
+gifticon:
+  domain: https://nstglsend.gifticon.com
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://172.22.241.104:3306/wevt?autoReconnect=true&rewriteBatchedStatements=true
+    username: 'wevtadm'
+    password: '!wev.Spruw9#'
+    hikari:
+      jdbcUrl: jdbc:mysql://172.22.241.104:3306/wevt?autoReconnect=true&rewriteBatchedStatements=true
+      poolName: HikariCP
+      maximumPoolSize: 300
+      minimumIdle: 300
+      idleTimeout: 356000
+      maxLifetime: 357000
+      connectionTimeout: 10000
+      leakDetectionThreshold: 600000
+  sql:
+    init:
+      mode: always
+      data-locations: classpath*:initdata/data-mysql.sql
+
+  jpa:
+    #hibernate:
+    #      ddl-auto: update
+    #      format_sql: true
+    #    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+        order_inserts: true
+        order_updates: true
+        jdbc:
+          batch_size: 20000
+        dialect: org.hibernate.dialect.MySQL57InnoDBDialect
+        generate-ddl: true
+        show_sql: true
+
+management:
+  security:
+    enabled: false
+  context-path: /api/actuator
+
+xtrans:
+  sftp:
+    event-id: PlayAR
+    host: 10.40.128.131
+    user: aruser
+    pass: apiuser1!
+    port: 22
+    default-path: /apps/API_DATA/PlayAR
+
+#OK캐시백 API통신 키값 정의
+ocb:
+  session:
+    token:
+      siteid: 6683
+      sid: 553d8a7d04fa9edf
+      salt: 6d2c4dcb5bd61c73
+      api:
+        url: https://pri-msg-ved.okcashbag.com/sugar/internal/session/info/partner
+  point:
+    api:
+      url: https://pri-msg-ved.okcashbag.com/sugar/internal/point/save/partner
+
+picaso:
+  syrup:
+    api:
+      url: http://pri-picaso-dev.syrup.co.kr/apis/v2/coupon
+
+---
+required.permission.permitList:
+  ips: 172.22.240.64,172.22.240.66,172.22.240.68,10.211.104.144
+
+aes.keyvalue: "534b504c414e455457454241524445564c4f43414c"
+
+spring:
+  servlet:
+    multipart:
+      maxFileSize: 10MB
+      maxRequestSize: 10MB

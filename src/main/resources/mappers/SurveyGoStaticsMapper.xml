@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="kr.co.syrup.adreport.survey.go.mybatis.mapper.SurveyGoStaticsMapper">
+
+    <select id="selectSurveyTableSubjectStatics" resultType="kr.co.syrup.adreport.survey.go.mybatis.vo.SurveyTableSubjectStaticsResVO">
+        SELECT A.survey_subject_id, A.sort, A.subject_example_type, A.etc_opinion_receive_yn, A.quiz_answer_sort, A.example_choice_type, count(B.survey_subject_id) as total_count
+        FROM survey_subject A
+        LEFT OUTER JOIN survey_log_attend_result B
+        ON A.survey_subject_id = B.survey_subject_id
+        WHERE A.ar_event_id =
+        (
+            SELECT ar_event_id FROM ar_event WHERE event_id = #{eventId}
+        )
+        GROUP BY A.survey_subject_id
+        ORDER BY A.sort
+    </select>
+
+    <select id="selectSurveyTableExampleStatics" resultType="kr.co.syrup.adreport.survey.go.mybatis.vo.SurveyTableExampleStaticsResVO">
+        SELECT T.sort, T.example_title, T.example_total_count, (T.example_total_count / T.total_cnt ) * 100 as percent
+        FROM
+        (
+            SELECT
+                A.sort,
+                A.example_title,
+                count(B.survey_example_id) as example_total_count,
+                (
+                    SELECT count(ZZ.survey_subject_id) as total_count
+                    FROM survey_subject Z
+                    LEFT OUTER JOIN survey_log_attend_result ZZ
+                    ON Z.survey_subject_id = ZZ.survey_subject_id
+                    WHERE Z.survey_subject_id = A.survey_subject_id
+                    GROUP BY ZZ.survey_subject_id
+                ) as total_cnt
+            FROM survey_example A
+            LEFT OUTER JOIN survey_log_attend_result B
+            ON A.survey_example_id = B.survey_example_id
+            WHERE A.survey_subject_id = #{surveySubjectId}
+            GROUP BY A.survey_example_id
+            ORDER BY A.sort
+        )T
+    </select>
+
+    <select id="countSurveyTableExampleEtc" resultType="int">
+        SELECT count(*)
+        FROM survey_log_attend_result
+        WHERE survey_subject_id = #{surveySubjectId}
+        AND survey_example_id is null
+        AND example_sort is null
+        AND question_answer is not null
+    </select>
+
+    <select id="countSurveyQuizQuestionWrong" resultType="int">
+        SELECT count(*)
+        FROM survey_log_attend_result
+        WHERE survey_example_id IN (
+            SELECT survey_example_id
+            FROM survey_example A
+            LEFT OUTER JOIN survey_subject B
+            ON A.survey_subject_id = B.survey_subject_id
+            WHERE A.survey_subject_id = #{surveySubjectId}
+            AND A.sort != B.quiz_answer_sort
+        )
+    </select>
+
+    <select id="selectSurveySubjectCategoryStaticsByQuiz" resultType="kr.co.syrup.adreport.survey.go.mybatis.vo.SurveyTableCategoryStaticsResVO">
+        SELECT CONCAT(A.category_title, A.sort) as title,
+               <!-- 퀴즈형일떄 -->
+               <if test="eventLogicalType == 'QUIZ'">
+                   CONCAT(A.weight_min, '%', ' ~ ', A.weight_max, '%') as weight,
+               </if>
+                <!-- 분석형일떄 -->
+                <if test="eventLogicalType == 'ANALYSIS'">
+                    CONCAT(A.weight_min, '점', ' ~ ', A.weight_max, '점') as weight,
+                </if>
+               (
+                   SELECT count(*)
+                   FROM survey_log_subject_category Z
+                   WHERE Z.survey_subject_category_id = A.survey_subject_category_id
+               ) as achieve_count
+        FROM survey_subject_category A
+        WHERE A.ar_event_id = #{arEventId}
+    </select>
+
+    <select id="selectSurveyTableRawStatics" resultType="kr.co.syrup.adreport.survey.go.mybatis.vo.SurveyTableRawResVO">
+        SELECT A.survey_log_attend_id, A.ar_event_id, DATE_FORMAT(A.created_date, '%Y-%m-%d %H:%i') as attend_start_date, A.gender, A.age, A.give_away_id, B.product_name,
+               DATE_FORMAT
+                   (
+                       (
+                           SELECT Z.created_date
+                           FROM survey_log_attend_result Z
+                           WHERE Z.survey_log_attend_id = A.survey_log_attend_id
+                           LIMIT 1
+
+                       )
+                        ,'%Y-%m-%d %H:%i'
+                   ) as attend_end_date
+        FROM survey_log_attend A
+        LEFT OUTER JOIN event_give_away_delivery B
+        ON A.give_away_id = B.give_away_id
+        WHERE A.event_id = #{eventId}
+        AND A.is_submit = true
+        ORDER BY A.created_date
+    </select>
+
+    <select id="selectSurveyTableRawStatics2" resultType="kr.co.syrup.adreport.survey.go.mybatis.vo.SurveyTableRawResVO">
+        SELECT T.*
+        FROM (
+                SELECT A.survey_log_attend_id,
+                     A.ar_event_id,
+                     #                DATE_FORMAT(A.created_date, '%Y-%m-%d %H:%i') as attend_start_date,
+                     A.created_date                          as attend_start_date,
+                     A.gender,
+                     A.age,
+                     A.give_away_id,
+                     DATE_FORMAT
+                         (
+                             (SELECT Z.created_date
+                              FROM survey_log_attend_result Z
+                              WHERE Z.survey_log_attend_id = A.survey_log_attend_id
+                              LIMIT 1)
+                         , '%Y-%m-%d %H:%i'
+                         )                                   as attend_end_date,
+                     (SELECT Z.product_name
+                      FROM event_give_away_delivery Z
+                      WHERE Z.give_away_id = A.give_away_id) as product_name
+              FROM survey_log_attend A
+              WHERE A.event_id = #{eventId}
+                AND A.is_submit = true
+              ORDER BY A.created_date
+          ) T
+        LIMIT #{start}, #{limitCount}
+    </select>
+
+    <select id="selectSurveyTableRawStaticsByArEventIdAndSurveyLogAttendId" resultType="kr.co.syrup.adreport.survey.go.mybatis.vo.SurveyTableRawResVO">
+        SELECT A.survey_log_attend_id, A.ar_event_id, DATE_FORMAT(A.created_date, '%Y-%m-%d %H:%i') as attend_start_date, A.gender, A.age, A.give_away_id, B.product_name,
+               DATE_FORMAT
+               (
+                       (
+                           SELECT Z.created_date
+                           FROM survey_log_attend_result Z
+                           WHERE Z.survey_log_attend_id = A.survey_log_attend_id
+                           LIMIT 1
+
+                       )
+                   ,'%Y-%m-%d %H:%i'
+               ) as attend_end_date
+        FROM survey_log_attend A
+                 LEFT OUTER JOIN event_give_away_delivery B
+                                 ON A.give_away_id = B.give_away_id
+        WHERE A.ar_event_id = #{arEventId}
+          AND A.survey_log_attend_id = #{surveyLogAttendId}
+          AND A.is_submit = true
+        ORDER BY A.created_date
+    </select>
+
+    <select id="selectSurveyTableRawTitleList" resultType="kr.co.syrup.adreport.survey.go.mybatis.vo.SurveyTableRawTitleResVO">
+        SELECT
+            Z.survey_subject_id,
+            Z.sort,
+            CONCAT('Q',Z.sort, '_', Z.subject_title ,'_답변') as title,
+            IF(Z.etc_opinion_receive_yn = 'Y', CONCAT('Q',Z.sort, '_', Z.subject_title, '_기타'), '') as etc_title
+        FROM (
+                 SELECT *
+                 FROM survey_subject
+                 WHERE ar_event_id = #{arEventId}
+         ) Z
+    </select>
+
+    <select id="selectSurveyTableRawAnswerList" resultType="kr.co.syrup.adreport.survey.go.mybatis.vo.SurveyTableRawAnswerResVO">
+        SELECT A.sort as subject_sort, A.etc_opinion_receive_yn, A.subject_example_type
+        FROM survey_subject A
+        WHERE A.ar_event_id = #{arEventId}
+    </select>
+
+    <select id="selectSurveyAttendStatics" resultType="String">
+        SELECT CONCAT( T.totalCnt, '/', T.standCnt ) as cnt
+        FROM (
+                SELECT count(*) as totalCnt,
+                       (
+                        SELECT count(*)
+                        FROM survey_log_attend Z
+                        WHERE Z.event_id = A.event_id
+                          AND DATE(Z.created_date) = #{searchDate}
+                        <if test="isSubmit != null">
+                            AND Z.is_submit = #{isSubmit}
+                        </if>
+                        ) as standCnt
+                FROM survey_log_attend A
+                WHERE A.event_id = #{eventId}
+                <if test="isSubmit != null">
+                    AND A.is_submit = #{isSubmit}
+                </if>
+         ) T
+    </select>
+
+    <select id="selectHourlySurveyAttendStatics" resultType="kr.co.syrup.adreport.web.event.mybatis.vo.HourlyMapperVO">
+        SELECT
+            T.n as time, IFNULL(dayT.cnt, 0) as count
+        FROM
+            (
+                SELECT @N := @N + 1 as n
+                FROM temp_hour,
+                     (
+                         SELECT @N:=-1 FROM DUAL
+                     ) NN LIMIT 24
+            ) AS T
+
+                LEFT JOIN
+            (
+                SELECT
+                    DATE_FORMAT(created_date, '%H') as hh,
+                    COUNT(*) as cnt
+                FROM survey_log_attend
+                WHERE event_id = #{eventId}
+                  AND DATE(created_date) = #{searchDate}
+                    <if test="isSubmit != null">
+                        AND is_submit = #{isSubmit}
+                    </if>
+                GROUP BY hh
+            ) as dayT ON T.n = dayT.hh
+        ORDER BY T.n ASC
+    </select>
+
+    <select id="selectSurveyExampleQuestionAnswerStaticsByQuiz" resultType="kr.co.syrup.adreport.survey.go.mybatis.vo.SurveyTableExampleStaticsResVO">
+        SELECT
+            A.sort,
+            A.example_question_answer as example_title,
+            (
+                SELECT count(*) FROM survey_log_attend_result Z
+                                WHERE Z.survey_subject_id = A.survey_subject_id
+                                AND Z.question_answer = A.example_question_answer
+            ) as example_total_count
+        FROM survey_example_question A
+        WHERE A.survey_subject_id = #{surveySubjectId}
+        GROUP BY A.example_question_answer
+        ORDER BY A.sort
+    </select>
+</mapper>

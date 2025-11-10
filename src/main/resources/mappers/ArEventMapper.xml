@@ -1,0 +1,1226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="kr.co.syrup.adreport.web.event.mybatis.mapper.ArEventMapper">
+
+    <select id="selectWebEventSequenceNextval" resultType="long">
+        select web_event_sequence_nextval(#{seqName}) as web_event_seq from dual;
+    </select>
+
+    <select id="selectCountEventGiveAwayDeliveryAndEventIdAndPhoneNumberAndCreatedDate" resultType="int">
+        SELECT count(*)
+        FROM EVENT_GIVE_AWAY_DELIVERY
+        WHERE event_id = #{eventId}
+        AND phone_number = #{phoneNumber}
+        AND DATE(created_date) = #{createdDate}
+    </select>
+
+    <select id="selectCountEventLogExposureByArEventObjectIdAndCreatedDay" resultType="int">
+        SELECT count(*)
+        FROM event_log_exposure
+        WHERE ar_event_object_id = #{arEventObjectId}
+        AND DATE(created_date) = #{createdDate}
+    </select>
+
+    <select id="selectCountEventLogExposureByArEventIdAndObjectSortAndCreatedDay" resultType="int">
+        SELECT count(*)
+        FROM event_log_exposure
+        WHERE ar_event_id = #{arEventId}
+        AND object_sort = #{objectSort}
+        AND created_day = #{createdDate}
+    </select>
+
+    <select id="selectCountEventLogExposureByArEventIdAndObjectSortAndCreatedDayImpr" resultType="int">
+        SELECT count(*)
+        FROM event_log_exposure
+        WHERE ar_event_id = #{arEventId}
+          AND object_sort = #{objectSort}
+          AND created_day_impr = #{createdDayImpr}
+    </select>
+
+    <select id="selectCountEventLogExposureByArEventObjectIdAndAttendCodeAndCreatedDay" resultType="int">
+        SELECT count(*)
+        FROM event_log_exposure
+        WHERE ar_event_object_id = #{arEventObjectId}
+        <if test="attendCode != ''">
+            AND attend_code = #{attendCode}
+        </if>
+        AND DATE(created_date) = #{createdDate}
+    </select>
+
+    <select id="selectCountEventLogExposureByArEventIdAndObjectSortAndAttendCodeAndCreatedDay" resultType="int">
+        SELECT count(*)
+        FROM event_log_exposure
+        WHERE ar_event_id = #{arEventId}
+        AND object_sort = #{objectSort}
+        <if test="attendCode != ''">
+            AND attend_code = #{attendCode}
+        </if>
+        AND created_day = #{createdDate}
+    </select>
+
+    <select id="selectCountEventLogExposureByArEventIdAndObjectSortAndAttendCodeAndCreatedDayImpr" resultType="int">
+        SELECT count(*)
+        FROM event_log_exposure
+        WHERE ar_event_id = #{arEventId}
+        AND object_sort = #{objectSort}
+        <if test="attendCode != ''">
+            AND attend_code = #{attendCode}
+        </if>
+        AND created_day_impr = #{createdDate}
+    </select>
+
+    <select id="selectCountEventLogAttendButtonByEventIdAndAndCreatedDayAndAttendCode" resultType="int">
+        SELECT count(*)
+        FROM event_log_attend_button
+        WHERE event_id = #{eventId}
+        AND attend_code = #{attendCode}
+        AND DATE(created_date) = #{createdDate}
+    </select>
+
+    <select id="selectCountEventWinningLogByEventIdAndCreatedDateAndNotFail" resultType="int">
+        SELECT count(*)
+        FROM event_log_winning
+        WHERE event_id = #{eventId}
+        AND DATE(created_date) = #{createdDate}
+        AND winning_type NOT IN ('FAIL')
+        <if test="arEventWinningId > 0">
+            AND ar_event_winning_id = #{arEventWinningId}
+        </if>
+    </select>
+
+    <select id="selectCountEventWinningLogByArEventIdAndEventWinningSortNotFail" resultType="int">
+        SELECT count(*)
+        FROM event_log_winning_success
+        WHERE ar_event_id = #{arEventId}
+          AND event_winning_sort = #{eventWinningSort}
+    </select>
+
+    <select id="selectCountEventWinningLogByArEventIdAndCreatedDateAndEventWinningSortNotFail" resultType="int">
+        SELECT count(*)
+        FROM event_log_winning_success
+        WHERE ar_event_id = #{arEventId}
+        AND event_winning_sort = #{eventWinningSort}
+        AND created_day = #{createdDay}
+    </select>
+
+    <select id="selectCountEventWinningLogByArEventIdAndCreatedDateAndEventWinningSortNotFail2" resultType="int">
+        SELECT count(*)
+        FROM event_log_winning_success
+        WHERE ar_event_id = #{arEventId}
+          AND event_winning_sort = #{eventWinningSort}
+          AND created_day_impr = #{createdDay}
+    </select>
+
+    <select id="selectCountEventWinningLogByArEventIdAndAttendCodeAndCreatedDayNotFail" resultType="int">
+        SELECT count(*)
+        FROM event_log_winning_success
+        WHERE ar_event_id = #{arEventId}
+        AND created_day = #{createdDay}
+          <if test="attendCode != '' and attendCode != null">
+              AND attend_code = #{attendCode}
+          </if>
+        <if test="arEventWinningId > 0">
+            AND ar_event_winning_id = #{arEventWinningId}
+        </if>
+    </select>
+
+    <select id="selectCountEventWinningLogByArEventIdAndAttendCodeAndCreatedDayNotFail2" resultType="int">
+        SELECT count(*)
+        FROM event_log_winning_success
+        WHERE ar_event_id = #{arEventId}
+        AND created_day_impr = #{createdDay}
+        <if test="attendCode != '' and attendCode != null">
+            AND attend_code = #{attendCode}
+        </if>
+        <if test="arEventWinningId > 0">
+            AND ar_event_winning_id = #{arEventWinningId}
+        </if>
+        <if test="phoneNumber != '' and phoneNumber != null">
+            AND phone_number = #{phoneNumber}
+        </if>
+    </select>
+
+    <select id="selectCountEventWinningLogByArEventIdAndEventWinningSortAndDayAndHourNotFail" resultType="int">
+        SELECT count(*)
+        FROM event_log_winning_success
+        WHERE ar_event_id = #{arEventId}
+        AND event_winning_sort = #{eventWinningSort}
+        AND created_day = #{createdDay}
+        AND created_hour = #{createdHour}
+    </select>
+
+    <select id="selectCountEventWinningLogByArEventIdAndEventWinningSortAndDayAndHourNotFail2" resultType="int">
+        SELECT count(*)
+        FROM event_log_winning_success
+        WHERE ar_event_id = #{arEventId}
+          AND event_winning_sort = #{eventWinningSort}
+          <if test="createdDay != '' and createdDay != null">
+              AND created_day_impr = #{createdDay}
+          </if>
+          AND created_hour_impr = #{createdHour}
+    </select>
+
+    <select id="selectArEventGateCodeList" resultType="string">
+        SELECT attend_code FROM AR_EVENT_GATE_CODE WHERE event_id = #{eventId}
+    </select>
+
+    <select id="countArEventGateCodeByEventId" resultType="long">
+        SELECT count(*) FROM AR_EVENT_GATE_CODE WHERE event_id = #{eventId}
+    </select>
+
+    <select id="selectEventGiveAwayListByServiceEndAfterSixtyDay" resultType="kr.co.syrup.adreport.web.event.entity.EventGiveAwayDeliveryEntity">
+        SELECT A.*
+        FROM event_give_away_delivery A
+        LEFT JOIN web_event_base B
+        ON A.event_id = B.event_id
+        WHERE 1=1
+          AND B.contract_status = #{contractStatus}
+          AND B.real_event_end_date <![CDATA[ <= ]]> #{createdDate}
+          AND date(A.created_date) <![CDATA[ <= ]]> #{createdDate}
+          AND A.name != ''
+    </select>
+    
+    <select id="selectEventIdAndArEventIdAtServiceEnd" resultType="int">
+       SELECT A.ar_event_id
+       FROM ar_event A
+        INNER JOIN web_event_base B
+        ON A.event_id = B.event_id
+           WHERE B.contract_status = #{contractStatus}
+    </select>
+
+    <select id="selectEventIdAndArEventIdAtServiceEndAfterSixtyDay" resultType="map">
+        SELECT A.ar_event_id, A.event_id, B.event_type, ifnull(A.ocb_point_save_type, 'NONE') as ocb_point_save_type
+        FROM ar_event A
+        INNER JOIN web_event_base B
+        ON A.event_id = B.event_id
+        WHERE B.contract_status IN
+        <foreach collection="contractStatusList" item="contractStatus" separator="," open="(" close=")">
+            #{contractStatus}
+        </foreach>
+        AND B.real_event_end_date <![CDATA[ <= ]]> #{createdDate}
+        AND date(A.created_date) <![CDATA[ <= ]]> #{createdDate}
+    </select>
+
+    <select id="selectStampEventIdAndArEventIdAtServiceEndAfterSixtyDay" resultType="map">
+        SELECT A.stp_id, A.event_id, B.event_type
+        FROM stamp_event_main A
+        INNER JOIN web_event_base B
+        ON A.event_id = B.event_id
+        LEFT OUTER JOIN event_log_scheduled C
+        ON C.event_id = A.event_id
+        WHERE B.contract_status IN
+        <foreach collection="contractStatusList" item="contractStatus" separator="," open="(" close=")">
+            #{contractStatus}
+        </foreach>
+        AND B.real_event_end_date <![CDATA[ <= ]]> #{createdDate}
+        AND C.event_id is null
+    </select>
+
+    <select id="selectSubscriptionList" resultType="kr.co.syrup.adreport.web.event.entity.EventGiveAwayDeliveryEntity">
+        SELECT * FROM event_give_away_delivery
+        WHERE ar_event_winning_id = #{arEventWinningId}
+        AND ar_event_winning_id IN (
+            SELECT A.ar_event_winning_id
+            FROM ar_event_winning A
+                     LEFT JOIN ar_event B
+                               ON A.ar_event_id = B.ar_event_id
+                     LEFT JOIN web_event_base C
+                               ON B.event_id = C.event_id
+
+            WHERE 1=1
+              AND C.contract_status = '06'
+                <if test="scheduleType == 'PRESENTATION'">
+                    AND A.subscription_yn = 'Y'
+                    AND A.is_subscription_winning_presentation = false
+                    AND date_format(A.subscription_winning_presentation_date, '%Y-%m-%d %H') = #{searchDate}
+                </if>
+                <if test="scheduleType == 'RAFFLE'">
+                    AND A.subscription_yn = 'Y'
+                    AND A.is_subscription_raffle = false OR A.is_subscription_raffle is null
+                    AND date_format(A.subscription_raffle_date, '%Y-%m-%d %H') = #{searchDate}
+                </if>
+                <!-- 소유권 이전 -->
+                <if test="scheduleType == 'OWNERSHIP'">
+                    AND A.nft_ownership_transfer_date_assign_yn = 'Y'
+                    AND date_format(A.nft_ownership_transfer_date, '%Y-%m-%d %H') = #{searchDate}
+                </if>
+
+        )
+        GROUP BY phone_number
+    </select>
+
+    <select id="selectSubscriptionWinningInfo" resultType="kr.co.syrup.adreport.web.event.entity.ArEventWinningEntity">
+        SELECT A.*
+        FROM ar_event_winning A
+                 LEFT JOIN ar_event B
+                           ON A.ar_event_id = B.ar_event_id
+                 LEFT JOIN web_event_base C
+                           ON B.event_id = C.event_id
+        WHERE 1=1
+          AND C.contract_status = '06'
+            <if test="scheduleType == 'PRESENTATION'">
+              AND A.subscription_yn = 'Y'
+              AND A.is_subscription_winning_presentation = false
+              AND date_format(A.subscription_winning_presentation_date, '%Y-%m-%d %H') = #{searchDate}
+            </if>
+            <if test="scheduleType == 'RAFFLE'">
+                AND A.subscription_yn = 'Y'
+                AND A.subscription_raffle_date IS NOT NULL
+                AND A.is_subscription_raffle = false OR A.is_subscription_raffle is null
+                AND date_format(A.subscription_raffle_date, '%Y-%m-%d %H') = #{searchDate}
+            </if>
+            <!-- 소유권 이전 -->
+            <if test="scheduleType == 'OWNERSHIP'">
+                AND A.nft_ownership_transfer_date_assign_yn = 'Y'
+                AND date_format(A.nft_ownership_transfer_date, '%Y-%m-%d %H') = #{searchDate}
+            </if>
+        ORDER BY ar_event_winning_id ASC
+    </select>
+
+    <select id="selectCountEventLogWinningByEventIdAndAttendCodeAndWinningType" resultType="int">
+        SELECT count(*)
+        FROM EVENT_LOG_WINNING
+        WHERE event_id = #{eventId}
+          <if test="attendCode != ''">
+              AND attend_code = #{attendCode}
+          </if>
+        AND winning_type != #{winningType}
+    </select>
+
+    <select id="selectCountEventLogWinningByArEventIdAndAttendCodeAndWinningType" resultType="int">
+        SELECT count(*)
+        FROM event_log_winning_success
+        WHERE ar_event_id = #{arEventId}
+        <if test="attendCode != ''">
+            AND attend_code = #{attendCode}
+        </if>
+
+    </select>
+
+    <select id="selectCountEventWinningLogByArEventIdAndArEventWinningIdAndAttendCodeNotFail" resultType="int">
+        SELECT count(*)
+        FROM event_log_winning_success
+        WHERE ar_event_id = #{arEventId}
+        AND ar_event_winning_id = #{arEventWinningId}
+        <if test="attendCode != '' and attendCode != null">
+            AND attend_code = #{attendCode}
+        </if>
+        <if test="phoneNumber != '' and phoneNumber != null">
+            AND phone_number = #{phoneNumber}
+        </if>
+    </select>
+
+    <select id="selectCountEventLogExposureByArEventIdAndObjectSortAndAttendCode" resultType="int">
+        SELECT count(*)
+        FROM event_log_exposure
+        WHERE 1=1
+        AND ar_event_id = #{arEventId}
+        AND object_sort = #{objectSort}
+        <if test="attendCode != ''">
+            AND attend_code = #{attendCode}
+       </if>
+    </select>
+
+    <select id="selectCountEventLogExposureByArEventIdAndObjectSortAndCreatedDayAndCreatedHour" resultType="int">
+        SELECT count(*)
+        FROM event_log_exposure
+        WHERE 1=1
+        AND ar_event_id = #{arEventId}
+        AND object_sort = #{objectSort}
+        AND created_day = #{createdDay}
+        AND created_hour = #{createdHour}
+    </select>
+
+    <select id="selectCountEventLogExposureByArEventIdAndObjectSortAndCreatedDayImprAndCreatedHourImpr" resultType="int">
+        SELECT count(*)
+        FROM event_log_exposure
+        WHERE 1=1
+          AND ar_event_id = #{arEventId}
+          AND object_sort = #{objectSort}
+          AND created_day_impr = #{createdDayImpr}
+          AND created_hour_impr = #{createdHourImpr}
+    </select>
+
+    <select id="selectEventBaseJoinArEventJoinEventButton" resultType="kr.co.syrup.adreport.web.event.mybatis.vo.EventBaseJoinArEventJoinEventButtonVO">
+        SELECT A.*, B.*, C.*, D.value as landing_url
+        FROM web_event_base A
+        INNER JOIN ar_event B
+        ON A.event_id = B.event_id
+        INNER JOIN ar_event_button C
+        ON B.ar_event_id = C.ar_event_id
+        LEFT OUTER JOIN  common_settings D
+        ON D.setting_key = A.event_id
+        WHERE A.event_id = #{eventId}
+    </select>
+
+    <select id="selectEventBaseJoinArEvent" resultType="kr.co.syrup.adreport.web.event.mybatis.vo.EventBaseJoinArEventJoinEventButtonVO">
+        SELECT A.event_title, A.marketing_id, A.contract_status, A.event_start_date, A.event_end_date, A.event_type
+              , B.*
+        FROM web_event_base A
+        INNER JOIN ar_event B
+        ON A.event_id = B.event_id
+        WHERE A.event_id = #{eventId}
+    </select>
+
+    <select id="selectCountEventLogWinningAtConcurrency" resultType="int">
+        SELECT count(*)
+        FROM event_log_winning_success
+        WHERE 1=1
+        AND ar_event_id = #{arEventId}
+        AND event_winning_sort = #{eventWiningSort}
+        AND id <![CDATA[ <  #{id} ]]>
+        <if test="createdDay != '' and createdDay != null">
+          AND created_day = #{createdDay}
+        </if>
+        <if test="createdHour != '' and createdHour != null">
+            AND created_hour = #{createdHour}
+        </if>
+    </select>
+
+    <select id="selectCountEventLogWinningAtConcurrency2" resultType="int">
+        SELECT count(*)
+        FROM event_log_winning_success
+        WHERE 1=1
+        AND ar_event_id = #{arEventId}
+        AND event_winning_sort = #{eventWiningSort}
+        AND id <![CDATA[ <  #{id} ]]>
+        <if test="createdDay != '' and createdDay != null">
+            AND created_day_impr = #{createdDay}
+        </if>
+        <if test="createdHour != '' and createdHour != null">
+            AND created_hour_impr = #{createdHour}
+        </if>
+    </select>
+
+    <select id="selectEventLogWinningLimitByArEventId" resultType="kr.co.syrup.adreport.web.event.mybatis.vo.EventLogWinningLimitMapperVO">
+        SELECT distinct code
+        FROM event_log_winning_limit
+        WHERE 1=1
+        AND ar_event_id = #{arEventId}
+    </select>
+
+    <select id="selectEventLogWinningLimitByArEventIdAndCode" resultType="String">
+        SELECT code
+        FROM event_log_winning_limit
+        WHERE 1=1
+          AND ar_event_id = #{arEventId}
+            AND code = #{code}
+        LIMIT 1
+    </select>
+
+    <select id="selectEventLogExposureLimitByArEventId" resultType="kr.co.syrup.adreport.web.event.mybatis.vo.EventLogWinningLimitMapperVO">
+        SELECT distinct code
+        FROM event_log_exposure_limit
+        WHERE 1=1
+          AND ar_event_id = #{arEventId}
+    </select>
+
+    <select id="selectEventGateCodeAtUsed" resultType="kr.co.syrup.adreport.web.event.mybatis.vo.EventGateCodeAtUsedMapperVO">
+        SELECT a.attend_code, a.used_count, ifnull(b.cnt, 0) as cnt
+        FROM
+        (
+            SELECT event_id, attend_code, used_count
+            FROM ar_event_gate_code
+            WHERE event_id = #{eventId}
+        ) a
+            LEFT OUTER JOIN
+        (
+            SELECT attend_code, count(*) as cnt
+            FROM event_log_attend_button
+            WHERE event_id = #{eventId}
+            GROUP BY attend_code
+        ) b
+        ON a.attend_code = b.attend_code
+    </select>
+
+    <select id="selectStampEventGateCodeAtUsed" resultType="kr.co.syrup.adreport.web.event.mybatis.vo.EventGateCodeAtUsedMapperVO">
+        SELECT attend_code, is_use
+        FROM stamp_event_gate_code
+        WHERE stp_id = (SELECT stp_id FROM stamp_event_main WHERE event_id = #{eventId})
+    </select>
+
+    <select id="selectEventLawHyperLinkList" resultType="hashmap">
+        SELECT T.idx,
+               CONCAT('개인정보취급방침', rownum, '차 변경일 : ', DATE_FORMAT(start_date, '%Y년 %m월 %d일')) as title
+        FROM (
+                 SELECT (@rownum := @rownum + 1) as rownum,
+                        idx,
+                        start_date
+                 FROM event_law_info,
+                      (SELECT @rownum := 0) TMP
+                 WHERE event_type = #{eventType}
+                 AND law_type = #{lawType}
+                 AND date(now()) >= start_date
+             ) T
+        ORDER BY T.idx ASC
+    </select>
+
+<!--    <select id="selectSubscriptionResultAnnounceList">-->
+<!--        SELECT * FROM event_give_away_delivery-->
+<!--        WHERE ar_event_winning_id = #{arEventWinningId}-->
+<!--          AND ar_event_winning_id IN (-->
+<!--            SELECT A.ar_event_winning_id-->
+<!--            FROM ar_event_winning A-->
+<!--                     LEFT JOIN ar_event B-->
+<!--                               ON A.ar_event_id = B.ar_event_id-->
+<!--                     LEFT JOIN web_event_base C-->
+<!--                               ON B.event_id = C.event_id-->
+<!--            WHERE 1=1-->
+<!--              AND C.contract_status = '06'-->
+<!--              AND A.subscription_yn = 'Y'-->
+<!--              AND A.is_subscription_winning_presentation = false-->
+<!--              AND date_format(A.subscription_winning_presentation_date, '%Y-%m-%d %H') = #{searchDate}-->
+<!--        ) Z-->
+<!--    </select>-->
+
+    <update id="useArEventGateCode">
+        UPDATE AR_EVENT_GATE_CODE
+        SET use_yn = true
+        WHERE event_id = #{eventId}
+        AND attend_code = #{attendCode}
+    </update>
+
+    <update id="updateArEventGateCodeUsedCount">
+        UPDATE AR_EVENT_GATE_CODE
+        SET used_count = used_count + 1
+        WHERE event_id = #{eventId}
+        AND attend_code = #{attendCode}
+    </update>
+
+    <update id="updateEventLogWinningSuccessGiveAwayId">
+        UPDATE EVENT_LOG_WINNING_SUCCESS
+        SET give_away_id = #{giveAwayId}
+        WHERE id = #{id}
+    </update>
+
+    <update id="updateEventGiveAwayDeliveryByGifticonIssuse">
+        UPDATE EVENT_GIVE_AWAY_DELIVERY
+        <set>
+            <if test="trId">
+                tr_id = #{trId},
+            </if>
+            <if test="gifticonOrderNo">
+                gifticon_order_no = #{gifticonOrderNo},
+            </if>
+            <if test="gifticonResultCd">
+                gifticon_result_cd = #{gifticonResultCd},
+            </if>
+        </set>
+        WHERE give_away_id = #{giveAwayId}
+    </update>
+
+    <update id="updateEventWinningLogFail">
+        UPDATE EVENT_LOG_WINNING
+        <set>
+            WINNING_TYPE = 'FAIL',
+            <if test="arEventObjectId > 0">
+                ar_event_object_id = #{arEventObjectId},
+            </if>
+            <if test="arEventWinningId > 0">
+                ar_event_winning_id = #{arEventWinningId},
+            </if>
+            <if test="eventWinningSort > 0">
+                event_winning_sort = #{eventWinningSort},
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <update id="updateSubscriptionRaffleScheduleDate">
+        UPDATE AR_EVENT_WINNING
+        <set>
+            is_subscription_raffle = true,
+            subscription_raffle_schedule_date = now()
+        </set>
+        WHERE ar_event_winning_id = #{arEventWinningId}
+    </update>
+
+    <update id="updateSubscriptionWinningPresentationScheduleDate">
+        UPDATE AR_EVENT_WINNING
+        <set>
+            is_subscription_winning_presentation = true,
+            subscription_winning_presentation_schedule_date = now()
+        </set>
+        WHERE ar_event_winning_id = #{arEventWinningId}
+    </update>
+
+    <update id="updateArEventNftTokenInfo">
+        UPDATE AR_EVENT_NFT_TOKEN_INFO
+        <set>
+            <if test="arEventId > 0">
+                ar_event_id = #{arEventId},
+            </if>
+            <if test="stpId > 0">
+                stp_id = #{stpId},
+            </if>
+            <if test="arEventWinningId > 0">
+                ar_event_winning_id = #{arEventWinningId},
+            </if>
+        </set>
+        <where>
+            upload_excel_file_name = #{fileName}
+        </where>
+    </update>
+
+    <update id="updatePasswordEventGiveAwayDelivery">
+        UPDATE EVENT_GIVE_AWAY_DELIVERY
+        <set>
+            <if test="newPassword">
+                give_away_password = #{newPassword}
+            </if>
+        </set>
+        WHERE event_id = #{eventId}
+        AND phone_number = #{phoneNumber}
+    </update>
+
+    <update id="updateWalletIdFromArEventNftRepository">
+        UPDATE AR_EVENT_NFT_REPOSITORY
+        <set>
+            <if test="arEventNftWalletId">
+                ar_event_nft_wallet_id = #{arEventNftWalletId}
+            </if>
+        </set>
+        <where>
+            give_away_id in
+            <foreach collection="giveAwayIds" item="giveAwayId" separator="," open="(" close=")">
+                #{giveAwayId}
+            </foreach>
+        </where>
+    </update>
+
+    <update id="updateRequestIdOfNftTransfer">
+        UPDATE AR_EVENT_NFT_REPOSITORY
+        <set>
+            nft_trance_date = now(),
+            holder_trance_status = 1,
+            <if test="requestId">
+                request_id = #{requestId},
+            </if>
+
+        </set>
+        <where>
+            ar_nft_repository_id = #{arNftRepositoryId}
+        </where>
+    </update>
+
+    <update id="updateSmsSendLogStatusBySmsCodeList">
+        UPDATE EVENT_LOG_SMS_SEND
+        <set>
+            is_success = true
+        </set>
+        <where>
+            sms_send_code in
+            <foreach collection="smsCodes" item="smsCode" separator="," open="(" close=")">
+                #{smsCode}
+            </foreach>
+        </where>
+    </update>
+
+    <update id="updateEncryptEventGiveAwayDelivery">
+        UPDATE EVENT_GIVE_AWAY_DELIVERY
+        SET
+            name = #{name},
+            phone_number = #{phoneNumber},
+            address = #{address},
+            address_detail = #{addressDetai}
+        WHERE give_away_id BETWEEN #{startNum} AND #{endNum}
+    </update>
+
+    <update id="updateArEventNftCouponInfo">
+        UPDATE AR_EVENT_NFT_COUPON_INFO
+        <set>
+            <if test="arEventId > 0">
+                ar_event_id = #{arEventId},
+            </if>
+            <if test="stpId > 0">
+                stp_id = #{stpId},
+            </if>
+            <if test="arEventWinningId > 0">
+                ar_event_winning_id = #{arEventWinningId},
+            </if>
+        </set>
+        <where>
+            upload_excel_file_name = #{fileName}
+        </where>
+    </update>
+
+    <update id="updateEmTranSmsBySendMms">
+        UPDATE EM_TRAN
+        <set>
+            tran_etc4 = #{mmsSeq},
+            tran_type = 6
+        </set>
+        <where>
+            tran_pr = #{tranPr}
+        </where>
+    </update>
+
+    <update id="updateNftCouponIsPayed">
+        UPDATE AR_EVENT_NFT_COUPON_INFO
+        <set>
+            is_payed = #{isPayed}
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <update id="updateNftTokenIsPayed">
+        UPDATE ar_event_nft_token_info
+        <set>
+            is_payed = true
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <select id="selectEventLogExposureByEventId" resultType="kr.co.syrup.adreport.web.event.entity.EventLogExposureEntity">
+        SELECT id, ar_event_id, object_sort, created_hour, created_day
+        FROM event_log_exposure
+        WHERE event_id = #{eventId}
+    </select>
+
+    <select id="selectArEventByIdAtWinningProcess" resultType="kr.co.syrup.adreport.web.event.mybatis.vo.ArEventByIdAtWinningProcessMapperVO">
+        SELECT A.event_id, A.ar_event_id, A.duplicate_winning_type, A.ar_attend_condition_code_yn, A.duplicate_winning_count,
+               A.duplicate_winning_limit_type, A.event_logical_type, A.attend_condition_mdn_yn, A.event_exposure_type, A.ocb_point_save_type, B.stp_connect_yn
+        FROM AR_EVENT A
+        INNER JOIN WEB_EVENT_BASE B
+        ON A.event_id = B.event_id
+        WHERE A.event_id = #{eventId}
+    </select>
+
+    <select id="selectArEventByEventIdAtObjectExposure" resultType="kr.co.syrup.adreport.web.event.mybatis.vo.ArEventByEventIdAtObjectExposureVO">
+        SELECT A.ar_event_id, A.event_logical_type, A.location_setting_yn, A.ar_attend_condition_code_yn, A.ar_bg_image, A.ar_skin_image, B.event_title, A.loading_img_yn, A.loading_img_url, C.ar_event_logical_id, B.stp_connect_yn, A.attend_condition_mdn_yn
+        FROM AR_EVENT A
+        INNER JOIN WEB_EVENT_BASE B
+        ON A.event_id = B.event_id
+        LEFT OUTER JOIN AR_EVENT_LOGICAL C
+        ON A.ar_event_id = C.ar_event_id
+        WHERE A.event_id = #{eventId}
+    </select>
+
+    <select id="selectArEventJoinEventBaseByEventId" resultType="kr.co.syrup.adreport.web.event.mybatis.vo.ArEventJoinEventBaseVO">
+        SELECT *
+        FROM ar_event A
+                 INNER JOIN web_event_base B
+                            ON A.event_id = B.event_id
+        WHERE A.event_id = #{eventId}
+    </select>
+
+    <select id="selectArEventJoinEventBaseByArEventId" resultType="kr.co.syrup.adreport.web.event.mybatis.vo.ArEventJoinEventBaseVO">
+        SELECT *
+        FROM ar_event A
+                 INNER JOIN web_event_base B
+                            ON A.event_id = B.event_id
+        WHERE A.ar_event_id = #{arEventId}
+    </select>
+
+    <select id="selectArEventWinningListByArEventIdAndNotFailAtWinningProcess" resultType="kr.co.syrup.adreport.web.event.entity.ArEventWinningEntity">
+        SELECT
+            ar_event_winning_id, ar_event_id, object_mapping_type, object_mapping_number, winning_type, winning_time_type,
+            start_winning_time, end_winning_time, hour_winning_number, total_winning_number, event_winning_sort,
+            day_winning_number, attend_code_winning_type, attend_code_limit_type, attend_code_winning_count,
+            winning_percent, winning_image_url, subscription_yn, auto_winning_yn, ocb_coupon_id
+        FROM AR_EVENT_WINNING
+        WHERE ar_event_id = #{arEventId}
+        <if test="isFail == true">
+            AND winning_type = 'FAIL'
+        </if>
+        <if test="isFail == false">
+            AND winning_type != 'FAIL'
+        </if>
+        <if test="subscriptionYn != '' and subscriptionYn != null">
+            AND subscription_yn = #{subscriptionYn}
+        </if>
+        ORDER BY event_winning_sort ASC
+    </select>
+
+    <select id="selectArEventWinningListByStpId" resultType="kr.co.syrup.adreport.web.event.entity.ArEventWinningEntity">
+        SELECT ar_event_winning_id, ar_event_id, object_mapping_type, object_mapping_number, winning_type, winning_time_type,
+                start_winning_time, end_winning_time, hour_winning_number, total_winning_number, event_winning_sort,
+                day_winning_number, attend_code_winning_type, attend_code_limit_type, attend_code_winning_count,
+                winning_percent, winning_image_url, subscription_yn, auto_winning_yn, ocb_coupon_id, product_name,
+                user_winning_type, user_winning_limit_count, stp_winning_popup_img_url, stp_pan_coupon_active_url, stp_pan_coupon_inactive_url
+        FROM AR_EVENT_WINNING
+        WHERE stp_id = #{stpId}
+        <if test="isFail == true">
+            AND winning_type = 'FAIL'
+        </if>
+        <if test="isFail == false">
+            AND winning_type != 'FAIL'
+        </if>
+        ORDER BY event_winning_sort ASC
+    </select>
+
+    <select id="selectArEventObjectByIdAtWinningProcess" resultType="kr.co.syrup.adreport.web.event.entity.ArEventObjectEntity">
+        SELECT object_sort
+        FROM AR_EVENT_OBJECT
+        WHERE ar_event_object_id = #{arEventObjectId}
+    </select>
+
+    <select id="selectArEventWinningButtonListByArEventWinningIdAtWinningProcess" resultType="kr.co.syrup.adreport.web.event.entity.ArEventWinningButtonEntity">
+        SELECT ar_event_winning_button_id, button_action_type, button_text, button_link_url, button_sort
+        FROM AR_EVENT_WINNING_BUTTON
+        WHERE ar_event_winning_id = #{arEventWinningId}
+    </select>
+
+    <select id="selectArEventObjectByArEventIdAtObjectExposure" resultType="kr.co.syrup.adreport.web.event.entity.ArEventObjectEntity">
+        SELECT  *
+        FROM AR_EVENT_OBJECT
+        WHERE ar_event_id = #{arEventId}
+    </select>
+
+    <select id="selectLastEventLogWinning" resultType="kr.co.syrup.adreport.web.event.entity.EventLogWinningEntity">
+        SELECT id, ar_event_id, event_winning_sort
+        FROM EVENT_LOG_WINNING
+        ORDER BY ID DESC
+        LIMIT 1
+    </select>
+    
+    <select id="countWebEventSmsAuth" resultType="int">
+        SELECT count(sms_auth_code)
+        FROM web_event_sms_auth
+        WHERE 1=1
+        <if test="smsAuthCode != '' and smsAuthCode != null">
+            AND sms_auth_code = #{smsAuthCode}
+        </if>
+        <if test="eventId != '' and eventId != null">
+            AND event_id = #{eventId}
+        </if>
+        <if test="phoneNumber != '' and phoneNumber != null">
+            AND phone_number = #{phoneNumber}
+        </if>
+        <if test="authCode != '' and authCode != null">
+            AND auth_code = #{authCode}
+        </if>
+        <if test="isAuth != '' and isAuth != null">
+            AND is_auth = #{isAuth}
+        </if>
+        <if test="authExpireDate != null">
+            AND auth_expire_date <![CDATA[ >= ]]> now()
+        </if>
+    </select>
+
+    <select id="selectCountEventWinningLogByArEventIdAndPhoneNumberAndCreatedDayNotFail" resultType="int">
+        SELECT count(*)
+        FROM event_log_winning_success
+        WHERE ar_event_id = #{arEventId}
+        AND created_day_impr = #{createdDay}
+        <if test="phoneNumber != '' and phoneNumber != null">
+            AND phone_number = #{phoneNumber}
+        </if>
+        <if test="arEventWinningId > 0">
+            AND ar_event_winning_id = #{arEventWinningId}
+        </if>
+    </select>
+
+    <select id="selectCountEventLogWinningByArEventIdAndPhoneNumberAndWinningType" resultType="int">
+        SELECT count(*)
+        FROM event_log_winning_success
+        WHERE ar_event_id = #{arEventId}
+        <if test="phoneNumber != '' and phoneNumber != null">
+            AND phone_number = #{phoneNumber}
+        </if>
+    </select>
+    
+    <select id="countEventLogAttendButtonByEventIdAndPhoneNumberAndIsToday" resultType="int">
+        SELECT count(*)
+        FROM event_log_attend_button
+        WHERE event_id = #{eventId}
+        AND phone_number = #{phoneNumber}
+        <if test='todayYn == true'>
+            AND DATE(created_date) = DATE(now())
+        </if>
+    </select>
+    
+    <insert id="saveEventLogWinningLimit">
+        INSERT INTO EVENT_LOG_WINNING_LIMIT
+        <set>
+            <if test="arEventId > 0">ar_event_id = #{arEventId},</if>
+            <if test="code != '' and code != null">code = #{code},</if>
+            <if test="codeDesc != '' and codeDesc != null">code_desc = #{codeDesc},</if>
+        </set>
+    </insert>
+
+    <insert id="saveEventLogWinning">
+        INSERT INTO EVENT_LOG_WINNING
+        <set>
+            <if test="eventId != null and eventId != ''">event_id = #{eventId},</if>
+            <if test="arEventId > 0">ar_event_id = #{arEventId},</if>
+            <if test="arEventObjectId > 0">ar_event_object_id = #{arEventObjectId},</if>
+            <if test="arEventWinningId > 0">ar_event_winning_id = #{arEventWinningId},</if>
+            <if test="eventWinningSort > 0">event_winning_sort = #{eventWinningSort},</if>
+            <if test="winningType != null and winningType != ''">winning_type = #{winningType},</if>
+            <if test="attendCode != null and attendCode != ''">attend_code = #{attendCode},</if>
+            <if test="createdDay != null and createdDay != ''">created_day = #{createdDay},</if>
+            <if test="createdHour != null and createdHour != ''">created_hour = #{createdHour},</if>
+            created_date = now(),
+            <if test="createdDayImpr != null and createdDayImpr != ''">created_day_impr = #{createdDayImpr},</if>
+            <if test="createdHourImpr != null and createdHourImpr != ''">created_hour_impr = #{createdHourImpr},</if>
+            <if test="surveySubjectCategoryId != null">survey_subject_category_id = #{surveySubjectCategoryId},</if>
+            <if test="phoneNumber != null and phoneNumber != ''">phone_number = #{phoneNumber},</if>
+        </set>
+        <selectKey resultType="long" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+
+    <insert id="saveEventLogWinningSuccess">
+        INSERT INTO EVENT_LOG_WINNING_SUCCESS
+        <set>
+            <if test="eventId != null and eventId != ''">event_id = #{eventId},</if>
+            <if test="arEventId > 0">ar_event_id = #{arEventId},</if>
+            <if test="arEventObjectId > 0">ar_event_object_id = #{arEventObjectId},</if>
+            <if test="arEventWinningId > 0">ar_event_winning_id = #{arEventWinningId},</if>
+            <if test="eventWinningSort > 0">event_winning_sort = #{eventWinningSort},</if>
+            <if test="winningType != null and winningType != ''">winning_type = #{winningType},</if>
+            <if test="attendCode != null and attendCode != ''">attend_code = #{attendCode},</if>
+            <if test="createdDay != null and createdDay != ''">created_day = #{createdDay},</if>
+            <if test="createdHour != null and createdHour != ''">created_hour = #{createdHour},</if>
+            created_date = now(),
+            <if test="createdDayImpr != null and createdDayImpr != ''">created_day_impr = #{createdDayImpr},</if>
+            <if test="createdHourImpr != null and createdHourImpr != ''">created_hour_impr = #{createdHourImpr},</if>
+            <if test="surveySubjectCategoryId != null">survey_subject_category_id = #{surveySubjectCategoryId},</if>
+            <if test="phoneNumber != null and phoneNumber != ''">phone_number = #{phoneNumber},</if>
+        </set>
+        <selectKey resultType="long" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+
+    <delete id="deleteEventLogWinningLimitByCode">
+        DELETE FROM EVENT_LOG_WINNING_LIMIT where ar_event_id = #{arEventId} AND code = #{code}
+    </delete>
+
+    <insert id="saveEventLogExposureLimit">
+        INSERT INTO EVENT_LOG_EXPOSURE_LIMIT
+        <set>
+            <if test="arEventId > 0">ar_event_id = #{arEventId},</if>
+            <if test="code != '' and code != null">code = #{code},</if>
+            <if test="codeDesc != '' and codeDesc != null">code_desc = #{codeDesc},</if>
+        </set>
+    </insert>
+
+    <insert id="saveArEventNftRepository">
+        INSERT INTO ar_event_nft_repository
+        <set>
+            <if test="arEventNftWalletId > 0">ar_event_nft_wallet_id = #{arEventNftWalletId}, </if>
+            <if test="giveAwayId > 0 and giveAwayId != null">give_away_id = #{giveAwayId}, </if>
+            <if test="arEventNftTokenInfoId > 0 ">ar_event_nft_token_info_id = #{arEventNftTokenInfoId}, </if>
+        </set>
+    </insert>
+
+    <delete id="deleteEventLogExposureByArEventId">
+        DELETE FROM event_log_exposure WHERE ar_event_id = #{arEventId}
+    </delete>
+
+    <delete id="deleteEventLogExposureLimitByArEventId">
+        DELETE FROM event_log_exposure_limit WHERE ar_event_id = #{arEventId}
+    </delete>
+    
+    <update id="updateArEventWinningText">
+        UPDATE ar_event_winning_text
+        <set>
+            <if test="winningText != '' and winningText != null">
+                winning_text = #{winningText},
+            </if>
+            <if test="sort != null and sort > 0 ">
+                sort = #{sort},
+            </if>
+            last_modified_date = now()
+        </set>
+        <where>
+            ar_event_winning_text_id = #{arEventWinningTextId}
+        </where>
+    </update>
+
+    <update id="updateArEventRepositoryButton">
+        UPDATE ar_event_repository_button
+        <set>
+            <if test="repositoryButtonType != '' and repositoryButtonType != null">
+                repository_button_type = #{repositoryButtonType},
+            </if>
+            <if test="repositoryButtonText != '' and repositoryButtonText != null">
+                repository_button_text = #{repositoryButtonText},
+            </if>
+            <if test="repositoryButtonTargetUrl != '' and repositoryButtonTargetUrl != null">
+                repository_button_target_url = #{repositoryButtonTargetUrl},
+            </if>
+            <if test="sort != null and sort > 0 ">
+                sort = #{sort},
+            </if>
+            last_modified_date = now()
+        </set>
+        <where>
+            ar_event_repository_button_id = #{arEventRepositoryButtonId}
+        </where>
+    </update>
+
+    <select id="selectEventGiveAwayDeliveryListAsStampEvent" resultType="kr.co.syrup.adreport.web.event.entity.EventGiveAwayDeliveryEntity">
+        SELECT give_away_id, winning_type
+        FROM event_give_away_delivery
+        WHERE 1=1
+        <if test="phoneNumber != '' and phoneNumber != null">
+            AND phone_number = #{phoneNumber}
+        </if>
+        <if test="attendCode != '' and attendCode != null">
+            AND attend_code = #{attendCode}
+        </if>
+        <if test="eventIdList.size != 0">
+            AND event_id IN
+            <foreach collection="eventIdList" item="eventId" separator="," open="(" close=")">
+                #{eventId}
+            </foreach>
+        </if>
+    </select>
+
+    <insert id="insertEventGiveAwayDelivery" parameterType="kr.co.syrup.adreport.web.event.entity.EventGiveAwayDeliveryEntity">
+        INSERT INTO event_give_away_delivery
+        (event_id, ar_event_winning_id, event_log_winning_id, winning_type, product_name, name, phone_number, zip_code,
+         address, address_detail, give_away_password, attend_code, member_birth, is_receive, tr_id, gifticon_order_no,
+         gifticon_result_cd, created_date, ocb_coupon_id, is_ocb_coupon_read)
+        VALUES
+        (#{eventId}, #{arEventWinningId}, #{eventLogWinningId}, #{winningType}, #{productName}, #{name}, #{phoneNumber}, #{zipCode},
+         #{address}, #{addressDetail}, #{giveAwayPassword}, #{attendCode}, #{memberBirth}, #{isReceive}, #{trId}, #{gifticonOrderNo},
+         #{gifticonResultCd}, now(), #{ocbCouponId}, #{isOcbCouponRead})
+    </insert>
+
+    <select id="getEventLogWinningSuccessLastIndex" resultType="long">
+        SELECT id FROM event_log_winning_success
+        WHERE 1=1
+        AND ar_event_id = #{arEventId}
+        AND event_winning_sort = #{winningSort}
+        <if test="createdDay != '' and createdDay != null">
+            AND created_day_impr = #{createdDay}
+        </if>
+        <if test="createdHour != '' and createdHour != null">
+            AND created_hour_impr = #{createdHour}
+        </if>
+        LIMIT #{limitCount}, 1
+    </select>
+
+    <select id="getEventLogWinningSuccessCount" resultType="int">
+        SELECT count(*) FROM event_log_winning_success
+        WHERE 1=1
+        AND ar_event_id = #{arEventId}
+        AND event_winning_sort = #{winningSort}
+        <if test="createdDay != '' and createdDay != null">
+            AND created_day_impr = #{createdDay}
+        </if>
+        <if test="createdHour != '' and createdHour != null">
+            AND created_hour_impr = #{createdHour}
+        </if>
+    </select>
+
+    <insert id="saveEventGiveAwayDeliveryButtonAddList">
+        INSERT INTO event_give_away_delivery_button_add
+        ( give_away_id, ar_event_winning_button_add_id, field_value, created_date)
+        VALUES
+        <foreach collection="list" item="item" index="idx" separator=",">
+        (
+            #{item.giveAwayId}, #{item.arEventWinningButtonAddId}, #{item.fieldValue}, now()
+        )
+        </foreach>
+    </insert>
+
+    <resultMap id="couponDetailInfoMap" type="kr.co.syrup.adreport.web.event.mybatis.vo.CouponDetailInfoMapVO">
+        <result property="nftCouponId"                  column="nftCouponId"/>
+        <result property="couponCode"                   column="coupon_code"/>
+        <result property="isUse"                        column="is_use"/>
+        <result property="nftImgUrl"                    column="nft_img_url"/>
+        <result property="nftInactiveImgUrl"            column="nft_inactive_img_url"/>
+        <result property="arEventWinningId"             column="ar_event_winning_id"/>
+        <result property="productName"                  column="product_name"/>
+        <result property="repositoryBarcodeViewYn"      column="repository_barcode_view_yn"/>
+        <result property="repositoryRandomViewYn"       column="repository_random_view_yn"/>
+        <result property="repositoryButtonSettingYn"    column="repository_button_setting_yn"/>
+        <result property="etcDescImgSettingYn"          column="etc_desc_img_setting_yn"/>
+        <result property="etcDescImgUrl"                column="etc_desc_img_url"/>
+        <result property="stpPanCouponActiveUrl"        column="stp_pan_coupon_inactive_url"/>
+        <result property="stpPanCouponInActiveUrl"        column="stp_pan_coupon_inactive_url"/>
+        <collection property="couponRepositoryButtonList" javaType="java.util.ArrayList" resultMap="couponRepositoryButtonMap"/>
+    </resultMap>
+    <resultMap id="couponRepositoryButtonMap" type="kr.co.syrup.adreport.web.event.entity.ArEventRepositoryButtonEntity">
+        <result property="repositoryButtonType"      column="repository_button_type"/>
+        <result property="repositoryButtonText"      column="repository_button_text"/>
+        <result property="repositoryButtonTargetUrl" column="repository_button_target_url"/>
+    </resultMap>
+
+    <select id="selectCouponDetailInfo" resultMap="couponDetailInfoMap">
+        SELECT B.id as nftCouponId, B.nft_coupon_id as coupon_code, A.is_use, C.nft_img_url, C.nft_inactive_img_url, C.ar_event_winning_id, C.product_name, C.stp_pan_coupon_inactive_url, C.stp_pan_coupon_active_url,
+               C.repository_barcode_view_yn, C.repository_random_view_yn, C.repository_button_setting_yn, C.etc_desc_img_setting_yn, C.etc_desc_img_url, D.*
+        FROM ar_event_nft_coupon_repository A
+        INNER JOIN ar_event_nft_coupon_info B
+        ON A.nft_coupon_info_id = B.id
+        INNER JOIN ar_event_winning C
+        ON B.ar_event_winning_id = C.ar_event_winning_id
+        LEFT OUTER JOIN ar_event_repository_button D
+        ON D.ar_event_winning_id = C.ar_event_winning_id
+        WHERE 1=1
+        AND A.ar_nft_coupon_repository_id = #{id}
+    </select>
+
+    <select id="selectEventIdArEventWinningIdByCouponRepositoryId" resultType="map">
+        SELECT D.event_id, B.ar_event_winning_id
+        FROM ar_event_nft_coupon_repository A
+        INNER JOIN ar_event_nft_coupon_info B
+        ON A.nft_coupon_info_id = B.id
+        INNER JOIN ar_event_winning C
+        ON B.ar_event_winning_id = C.ar_event_winning_id
+        INNER JOIN ar_event D
+        ON D.ar_event_id = B.ar_event_id
+        WHERE 1=1
+        AND A.ar_nft_coupon_repository_id = #{id}
+    </select>
+
+    <select id="selectEventIdArEventWinningIdByCouponRepositoryIdAtStamp" resultType="map">
+        SELECT D.event_id, B.ar_event_winning_id
+        FROM ar_event_nft_coupon_repository A
+        INNER JOIN ar_event_nft_coupon_info B
+        ON A.nft_coupon_info_id = B.id
+        INNER JOIN ar_event_winning C
+        ON B.ar_event_winning_id = C.ar_event_winning_id
+        INNER JOIN stamp_event_main D
+        ON D.stp_id = B.stp_id
+        WHERE 1=1
+        AND A.ar_nft_coupon_repository_id = #{id}
+    </select>
+
+    <update id="updateArEvent" parameterType="kr.co.syrup.adreport.web.event.mybatis.vo.ArEventUpdateVO">
+        UPDATE ar_event
+        SET
+            event_logical_type = #{eventLogicalType},
+            location_setting_yn = #{locationSettingYn},
+            ar_attend_condition_all_yn = #{arAttendConditionAllYn},
+            ar_attend_condition_special_location_yn = #{arAttendConditionSpecialLocationYn},
+            ar_attend_condition_hourly_yn = #{arAttendConditionHourlyYn},
+            ar_attend_condition_code_yn = #{arAttendConditionCodeYn},
+            ar_attend_term_type = #{arAttendTermType},
+            ar_attend_term_limit_type = #{arAttendTermLimitType},
+            ar_attend_term_limit_count = #{arAttendTermLimitCount},
+            pid = #{pid},
+            location_message_attend = #{locationMessageAttend},
+            location_message_not_attend = #{locationMessageNotAttend},
+            attend_hour_mis_message = #{attendHourMisMessage},
+            attend_code_mis_match_message = #{attendCodeMisMatchMessage},
+            ar_bg_image = #{arBgImage},
+            ar_skin_image = #{arSkinImage},
+            duplicate_winning_type = #{duplicateWinningType},
+            duplicate_winning_limit_type = #{duplicateWinningLimitType},
+            duplicate_winning_count = #{duplicateWinningCount},
+            winning_password_yn = #{winningPasswordYn},
+            attend_code_reg_type = #{attendCodeRegType},
+            attend_code_count = #{attendCodeCount},
+            attend_code_digit = #{attendCodeDigit},
+            information_provision_agreement_text_setting = #{informationProvisionAgreementTextSetting},
+            information_provision_recipient = #{informationProvisionRecipient},
+            information_provision_consignor = #{informationProvisionConsignor},
+            information_provision_purpose_use = #{informationProvisionPurposeUse},
+            attend_condition_mdn_yn = #{attendConditionMdnYn},
+            attend_mdn_mis_message = #{attendMdnMisMessage},
+            attend_condition_target_yn = #{attendConditionTargetYn},
+            attend_target_mis_message = #{attendTargetMisMessage},
+            subject_target_move_yn = #{subjectTargetMoveYn},
+            talk_icon_img_url = #{talkIconImgUrl},
+            talk_survey_end_text = #{talkSurveyEndText},
+            survey_end_button_type = #{surveyEndButtonType},
+            survey_end_button_text = #{surveyEndButtonText},
+            quiz_retry_yn = #{quizRetryYn},
+            winning_search_type = #{winningSearchType},
+            sms_auth_use_yn = #{smsAuthUseYn},
+            event_exposure_type = #{eventExposureType},
+            ocb_point_save_type = #{ocbPointSaveType},
+            loading_img_yn = #{loadingImgYn},
+            loading_img_url = #{loadingImgUrl}
+        WHERE ar_event_id = #{arEventId}
+    </update>
+
+    <select id="selectArEventNftCouponInfJoinArEventWinningById" resultType="kr.co.syrup.adreport.web.event.dto.response.ArEventNftCouponInfoResDto">
+        SELECT A.*, B.nft_img_url, B.nft_inactive_img_url, B.product_name, B.stp_pan_coupon_active_url, B.stp_pan_coupon_inactive_url
+        FROM ar_event_nft_coupon_info A
+                 INNER JOIN ar_event_winning B
+                            ON A.ar_event_winning_id = B.ar_event_winning_id
+        WHERE A.id = #{id}
+    </select>
+
+   <select id="selectArEventNftCouponRepositoryEntityJoinArEventWInningById" resultType="kr.co.syrup.adreport.web.event.dto.response.ArEventCouponDetailInfoResDto">
+        SELECT A.*, B.*, C.*
+        FROM ar_event_nft_coupon_repository A
+                 INNER JOIN ar_event_nft_coupon_info B
+                            ON A.nft_coupon_info_id = B.id
+                 INNER JOIN ar_event_winning C
+                            ON B.ar_event_winning_id = C.ar_event_winning_id
+        WHERE A.ar_nft_coupon_repository_id = #{id}
+    </select>
+
+    <select id="selectEventIdByArEventWinningId" resultType="string">
+        SELECT B.event_id
+        FROM ar_event_winning A
+        INNER JOIN ar_event B
+        ON A.ar_event_id = B.ar_event_id
+        WHERE 1=1
+        AND A.ar_event_winning_id = #{arEventWinningId}
+    </select>
+
+    <select id="selectArEventWinningListByStpIdAndStampAttendSortLogCount" resultType="kr.co.syrup.adreport.web.event.entity.ArEventWinningEntity">
+        SELECT ar_event_winning_id, ar_event_id, stp_id, object_mapping_type, object_mapping_number, winning_type, winning_time_type,
+               start_winning_time, end_winning_time, hour_winning_number, total_winning_number, event_winning_sort, product_name,
+               day_winning_number, attend_code_winning_type, attend_code_limit_type, attend_code_winning_count, stp_winning_popup_img_url,
+               winning_percent, winning_image_url, subscription_yn, auto_winning_yn, ocb_coupon_id, user_winning_type, user_winning_limit_type, user_winning_limit_count
+        FROM ar_event_winning
+        WHERE stp_id = #{stpId}
+        AND object_mapping_number = #{winningAttemptOrder}
+        ORDER BY event_winning_sort ASC
+    </select>
+    
+    <insert id="insertSodarEventUpdateHistory">
+        INSERT INTO sodar_event_update_history (event_id, json_str, created_by) VALUES (#{eventId}, #{jsonStr}, #{createdBy})
+    </insert>
+
+    <insert id="insertArEventNftCouponByTemp">
+        INSERT INTO ar_event_nft_coupon_info
+        (ar_event_id, stp_id, ar_event_winning_id, nft_coupon_id, is_payed, upload_excel_file_name)
+        SELECT #{arEventId}, #{stpId}, #{arEventWinningId}, coupon_code,  0, #{uploadFileName} FROM ar_event_nft_coupon_info_temp
+        WHERE temp_seq = #{tempSeq}
+    </insert>
+
+    <insert id="insertArEventNftTokenByTemp">
+        INSERT INTO ar_event_nft_token_info
+        (ar_event_id, stp_id, ar_event_winning_id, nft_token_id, is_payed, upload_excel_file_name)
+        SELECT #{arEventId}, #{stpId}, #{arEventWinningId}, coupon_code,  0, #{uploadFileName} FROM ar_event_nft_coupon_info_temp
+        WHERE temp_seq = #{tempSeq}
+    </insert>
+
+    <delete id="deleteArEventNftCouponInfoTempBySeq">
+        DELETE FROM ar_event_nft_coupon_info_temp WHERE temp_seq = #{tempSeq}
+    </delete>
+
+    <delete id="deleteArEventNftCouponInfoByLegacy">
+        DELETE FROM ar_event_nft_coupon_info WHERE ar_event_id = 0 AND stp_id = 0
+    </delete>
+
+    <delete id="deleteArEventCouponRepositoryByEventId">
+        DELETE FROM ar_event_nft_coupon_repository Z
+        WHERE Z.give_away_id IN
+        (
+                  SELECT Z.give_away_id FROM (
+                         SELECT A.give_away_id FROM event_give_away_delivery A
+                         INNER JOIN ar_event_nft_coupon_repository B
+                         ON A.give_away_id = B.give_away_id
+                         WHERE 1=1
+                         AND A.event_id = #{eventId}
+                 ) Z
+        )
+    </delete>
+
+    <delete id="deleteArEventNftCouponInfoByEventIdx">
+        DELETE FROM ar_event_nft_coupon_info
+        <if test="isStampEvent == false">
+            WHERE ar_event_id = #{eventIdx}
+        </if>
+        <if test="isStampEvent == true">
+            WHERE stp_id = #{eventIdx}
+        </if>
+    </delete>
+</mapper>

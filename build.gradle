@@ -1,0 +1,272 @@
+buildscript {
+    repositories {
+        // SKP Repository
+//        maven { url "http://nexus.skplanet.com/repository/maven-public/" }
+//        maven { url "http://nexus.skplanet.com/repository/skp-3rd-party/" }
+//        maven { url "http://nexus.skplanet.com/repository/maven-snapshots/" }
+        // oracle jdbc repository
+        maven { url "https://code.lds.org/nexus/content/groups/main-repo" }
+        // for JAI
+        maven { url "https://repository.jboss.org/nexus/content/repositories/public" }
+        mavenCentral()
+        jcenter()
+        //mavenLocal()
+
+    }
+}
+
+plugins {
+    id 'org.springframework.boot' version '2.5.14'
+    id 'io.spring.dependency-management' version '1.0.14.RELEASE'
+    id 'eclipse-wtp'
+    id 'eclipse'
+    id 'java'
+    id 'war'
+    id 'idea'
+    id 'org.hidetake.ssh' version '2.8.0'
+}
+
+project.ext {
+    warBaseName = 'adreport-be'
+    warVersion = '0.0.1-SNAPSHOT'
+    javaVersion = 1.8
+    springVersion = '5.3.18'
+    encoding = 'UTF-8'
+    slf4jVersion = '1.7.22'
+    logbackVersion = '1.2.11'
+    jclOverSlf4jVersion='1.7.22'
+    log4j2Version = '2.5'
+    commonsLogging = '1.2'
+//    rootProject.projectDir = '/Library/Local-Repository'
+}
+
+allprojects {
+    repositories {
+        mavenCentral()
+        jcenter()
+        mavenLocal()
+        flatDir(name: "projectRepo", dirs: "${rootProject.projectDir}/libs-repo")
+    }
+}
+
+buildDir = 'build'
+
+sourceCompatibility = javaVersion
+targetCompatibility = javaVersion
+
+compileJava {
+    options.encoding = 'UTF-8'
+    options.compilerArgs = ["-Xlint:unchecked", "-Xlint:deprecation"]
+}
+
+compileTestJava {
+    options.encoding = 'UTF-8'
+    options.compilerArgs = ["-Xlint:unchecked", "-Xlint:deprecation"]
+}
+
+sourceSets {
+    main {
+        java.srcDirs = ['src/main/java']
+        resources.srcDirs = ['src/main/resources']
+    }
+
+    test {
+        java.srcDirs = ['src/test/java']
+        resources.srcDirs = ['src/test/resources']
+    }
+}
+
+war {
+    enabled = true
+    baseName = project.warBaseName
+    version = project.warVersion
+    exclude("build/**")
+}
+
+configurations {
+    providedRuntime
+    all*.exclude group: 'commonXxxrs-logging', module: 'commons-logging'
+}
+
+/*
+compileQuerydsl {
+    options.annotationProcessorPath = configurations.querydsl
+}
+*/
+
+dependencies {
+    providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+    compileOnly('org.springframework.boot:spring-boot-configuration-processor')
+
+    compile('org.springframework.boot:spring-boot-starter-web') {
+        exclude module: 'spring-boot-starter-logging'
+    }
+    compile("org.springframework.boot:spring-boot-starter-jdbc") {
+        exclude module: 'spring-boot-starter-logging'
+    }
+    compile('org.springframework.boot:spring-boot-starter-security') {
+        exclude module: 'spring-boot-starter-logging'
+    }
+    compile ('org.springframework.boot:spring-boot-starter-aop') {
+        exclude module: 'spring-boot-starter-logging'
+    }
+    compile("org.springframework.boot:spring-boot-devtools") {
+        exclude module: 'spring-boot-starter-logging'
+    }
+    compile("org.springframework.boot:spring-boot-starter-data-jpa") {
+        exclude module: 'spring-boot-starter-logging'
+    }
+
+    compileOnly 'org.projectlombok:lombok'
+    testCompileOnly 'org.projectlombok:lombok'
+    testAnnotationProcessor 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    compile("org.slf4j:slf4j-api:${slf4jVersion}")
+    compile group: 'ch.qos.logback', name: 'logback-classic', version: "${logbackVersion}"
+    compile group: 'org.slf4j', name: 'jcl-over-slf4j', version: "${jclOverSlf4jVersion}"
+
+    compile group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '2.7.3'
+    compile group: 'com.mashape.unirest', name: 'unirest-java', version: '1.4.9'
+    compile group: 'com.thoughtworks.xstream', name: 'xstream', version: '1.4.20'
+
+    compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-hibernate4', version: '2.8.6'
+    // 날짜 시간 처리 Date Time Format
+    compile('com.fasterxml.jackson.datatype:jackson-datatype-jsr310')
+    compile('com.fasterxml.jackson.datatype:jackson-datatype-jdk8')
+    compile('joda-time:joda-time:2.10.1')
+
+    compile group: 'org.bgee.log4jdbc-log4j2', name: 'log4jdbc-log4j2-jdbc4.1', version: '1.16'
+    implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.28'
+
+    //이미지관련
+    //compile group: 'org.im4java', name: 'im4java', version: '1.4.0'
+    compile group: 'commons-io', name: 'commons-io', version: '2.7'
+    compile group: 'commons-lang', name: 'commons-lang', version: '2.6'
+
+    // https://mvnrepository.com/artifact/io.springfox/springfox-swagger2
+    compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
+    compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
+/*
+    compile group: 'com.mangofactory', name: 'swagger-springmvc', version: '1.0.2'
+    compile group: 'org.webjars', name: 'swagger-ui', version: '2.1.8-M1'
+*/
+
+    //compile('org.springframework.boot:spring-boot-starter-thymeleaf')
+    compile('javax.servlet:jstl')
+    compile('org.apache.tomcat.embed:tomcat-embed-jasper')
+
+    compile 'javax.validation:validation-api:2.0.1.Final'
+
+    // https://github.com/kevinsawicki/http-request
+    compile ('com.github.kevinsawicki:http-request:6.0')
+
+    implementation group: 'org.glassfish.jaxb', name: 'jaxb-runtime', version: '3.0.0'
+
+    compile 'org.modelmapper:modelmapper:2.3.0'
+
+    compile 'org.apache.poi:poi:4.1.2'
+
+    // https://mvnrepository.com/artifact/org.apache.commons/commons-compress
+    implementation group: 'org.apache.commons', name: 'commons-compress', version: '1.21'
+
+    compile 'org.apache.poi:poi-ooxml:4.1.2'
+
+    compile 'org.codehaus.jackson:jackson-mapper-asl:1.9.13'
+
+    compile 'com.google.code.gson:gson:2.8.9'
+
+    compile('org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.2')
+
+    implementation group: 'org.mybatis', name: 'mybatis-spring', version: '2.0.7'
+
+    implementation group: 'org.mybatis', name: 'mybatis', version: '3.5.10'
+
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.14.1'
+
+//    compile("com.fasterxml.jackson.core:jackson-databind")
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.14.1'
+
+
+    implementation 'net.javacrumbs.shedlock:shedlock-spring:2.2.0'
+    implementation 'net.javacrumbs.shedlock:shedlock-provider-jdbc-template:2.1.0'
+
+    // https://mvnrepository.com/artifact/org.codehaus.jettison/jettison
+    implementation group: 'org.codehaus.jettison', name: 'jettison', version: '1.5.2'
+
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-batch', version: '2.3.9.RELEASE'
+
+    implementation 'com.squareup.okhttp3:okhttp:4.9.3'
+
+    implementation group: 'com.jcraft', name: 'jsch', version: '0.1.55'
+
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-cache', version: '2.6.0'
+
+    // https://mvnrepository.com/artifact/com.github.ben-manes.caffeine/caffeine
+    // https://mvnrepository.com/artifact/com.github.ben-manes.caffeine/caffeine
+    implementation 'com.github.ben-manes.caffeine:caffeine'
+
+    implementation group: 'com.zaxxer', name: 'HikariCP', version: '4.0.3'
+
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-actuator
+//    implementation "org.springframework.boot:spring-boot-starter-actuator:${springBootVersion}"
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: '2.5.14'
+
+    implementation("org.hibernate.validator:hibernate-validator")
+
+    implementation("org.apache.tomcat:tomcat-jdbc")
+
+    implementation group: 'com.navercorp.lucy', name: 'lucy-xss-servlet', version: '2.0.0'
+
+    // https://mvnrepository.com/artifact/org.springframework.security/spring-security-core
+    implementation group: 'org.springframework.security', name: 'spring-security-core', version: '5.7.5'
+
+    implementation 'junit:junit:4.12'
+
+    implementation name: 'scpdb'
+
+    // https://mvnrepository.com/artifact/org.mariadb.jdbc/mariadb-java-client
+    implementation 'org.mariadb.jdbc:mariadb-java-client:2.2.0'
+
+    //JWT
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+    implementation 'io.jsonwebtoken:jjwt-impl:0.11.5'
+    implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+
+}
+
+test {
+    useJUnitPlatform()
+}
+
+eclipse {
+    classpath {
+        containers.remove('org.eclipse.jdt.launching.JRE_CONTAINER')
+        containers 'org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8'
+    }
+
+    wtp {
+        // .settings 폴더의 org.eclipse.wst.common.component 파일을 설정한다.
+        component {
+            //contextPath = project.name // 원하는 contextPath 지정. 단, 빈 컨텍스트패스는 "/" 로 지정
+            contextPath = "" // 원하는 contextPath 지정. 단, 빈 컨텍스트패스는 "/" 로 지정
+        }
+        // .settings 폴더의 org.eclipse.wst.common.project.facet.core.xml 파일을 설정한다.
+        facet {
+            facet name: "jst.web", version: "2.5" // Servlet Spec Version 지정
+            facet name: "jst.java", version: "${javaVersion}" // Java Version 지정, 1.7 ...
+            facet name: 'wst.jsdt.web', version: '1.0'   // Javascript 지정, 1.0
+        }
+    }
+}
+
+/*
+task initSrc << {
+    project.sourceSets*.allSource.srcDirTrees.flatten().dir.each {
+        dir -> dir.mkdirs()
+    }
+}
+*/

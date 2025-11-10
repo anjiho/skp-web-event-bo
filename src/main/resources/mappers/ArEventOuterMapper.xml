@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="kr.co.syrup.adreport.web.event.mybatis.mapper.ArEventOuterMapper">
+
+    <select id="countByCommonLogPersonAgreeByEventNameAndAgreeId" resultType="int">
+        SELECT count(*) FROM common_log_person_agree
+        WHERE event_name = #{eventName}
+
+            <if test="agreeId != '' and agreeId != null">
+                AND agree_id = #{agreeId}
+            </if>
+            <if test="phoneNumber != '' and phoneNumber != null">
+                AND phone_number = #{phoneNumber}
+            </if>
+    </select>
+</mapper>

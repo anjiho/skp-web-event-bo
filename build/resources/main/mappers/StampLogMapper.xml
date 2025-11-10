@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="kr.co.syrup.adreport.stamp.event.mybatis.mapper.StampLogMapper">
+
+    <insert id="insertStampEventLogWinning">
+        INSERT INTO stamp_event_log_winning
+            (
+             stp_id, stp_pan_tr_id, ar_event_winning_id, event_winning_sort, winning_type, attend_type, attend_value,
+             stp_winning_type, stp_give_away_id, created_day, created_hour, created_day_impr, created_hour_impr
+            )
+        VALUES
+            (
+             #{stpId}, #{stpPanTrId}, #{arEventWinningId}, #{eventWinningSort}, #{winningType}, #{attendType}, #{attendValue},
+             #{stpWinningType}, 0, #{createdDay}, #{createdHour}, #{createdDayImpr}, #{createdHourImpr}
+            )
+        <selectKey resultType="long" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+
+    <insert id="insertStampEventLogWinningSuccess">
+        INSERT INTO stamp_event_log_winning_success
+        (
+        stp_id, stp_pan_tr_id, ar_event_winning_id, event_winning_sort, winning_type, attend_type, attend_value,
+        stp_winning_type, stp_give_away_id, created_day, created_hour, created_day_impr, created_hour_impr
+        )
+        VALUES
+        (
+        #{stpId}, #{stpPanTrId}, #{arEventWinningId}, #{eventWinningSort}, #{winningType}, #{attendType}, #{attendValue},
+        #{stpWinningType}, 0, #{createdDay}, #{createdHour}, #{createdDayImpr}, #{createdHourImpr}
+        )
+        <selectKey resultType="long" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+
+    <select id="countStampEventLogWinning" resultType="int">
+        SELECT count(*) FROM stamp_event_log_winning_success
+        WHERE stp_id = #{stpId}
+        <if test="attendType != null and attendValue != ''">
+            AND attend_type = #{attendType}
+        </if>
+        <if test="eventWinningSort > 0">
+            AND event_winning_sort = #{eventWinningSort}
+        </if>
+        <if test="createdDayImpr != null and createdDayImpr != ''">
+            AND created_day_impr = #{createdDayImpr}
+        </if>
+        <if test="createdHourImpr != null and createdHourImpr != ''">
+            AND created_hour_impr = #{createdHourImpr}
+        </if>
+        <if test="attendValue != '' and attendValue != null">
+            AND attend_value = #{attendValue}
+        </if>
+    </select>
+
+    <insert id="saveStampEventLogWinningLimit">
+        INSERT INTO stamp_event_log_winning_limit
+        <set>
+            <if test="stpId > 0">stp_id = #{stpId},</if>
+            <if test="code != '' and code != null">code = #{code},</if>
+            <if test="codeDesc != '' and codeDesc != null">code_desc = #{codeDesc},</if>
+        </set>
+    </insert>
+
+    <select id="selectCountStampEventLogWinningAtConcurrency" resultType="int">
+        SELECT count(*)
+        FROM stamp_event_log_winning_success
+        WHERE 1=1
+        AND stp_id = #{stpId}
+        AND event_winning_sort = #{eventWiningSort}
+        AND id <![CDATA[ <  #{id} ]]>
+        <if test="createdDayImpr != '' and createdDayImpr != null">
+            AND created_day_impr = #{createdDayImpr}
+        </if>
+        <if test="createdHourImpr != '' and createdHourImpr != null">
+            AND created_hour_impr = #{createdHourImpr}
+        </if>
+    </select>
+
+    <update id="updateStampEventWinningLogFail">
+        UPDATE stamp_event_log_winning
+        SET winning_type = 'FAIL'
+        WHERE id = #{id}
+    </update>
+
+    <select id="selectCountStampEventWinningLogSuccessByEventLogWinningId" resultType="int">
+        SELECT count(*)
+        FROM stamp_event_give_away_delivery
+        WHERE 1=1
+        AND stp_id = #{stpId}
+        AND stp_event_log_winning_id = #{eventLogWinningId}
+    </select>
+
+    <select id="selectCountStampGiveAwayDeliveryPayedGificon" resultType="int">
+        SELECT count(*)
+        FROM stamp_event_give_away_delivery
+        WHERE 1=1
+        AND winning_type = 'GIFTICON'
+        AND gifticon_result_cd = '00'
+        AND event_id = #{eventId}
+        AND ar_event_winning_id = #{arEventWinningId}
+        AND phone_number = #{phoneNumber}
+        AND gifticon_result_cd = #{gifticonResultCd}
+    </select>
+
+    <select id="selectCountStampGiveAwayDeliveryByEventIdAndSearchValueAndIsToady" resultType="int">
+        SELECT count(*)
+        FROM stamp_event_give_away_delivery
+        WHERE event_id = #{eventId}
+        <if test="authCondition == 'MDN'">
+            AND phone_number = #{searchValue}
+        </if>
+        <if test="authCondition == 'ATTEND'">
+            AND attend_code = #{searchValue}
+        </if>
+        <if test="isToday != null">
+            <if test="isToday == true">
+                DATE(created_date) = DATE(now())
+            </if>
+        </if>
+    </select>
+
+    <select id="selectStampEventLogWinningSuccessLastIndex" resultType="long">
+        SELECT id FROM stamp_event_log_winning_success
+        WHERE 1=1
+        AND stp_id = #{stpId}
+        AND event_winning_sort = #{winningSort}
+        <if test="createdDay != '' and createdDay != null">
+            AND created_day_impr = #{createdDay}
+        </if>
+        <if test="createdHour != '' and createdHour != null">
+            AND created_hour_impr = #{createdHour}
+        </if>
+        LIMIT #{limitCount}, 1
+    </select>
+
+    <select id="selectStampEventLogWinningSuccessCount" resultType="int">
+        SELECT count(*) FROM stamp_event_log_winning_success
+        WHERE 1=1
+        AND stp_id = #{stpId}
+        AND event_winning_sort = #{winningSort}
+        <if test="createdDay != '' and createdDay != null">
+            AND created_day_impr = #{createdDay}
+        </if>
+        <if test="createdHour != '' and createdHour != null">
+            AND created_hour_impr = #{createdHour}
+        </if>
+    </select>
+
+    <insert id="insertStampEventLogConnect">
+        INSERT INTO stamp_event_log_connect
+        (stp_id, connect_type, created_hour, created_day)
+        VALUES
+        (#{stpId}, #{connectType}, HOUR(now()), DATE(now()))
+    </insert>
+
+    <select id="selectStampAccAttendValueGroupBy" resultType="string">
+        SELECT attend_value FROM stamp_event_log_tr WHERE event_id = #{eventId} GROUP BY attend_value
+    </select>
+
+    <select id="selectStampTrAccYn" resultType="kr.co.syrup.adreport.stamp.event.mybatis.vo.StampTrAccYnResVO">
+        SELECT Z.*,
+               CASE
+                   WHEN (ZZ.stp_pan_tr_id = '') THEN 'X'
+                   WHEN (ZZ.stp_pan_tr_id != '') THEN 'O'
+                   ELSE 'X'
+                   END as trAccStatus
+        FROM
+            (
+                SELECT stp_pan_tr_id, stp_tr_txt, stp_tr_sort FROM stamp_event_pan_tr
+                WHERE stp_pan_id = (SELECT stp_pan_id FROM stamp_event_pan WHERE stp_id = #{stpId})
+            ) as Z
+                LEFT OUTER JOIN
+            (
+                SELECT stp_pan_tr_id FROM stamp_event_log_tr WHERE stp_id = #{stpId}
+                                                               <if test="attendValue != '' and attendValue != null">
+                                                                   AND attend_value = #{attendValue}
+                                                               </if>
+            ) as ZZ
+            ON Z.stp_pan_tr_id = ZZ.stp_pan_tr_id
+            <if test="attendValue == null">
+                GROUP BY Z.stp_pan_tr_id
+            </if>
+    </select>
+
+    <select id="selectStampEventLogWinningSuccessByStpPanTrId" resultType="kr.co.syrup.adreport.stamp.event.model.StampEventLogWinningModel">
+        SELECT * FROM stamp_event_log_winning_success WHERE stp_pan_tr_id = #{stpPanTrId} AND attend_value = #{attendValue}
+    </select>
+    
+    <select id="selectCountStampEventGiveAwayDeliveryByWinningId" resultType="int">
+        SELECT count(*)
+        FROM stamp_event_give_away_delivery
+        WHERE stp_id = #{stpId}
+        AND stp_pan_tr_id = {stpPanTrId}
+        <if test="attendAuthCondition != '' and attendAuthCondition != null">
+            <if test="attendAuthCondition == 'MDN">
+                AND phone_number = #{attendValue}
+            </if>
+            <if test="attendAuthCondition == 'ATTEND">
+                AND attend_code = #{attendValue}
+            </if>
+        </if>
+    </select>
+
+    <select id="selectCountStampWinningProduct" resultType="kr.co.syrup.adreport.stamp.event.mybatis.vo.StampAccWinningProductResVO">
+        SELECT Z.product_name, IFNULL(ZZ.cnt, 0) as cnt FROM
+            (
+                SELECT event_winning_sort, product_name
+                FROM ar_event_winning
+                WHERE stp_id = #{stpId}
+                AND winning_type != 'FAIL'
+            ) Z
+                LEFT OUTER JOIN
+            (
+                SELECT count(*) as cnt, B.event_winning_sort  FROM stamp_event_give_away_delivery A
+                INNER JOIN stamp_event_log_winning_success B
+                ON A.stp_event_log_winning_id = B.id
+                WHERE 1=1
+                AND A.stp_id = #{stpId}
+                <if test="attendAuthCondition != '' and attendAuthCondition != null">
+                    <if test="attendAuthCondition == 'MDN'">
+                        AND A.phone_number = #{attendValue}
+                    </if>
+                    <if test="attendAuthCondition == 'ATTEND'">
+                        AND A.attend_code = #{attendValue}
+                    </if>
+                </if>
+
+            ) ZZ
+            ON Z.event_winning_sort = ZZ.event_winning_sort
+    </select>
+
+    <select id="selectUnionAllStampTrAndWinningDelivery" resultType="kr.co.syrup.adreport.stamp.event.mybatis.vo.StampTrAccYnResVO">
+        SELECT Z.stp_tr_txt,
+               CASE
+                   WHEN (ZZ.stp_pan_tr_id = '') THEN 'X'
+                   WHEN (ZZ.stp_pan_tr_id != '') THEN 'O'
+                   ELSE 'X'
+                   END as trStatus
+        FROM
+            (
+                SELECT stp_pan_tr_id, stp_tr_txt
+                FROM stamp_event_pan_tr
+                WHERE stp_pan_id = (SELECT stp_pan_id FROM stamp_event_pan WHERE stp_id = #{stpId})
+            ) as Z
+            LEFT OUTER JOIN
+            (
+                SELECT stp_pan_tr_id FROM stamp_event_log_tr WHERE stp_id = #{stpId} AND attend_value = #{attendValue}
+            ) as ZZ
+        ON Z.stp_pan_tr_id = ZZ.stp_pan_tr_id
+
+        UNION ALL
+
+        SELECT Z.product_name, IFNULL(ZZ.cnt, 0) as cnt FROM
+            (
+                SELECT event_winning_sort, product_name
+                FROM ar_event_winning
+                WHERE stp_id = #{stpId}
+                AND winning_type != 'FAIL'
+            ) Z
+            LEFT OUTER JOIN
+            (
+                SELECT count(*) as cnt, B.event_winning_sort  FROM stamp_event_give_away_delivery A
+                                                              INNER JOIN stamp_event_log_winning_success B
+                                                              ON A.stp_event_log_winning_id = B.id
+                WHERE 1=1
+                AND A.stp_id = #{stpId}
+                <if test="attendAuthCondition != '' and attendAuthCondition != null">
+                    <if test="attendAuthCondition == 'MDN'">
+                        AND A.phone_number = #{attendValue}
+                    </if>
+                    <if test="attendAuthCondition == 'ATTEND'">
+                        AND A.attend_code = #{attendValue}
+                    </if>
+                </if>
+                GROUP BY B.event_winning_sort
+            ) ZZ
+        ON Z.event_winning_sort = ZZ.event_winning_sort
+    </select>
+
+    <select id="selectStampTrLogLastSortByStpId" resultType="int">
+        SELECT stp_tr_sort FROM stamp_event_log_tr
+        WHERE stp_id = #{stpId}
+        AND stp_attend_auth_condition = #{attendType}
+        AND attend_value = #{attendValue}
+        ORDER BY id DESC LIMIT 1
+    </select>
+
+    <select id="selectStampTrLogByStpPanId" resultType="kr.co.syrup.adreport.stamp.event.mybatis.vo.StampEventLogTrVO">
+        SELECT
+               id as stpEventLogTrId,
+               id,
+               stp_id,
+               event_id,
+               stp_tr_pid,
+               stp_pan_id,
+               stp_pan_tr_id,
+               stp_tr_sort,
+               stp_attend_auth_condition,
+               ar_event_winning_id,
+               attend_value,
+               is_click
+        FROM stamp_event_log_tr
+        WHERE stp_pan_id = #{stpPanId}
+          AND stp_attend_auth_condition = #{attendType}
+          AND attend_value = #{attendValue}
+        <if test='stpAttendSortSettingYn != "" and stpAttendSortSettingYn != null'>
+            <if test='stpAttendSortSettingYn == "Y"'>
+                ORDER BY id ASC
+            </if>
+            <if test='stpAttendSortSettingYn == "N"'>
+                ORDER BY stp_tr_sort ASC
+            </if>
+        </if>
+
+        <if test='stpAttendSortSettingYn == null or stpAttendSortSettingYn == ""'>
+            ORDER BY stp_tr_sort ASC
+        </if>
+    </select>
+</mapper>

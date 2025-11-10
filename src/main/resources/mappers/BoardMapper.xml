@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="kr.co.syrup.adreport.controller.rest.local.test.BoardMapper">
+
+    <select id="selectBoardList" resultType="kr.co.syrup.adreport.controller.rest.local.test.BoardInfoDto">
+        select * from board_info order by idx desc
+    </select>
+
+    <select id="selectBoardListByPaging" resultType="kr.co.syrup.adreport.controller.rest.local.test.BoardInfoDto">
+        select * from board_info
+        order by idx desc
+        limit #{start}, #{size}
+    </select>
+
+    <select id="countByBoardTotal" resultType="long">
+        select count(*) from board_info
+    </select>
+
+    <select id="selectBoardById" resultType="kr.co.syrup.adreport.controller.rest.local.test.BoardInfoDto">
+        select * from board_info where idx = #{idx}
+    </select>
+
+    <insert id="saveBoard">
+        insert into board_info (title, contents) values (#{title}, #{contents})
+    </insert>
+
+    <delete id="deleteBoardByIdxList" parameterType="int">
+        delete from board_info
+        <where>
+            idx in
+            <foreach collection="list" item="idx" separator="," open="(" close=")">
+                #{idx}
+            </foreach>
+        </where>
+    </delete>
+
+    <update id="modifyBoard">
+        update board_info
+        <set>
+            <if test="title != '' and title != null">
+                title = #{title},
+            </if>
+            <if test="contents != '' and contents != null">
+                contents = #{contents},
+            </if>
+        </set>
+        <where>
+            idx = #{idx}
+        </where>
+    </update>
+</mapper>

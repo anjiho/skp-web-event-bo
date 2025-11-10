@@ -1,0 +1,181 @@
+body{
+    margin: 0;
+    padding: 0;
+    border: 0;
+    overflow: hidden;
+    height: 100%;
+    max-height: 100%;
+}
+
+#framecontent{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 200px; /*Width of frame div*/
+    height: 100%;
+    overflow: hidden; /*Disable scrollbars. Set to "scroll" to enable*/
+    background: white;
+    color: white;
+}
+
+#maincontent{
+    position: fixed;
+    top: 0;
+    left: 200px; /*Set left value to WidthOfFrameDiv*/
+    right: 0;
+    bottom: 0;
+    overflow: auto;
+    background: #fff;
+}
+
+.innertube{
+    margin: 15px; /*Margins for inner DIV inside each DIV (to provide padding)*/
+}
+
+.wireframemenu{
+    border: 1px solid #C0C0C0;
+    background-color: white;
+    border-bottom-width: 0;
+    width: 170px;
+    float: left;
+}
+
+* html .wireframemenu{ /*IE only rule. Original menu width minus all left/right paddings */
+    width: 164px;
+}
+
+.wireframemenu ul{
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+}
+
+.wireframemenu a{
+    font: bold 13px Verdana;
+    padding: 4px 3px;
+    display: block;
+    width: 100%; /*Define width for IE6's sake*/
+    color: #595959;
+    text-decoration: none;
+    border-bottom: 1px solid #C0C0C0;
+}
+
+.wireframemenu a:visited{
+    color: #595959;
+}
+
+html>body .wireframemenu a{ /*Non IE rule*/
+    width: auto;
+}
+
+.wireframemenu a:hover{
+    background-color: #F8FBBD;
+    color: black;
+}
+
+fieldset {
+    border: 0;
+}
+
+.overflow {
+    height: 200px;
+}
+
+
+
+table.type01 {
+    border-collapse: collapse;
+    text-align: left;
+    line-height: 1.5;
+    margin : 20px 10px;
+}
+table.type01 th {
+    width: 150px;
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    border: 1px solid #ccc;
+}
+table.type01 td {
+    width: 350px;
+    padding: 10px;
+    vertical-align: top;
+    border: 1px solid #ccc;
+}
+
+table.type02 {
+    border-collapse: separate;
+    border-spacing: 0;
+    text-align: left;
+    line-height: 1.5;
+    border-top: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+    margin : 20px 10px;
+}
+table.type02 th {
+    width: 150px;
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    border-top: 1px solid #fff;
+    border-left: 1px solid #fff;
+    background: #eee;
+}
+table.type02 td {
+    width: 350px;
+    padding: 10px;
+    vertical-align: top;
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+}
+table.type02 .even {
+    background: #efefef;
+}
+table.type02 tbody  tr:hover {background: #F8FBBD; color: #011;}
+
+table.type04 {
+    border-collapse: separate;
+    border-spacing: 1px;
+    text-align: left;
+    line-height: 1.5;
+    border-top: 1px solid #ccc;
+    margin : 20px 10px;
+}
+table.type04 th {
+    width: 150px;
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    border-bottom: 1px solid #ccc;
+}
+table.type04 td {
+    width: 350px;
+    padding: 10px;
+    vertical-align: top;
+    border-bottom: 1px solid #ccc;
+}
+table.type05 {
+    border-collapse: separate;
+    border-spacing: 1px;
+    text-align: left;
+    line-height: 1.5;
+    border-top: 1px solid #ccc;
+    margin: 20px 10px;
+}
+table.type05 th {
+    width: 150px;
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    border-bottom: 1px solid #ccc;
+    background: #efefef;
+}
+table.type05 td {
+    width: 350px;
+    padding: 10px;
+    vertical-align: top;
+    border-bottom: 1px solid #ccc;
+}

@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="kr.co.syrup.adreport.stamp.event.mybatis.mapper.StampFrontMapper">
+
+    <select id="selectStpIdStpPanIdByStpPanTrId" resultType="kr.co.syrup.adreport.stamp.event.model.StampEventPanModel">
+        SELECT B.stp_id, B.stp_pan_id
+        FROM stamp_event_pan_tr A
+        INNER JOIN stamp_event_pan B
+        ON A.stp_pan_id = B.stp_pan_id
+        WHERE A.stp_pan_tr_id = #{stpPanTrId}
+    </select>
+
+    <select id="selectMappingArEventWinningByStpPanTrId" resultType="kr.co.syrup.adreport.web.event.entity.ArEventWinningEntity">
+        SELECT  C.*
+        FROM stamp_event_pan_tr A
+        INNER JOIN stamp_event_pan B
+        ON A.stp_pan_id = B.stp_pan_id
+        INNER JOIN ar_event_winning C
+        ON B.stp_id = C.stp_id
+        WHERE A.stp_tr_sort = C.object_mapping_number
+        AND A.stp_pan_tr_id = #{stpPanTrId}
+    </select>
+
+    <insert id="insertStampEventGiveAwayDelivery" parameterType="kr.co.syrup.adreport.stamp.event.model.StampEventGiveAwayDeliveryModel">
+        INSERT INTO STAMP_EVENT_GIVE_AWAY_DELIVERY
+        (event_id,
+         stp_id,
+         stp_pan_tr_id,
+         ar_event_winning_id,
+         stp_event_log_winning_id,
+         winning_type,
+         product_name,
+         name,
+         phone_number,
+         zip_code,
+         address,
+         address_detail,
+         attend_code,
+         member_birth,
+         is_receive,
+         tr_id,
+         gifticon_order_no,
+         gifticon_result_cd)
+        VALUES
+            (#{eventId},
+             #{stpId},
+             #{stpPanTrId},
+             #{arEventWinningId},
+             #{stpEventLogWinningId},
+             #{winningType},
+             #{productName},
+             #{name},
+             #{phoneNumber},
+             #{zipCode},
+             #{address},
+             #{addressDetail},
+             #{attendCode},
+             #{memberBirth},
+             #{isReceive},
+             #{trId},
+             #{gifticonOrderNo},
+             #{gifticonResultCd})
+        <selectKey resultType="long" keyProperty="stpGiveAwayId" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+
+    <select id="selectStampPanTrSortByStampPanTrId" resultType="int">
+        SELECT stp_tr_sort FROM stamp_event_pan_tr WHERE stp_pan_tr_id = #{stpPanTrId}
+    </select>
+
+    <update id="updateStampEventGiveAwayDelivery" parameterType="kr.co.syrup.adreport.stamp.event.model.StampEventGiveAwayDeliveryModel">
+        UPDATE STAMP_EVENT_GIVE_AWAY_DELIVERY
+        <set>
+            <if test="name != '' and name != null">name = #{name},</if>
+            <if test="zipCode != '' and zipCode != null">zip_code = #{zipCode},</if>
+            <if test="address != '' and address != null">address = #{address},</if>
+            <if test="addressDetail != '' and addressDetail != null">address_detail = #{addressDetail},</if>
+            <if test="memberBirth != '' and memberBirth != null">member_birth = #{memberBirth},</if>
+            is_receive = 0
+        </set>
+        <where>
+            stp_give_away_id = #{stpGiveAwayId}
+        </where>
+    </update>
+
+    <insert id="selectInsertStampEventTrLog">
+        INSERT INTO stamp_event_log_tr
+        (
+            event_id, stp_id, stp_pan_id, stp_pan_tr_id, stp_tr_sort, stp_attend_auth_condition, ar_event_winning_id, attend_value, created_day_impr, created_hour_impr
+        )
+        SELECT A.event_id, A.stp_id, B.stp_pan_id, C.stp_pan_tr_id, C.stp_tr_sort, A.stp_attend_auth_condition, #{arEventWinningId}, #{attendValue}, #{createdDayImpr}, #{createdHourImpr}
+        FROM stamp_event_main A
+        INNER JOIN stamp_event_pan B
+        ON A.stp_id = B.stp_id
+        INNER JOIN stamp_event_pan_tr C
+        ON B.stp_pan_id = C.stp_pan_id
+        WHERE 1=1
+        AND C.stp_tr_event_id = #{eventId}
+        LIMIT 1
+    </insert>
+
+    <insert id="selectInsertStampEventTrLogAtPid">
+        INSERT INTO stamp_event_log_tr
+        (
+            stp_id, event_id, stp_tr_pid, stp_pan_id, stp_pan_tr_id, stp_tr_sort, stp_attend_auth_condition, ar_event_winning_id, attend_value, created_day_impr, created_hour_impr
+        )
+        SELECT A.stp_id, A.event_id, #{stpTrPid}, B.stp_pan_id, C.stp_pan_tr_id, C.stp_tr_sort, A.stp_attend_auth_condition, 0, #{attendValue}, #{createdDayImpr}, #{createdHourImpr}
+        FROM stamp_event_main A
+                 INNER JOIN stamp_event_pan B
+                            ON A.stp_id = B.stp_id
+                 INNER JOIN stamp_event_pan_tr C
+                            ON B.stp_pan_id = C.stp_pan_id
+        WHERE 1=1
+        AND C.stp_pan_tr_id = #{stpPanTrId}
+    </insert>
+
+    <select id="selectStpTrEventIdListByEventId" resultType="string">
+        SELECT stp_tr_event_id FROM stamp_event_pan_tr
+        WHERE stp_pan_id =
+        (
+            SELECT stp_pan_id
+            FROM stamp_event_pan_tr
+            WHERE stp_tr_event_id = #{eventId}
+        )
+    </select>
+
+    <select id="selectStampEventGiveAwayDeliveryAtHistoryCheck" resultType="kr.co.syrup.adreport.stamp.event.mybatis.vo.StampEventGiveAwayDeliveryAtHistoryCheckResVO">
+        SELECT A.stp_give_away_id, A.stp_id, A.event_id, A.ar_event_winning_id, A.stp_pan_tr_id, A.winning_type, A.name, A.phone_number, A.zip_code, A.address, A.address_detail, A.attend_code, A.member_birth, A.is_receive, A.tr_id, A.gifticon_order_no, A.gifticon_result_cd, A.created_date, A.ocb_coupon_id, A.is_ocb_coupon_read,
+               date_format(A.created_date, '%Y.%m.%d') as winningDate, B.winning_image_url, B.product_name
+        FROM stamp_event_give_away_delivery A
+        LEFT JOIN ar_event_winning B
+        ON A.ar_event_winning_id = B.ar_event_winning_id
+        WHERE 1=1
+        AND A.event_id = #{eventId}
+        <if test="phoneNumber != '' and phoneNumber != null">AND A.phone_number = #{phoneNumber}</if>
+        <if test="attendCode != '' and attendCode != null">AND A.attend_code = #{attendCode}</if>
+        ORDER BY A.created_date ASC
+    </select>
+
+    <select id="selectEventBaseJoinStampEventMain" resultType="kr.co.syrup.adreport.stamp.event.mybatis.vo.EventBaseJoinStampEventMainVO">
+        SELECT A.event_title, A.marketing_id, A.contract_status, A.event_start_date, A.event_end_date, A.event_type, B.*
+        FROM web_event_base A
+        INNER JOIN stamp_event_main B
+        ON A.event_id = B.event_id
+        WHERE A.event_id = #{eventId}
+    </select>
+
+    <select id="selectStampTrSortAndAttendSortYnByStpTrEventId" resultType="kr.co.syrup.adreport.stamp.event.mybatis.vo.StampSortAttendSortYnResVO">
+        SELECT C.stp_main_setting_yn, A.stp_pan_tr_id, A.stp_tr_sort, B.attend_sort_setting_yn, C.stp_attend_auth_condition, C.stp_id, B.stp_pan_id, C.event_id as stamp_event_id
+        FROM stamp_event_pan_tr A
+        INNER JOIN stamp_event_pan B
+        ON A.stp_pan_id = B.stp_pan_id
+        INNER JOIN stamp_event_main C
+        ON B.stp_id = C.stp_id
+        WHERE A.stp_tr_event_id = #{stpTrEventId}
+        ORDER BY C.stp_id DESC
+        LIMIT 1
+    </select>
+
+    <select id="selectStampEventGiveAwayDeliveryByEventId" resultType="kr.co.syrup.adreport.stamp.event.model.StampEventGiveAwayDeliveryModel">
+        SELECT * FROM stamp_event_give_away_delivery
+        WHERE 1=1
+        AND event_id = #{eventId}
+        <if test="authCondition == 'MDN'">AND phone_number = #{attendValue}</if>
+        <if test="authCondition == 'ATTEND'">AND attend_code = #{attendValue}</if>
+    </select>
+
+    <insert id="insertStampEventGiveAwayDeliveryButtonAddList" parameterType="list">
+        INSERT INTO stamp_event_give_away_delivery_button_add
+        (stp_give_away_id, ar_event_winning_button_add_id, field_value)
+        VALUES
+        <foreach collection="list" item="item" separator=",">
+        (
+            #{item.stpGiveAwayId},
+            #{item.arEventWinningButtonAddId},
+            #{item.fieldValue}
+        )
+        </foreach>
+    </insert>
+
+    <delete id="deleteStampEventGiveAwayDeliveryButtonAddInStpGiveAwayIds" parameterType="list">
+        DELETE FROM stamp_event_give_away_delivery_button_add
+        WHERE stp_give_away_id
+        <foreach collection="stpGiveAwayIdList" item="stpGiveAwayId" separator="," open="(" close=")">
+            #{stpGiveAwayId}
+        </foreach>
+    </delete>
+
+    <select id="selectStpPanTrRowNumByWinning" resultType="kr.co.syrup.adreport.stamp.event.mybatis.vo.StpPanTrRowNumByWinningVO">
+        SELECT Z.stp_pan_tr_id, Z.row_num
+        FROM (
+                SELECT A.stp_pan_tr_id, @rownum := @rownum + 1 as row_num
+                FROM stamp_event_log_tr A
+                JOIN (SELECT @rownum := 0) INIT
+                WHERE A.stp_id = #{stpId}
+                AND A.stp_attend_auth_condition = #{stpAttendAuthCondition}
+                AND A.attend_value = #{attendValue}
+                ORDER BY A.id asc
+          ) Z
+    </select>
+
+    <select id="selectAttendCodeUseListAtStampTr" resultType="kr.co.syrup.adreport.stamp.event.mybatis.vo.AttendCodeUseVO">
+        SELECT D.attend_code, CONCAT(A.stp_tr_sort, '번/', C.stp_tr_txt) as stamp_name, A.created_date as acc_date,
+               CASE
+                   WHEN A.is_click = 1 THEN 'O' ELSE 'X'
+                   END as is_raffle,
+               D.product_name,
+               IFNULL(D.created_date, 'X') as winning_date
+        FROM stamp_event_log_tr A
+        INNER JOIN stamp_event_pan B
+        ON A.stp_pan_id = B.stp_pan_id
+        LEFT JOIN stamp_event_pan_tr C
+        ON B.stp_pan_id = C.stp_pan_id
+        LEFT JOIN stamp_event_give_away_delivery D
+        ON C.stp_pan_tr_id = D.stp_pan_tr_id
+        WHERE A.stp_tr_sort = C.stp_tr_sort
+        AND A.stp_attend_auth_condition = 'ATTEND'
+        AND A.event_id = #{eventId}
+        AND A.attend_value = #{attendCode}
+        ORDER BY A.id ASC
+    </select>
+
+</mapper>

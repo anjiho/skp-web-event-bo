@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+<title>Test results - SyrupApiServiceTest</title>
+<link href="../css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="../css/style.css" rel="stylesheet" type="text/css"/>
+<script src="../js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<h1>SyrupApiServiceTest</h1>
+<div class="breadcrumbs">
+<a href="../index.html">all</a> &gt; 
+<a href="../packages/kr.co.syrup.adreport.web.event.service.html">kr.co.syrup.adreport.web.event.service</a> &gt; SyrupApiServiceTest</div>
+<div id="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox" id="tests">
+<div class="counter">1</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="failures">
+<div class="counter">0</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="ignored">
+<div class="counter">0</div>
+<p>ignored</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="duration">
+<div class="counter">10.147s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox success" id="successRate">
+<div class="percent">100%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div id="tabs">
+<ul class="tabLinks">
+<li>
+<a href="#tab0">Tests</a>
+</li>
+<li>
+<a href="#tab1">Standard output</a>
+</li>
+</ul>
+<div id="tab0" class="tab">
+<h2>Tests</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Duration</th>
+<th>Result</th>
+</tr>
+</thead>
+<tr>
+<td class="success">sodarIAMemberCheckTest()</td>
+<td class="success">10.147s</td>
+<td class="success">passed</td>
+</tr>
+</table>
+</div>
+<div id="tab1" class="tab">
+<h2>Standard output</h2>
+<span class="code">
+<pre>22:39:27.786 [Test worker] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating CacheAwareContextLoaderDelegate from class [org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate]
+22:39:27.790 [Test worker] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating BootstrapContext using constructor [public org.springframework.test.context.support.DefaultBootstrapContext(java.lang.Class,org.springframework.test.context.CacheAwareContextLoaderDelegate)]
+22:39:27.804 [Test worker] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating TestContextBootstrapper for test class [kr.co.syrup.adreport.web.event.service.SyrupApiServiceTest] from class [org.springframework.boot.test.context.SpringBootTestContextBootstrapper]
+22:39:27.810 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Neither @ContextConfiguration nor @ContextHierarchy found for test class [kr.co.syrup.adreport.web.event.service.SyrupApiServiceTest], using SpringBootContextLoader
+22:39:27.811 [Test worker] DEBUG org.springframework.test.context.support.AbstractContextLoader - Did not detect default resource location for test class [kr.co.syrup.adreport.web.event.service.SyrupApiServiceTest]: class path resource [kr/co/syrup/adreport/web/event/service/SyrupApiServiceTest-context.xml] does not exist
+22:39:27.811 [Test worker] DEBUG org.springframework.test.context.support.AbstractContextLoader - Did not detect default resource location for test class [kr.co.syrup.adreport.web.event.service.SyrupApiServiceTest]: class path resource [kr/co/syrup/adreport/web/event/service/SyrupApiServiceTestContext.groovy] does not exist
+22:39:27.811 [Test worker] INFO org.springframework.test.context.support.AbstractContextLoader - Could not detect default resource locations for test class [kr.co.syrup.adreport.web.event.service.SyrupApiServiceTest]: no resource found for suffixes {-context.xml, Context.groovy}.
+22:39:27.812 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [kr.co.syrup.adreport.web.event.service.SyrupApiServiceTest]: SyrupApiServiceTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+22:39:27.865 [Test worker] DEBUG org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider - Identified candidate component class: file [/Users/anjiho/Documents/git/adreport-be_pc01131/build/classes/java/main/kr/co/syrup/adreport/BaseApplication.class]
+22:39:27.866 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration kr.co.syrup.adreport.BaseApplication for test class kr.co.syrup.adreport.web.event.service.SyrupApiServiceTest
+22:39:27.905 [Test worker] DEBUG org.springframework.boot.test.context.SpringBootTestContextBootstrapper - @TestExecutionListeners is not present for class [kr.co.syrup.adreport.web.event.service.SyrupApiServiceTest]: using defaults.
+22:39:27.905 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.event.ApplicationEventsTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener, org.springframework.test.context.event.EventPublishingTestExecutionListener]
+22:39:27.914 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@6754f6bb, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@7bddabb5, org.springframework.test.context.event.ApplicationEventsTestExecutionListener@42255be5, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@26366010, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@6617ab43, org.springframework.test.context.support.DirtiesContextTestExecutionListener@70013437, org.springframework.test.context.transaction.TransactionalTestExecutionListener@1813b3a1, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@db07653, org.springframework.test.context.event.EventPublishingTestExecutionListener@56a68915, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@2f7faf7a, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@2af49f8f, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@2478766c, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@46f4add7, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener@1422ce0c, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@1aa423e0]
+22:39:27.916 [Test worker] DEBUG org.springframework.test.context.support.AbstractDirtiesContextTestExecutionListener - Before test class: context [DefaultTestContext@39b7f9a7 testClass = SyrupApiServiceTest, testInstance = [null], testMethod = [null], testException = [null], mergedContextConfiguration = [WebMergedContextConfiguration@1bde395 testClass = SyrupApiServiceTest, locations = '{}', classes = '{class kr.co.syrup.adreport.BaseApplication}', contextInitializerClasses = '[]', activeProfiles = '{local}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[org.springframework.boot.test.autoconfigure.actuate.metrics.MetricsExportContextCustomizerFactory$DisableMetricExportContextCustomizer@102ef275, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@7c1a6683, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@22fb0db8, [ImportsContextCustomizer@771b94c0 key = [org.springframework.boot.autoconfigure.cache.CacheAutoConfiguration, org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfiguration, org.springframework.boot.autoconfigure.flyway.FlywayAutoConfiguration, org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration, org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration, org.springframework.boot.autoconfigure.jdbc.JdbcTemplateAutoConfiguration, org.springframework.boot.autoconfigure.liquibase.LiquibaseAutoConfiguration, org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration, org.springframework.boot.autoconfigure.sql.init.SqlInitializationAutoConfiguration, org.springframework.boot.autoconfigure.transaction.TransactionAutoConfiguration, org.springframework.boot.test.autoconfigure.jdbc.TestDatabaseAutoConfiguration, org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManagerAutoConfiguration, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcAutoConfiguration, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcWebClientAutoConfiguration, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcWebDriverAutoConfiguration, org.springframework.boot.autoconfigure.security.oauth2.client.servlet.OAuth2ClientAutoConfiguration, org.springframework.boot.autoconfigure.security.oauth2.resource.servlet.OAuth2ResourceServerAutoConfiguration, org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration, org.springframework.boot.autoconfigure.security.servlet.SecurityFilterAutoConfiguration, org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcSecurityConfiguration]], org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@2b20f279, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@3d9fbdfc, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@5f8db4ef, org.springframework.test.context.web.socket.MockServerContainerContextCustomizer@5fb7c18d, org.springframework.boot.test.context.SpringBootTestArgs@1, org.springframework.boot.test.context.SpringBootTestWebEnvironment@f447966], resourceBasePath = 'src/main/webapp', contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map['org.springframework.test.context.web.ServletTestExecutionListener.activateListener' -&gt; true]], class annotated with @DirtiesContext [false] with mode [null].
+22:39:27,777 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Could NOT find resource [logback-test.xml]
+22:39:27,777 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Could NOT find resource [logback.xml]
+22:39:27,778 |-INFO in ch.qos.logback.classic.BasicConfigurator@3919be32 - Setting up default configuration.
+22:39:28,072 |-INFO in ch.qos.logback.core.joran.action.DefinePropertyAction - About to instantiate property definer of type [kr.co.syrup.adreport.framework.log.HostnamePropertyDefiner]
+22:39:28,073 |-INFO in ch.qos.logback.core.joran.action.DefinePropertyAction - Popping property definer for property named [DEFAULT_HOSTNAME] from the object stack
+22:39:28,074 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - About to instantiate appender of type [ch.qos.logback.core.ConsoleAppender]
+22:39:28,074 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - Naming appender as [STDOUT]
+22:39:28,083 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - About to instantiate appender of type [ch.qos.logback.classic.AsyncAppender]
+22:39:28,083 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - Naming appender as [ASYNCSTDOUT]
+22:39:28,084 |-INFO in ch.qos.logback.core.joran.action.AppenderRefAction - Attaching appender named [STDOUT] to ch.qos.logback.classic.AsyncAppender[ASYNCSTDOUT]
+22:39:28,084 |-INFO in ch.qos.logback.classic.AsyncAppender[ASYNCSTDOUT] - Attaching appender named [STDOUT] to AsyncAppender.
+22:39:28,084 |-INFO in ch.qos.logback.classic.AsyncAppender[ASYNCSTDOUT] - Setting discardingThreshold to 100
+22:39:28,084 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - About to instantiate appender of type [ch.qos.logback.core.rolling.RollingFileAppender]
+22:39:28,085 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - Naming appender as [TAILSFILEOUT]
+22:39:28,087 |-INFO in c.q.l.core.rolling.TimeBasedRollingPolicy@27882616 - No compression will be used
+22:39:28,087 |-INFO in c.q.l.core.rolling.TimeBasedRollingPolicy@27882616 - Will use the pattern /Users/anjiho/logs/svr_ADDTc-was1.out.%d{yyyy-MM-dd}.log for the active file
+22:39:28,088 |-INFO in c.q.l.core.rolling.DefaultTimeBasedFileNamingAndTriggeringPolicy - The date pattern is 'yyyy-MM-dd' from file name pattern '/Users/anjiho/logs/svr_ADDTc-was1.out.%d{yyyy-MM-dd}.log'.
+22:39:28,088 |-INFO in c.q.l.core.rolling.DefaultTimeBasedFileNamingAndTriggeringPolicy - Roll-over at midnight.
+22:39:28,093 |-INFO in c.q.l.core.rolling.DefaultTimeBasedFileNamingAndTriggeringPolicy - Setting initial period to Tue Feb 18 22:37:57 KST 2025
+22:39:28,095 |-INFO in ch.qos.logback.core.rolling.RollingFileAppender[TAILSFILEOUT] - Active log file name: /Users/anjiho/logs/svr_ADDTc-was1.out
+22:39:28,095 |-INFO in ch.qos.logback.core.rolling.RollingFileAppender[TAILSFILEOUT] - File property is set to [/Users/anjiho/logs/svr_ADDTc-was1.out]
+22:39:28,096 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - About to instantiate appender of type [ch.qos.logback.classic.AsyncAppender]
+22:39:28,096 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - Naming appender as [ASYNCTAILSFILEOUT]
+22:39:28,096 |-INFO in ch.qos.logback.core.joran.action.AppenderRefAction - Attaching appender named [TAILSFILEOUT] to ch.qos.logback.classic.AsyncAppender[ASYNCTAILSFILEOUT]
+22:39:28,096 |-INFO in ch.qos.logback.classic.AsyncAppender[ASYNCTAILSFILEOUT] - Attaching appender named [TAILSFILEOUT] to AsyncAppender.
+22:39:28,096 |-INFO in ch.qos.logback.classic.AsyncAppender[ASYNCTAILSFILEOUT] - Setting discardingThreshold to 20
+22:39:28,096 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting level of logger [org.springframework] to INFO
+22:39:28,097 |-INFO in ch.qos.logback.classic.jul.LevelChangePropagator@73854a8b - Propagating INFO level on Logger[org.springframework] onto the JUL framework
+22:39:28,097 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting level of logger [org.springframework.core] to INFO
+22:39:28,097 |-INFO in ch.qos.logback.classic.jul.LevelChangePropagator@73854a8b - Propagating INFO level on Logger[org.springframework.core] onto the JUL framework
+22:39:28,097 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting level of logger [org.springframework.jndi] to INFO
+22:39:28,097 |-INFO in ch.qos.logback.classic.jul.LevelChangePropagator@73854a8b - Propagating INFO level on Logger[org.springframework.jndi] onto the JUL framework
+22:39:28,097 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting level of logger [org.springframework.beans] to INFO
+22:39:28,097 |-INFO in ch.qos.logback.classic.jul.LevelChangePropagator@73854a8b - Propagating INFO level on Logger[org.springframework.beans] onto the JUL framework
+22:39:28,097 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting level of logger [org.springframework.beans.factory.support] to INFO
+22:39:28,097 |-INFO in ch.qos.logback.classic.jul.LevelChangePropagator@73854a8b - Propagating INFO level on Logger[org.springframework.beans.factory.support] onto the JUL framework
+22:39:28,097 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting level of logger [org.springframework.security] to INFO
+22:39:28,097 |-INFO in ch.qos.logback.classic.jul.LevelChangePropagator@73854a8b - Propagating INFO level on Logger[org.springframework.security] onto the JUL framework
+22:39:28,097 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting level of logger [org.springframework.context] to INFO
+22:39:28,097 |-INFO in ch.qos.logback.classic.jul.LevelChangePropagator@73854a8b - Propagating INFO level on Logger[org.springframework.context] onto the JUL framework
+22:39:28,097 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting level of logger [org.springframework.web] to INFO
+22:39:28,097 |-INFO in ch.qos.logback.classic.jul.LevelChangePropagator@73854a8b - Propagating INFO level on Logger[org.springframework.web] onto the JUL framework
+22:39:28,098 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting level of logger [org.springframework.web.context.support.AnnotationConfigWebApplicationContext] to INFO
+22:39:28,098 |-INFO in ch.qos.logback.classic.jul.LevelChangePropagator@73854a8b - Propagating INFO level on Logger[org.springframework.web.context.support.AnnotationConfigWebApplicationContext] onto the JUL framework
+22:39:28,098 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting level of logger [org.springframework.context.annotation.ConfigurationClassBeanDefinitionReader] to INFO
+22:39:28,098 |-INFO in ch.qos.logback.classic.jul.LevelChangePropagator@73854a8b - Propagating INFO level on Logger[org.springframework.context.annotation.ConfigurationClassBeanDefinitionReader] onto the JUL framework
+22:39:28,098 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting level of logger [org.springframework.scheduling.annotation.ScheduledAnnotationBeanPostProcessor] to INFO
+22:39:28,098 |-INFO in ch.qos.logback.classic.jul.LevelChangePropagator@73854a8b - Propagating INFO level on Logger[org.springframework.scheduling.annotation.ScheduledAnnotationBeanPostProcessor] onto the JUL framework
+22:39:28,098 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting level of logger [org.springframework.aop.framework.CglibAopProxy] to INFO
+22:39:28,098 |-INFO in ch.qos.logback.classic.jul.LevelChangePropagator@73854a8b - Propagating INFO level on Logger[org.springframework.aop.framework.CglibAopProxy] onto the JUL framework
+22:39:28,098 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting level of logger [org.springframework.core.io.support.PathMatchingResourcePatternResolver] to INFO
+22:39:28,098 |-INFO in ch.qos.logback.classic.jul.LevelChangePropagator@73854a8b - Propagating INFO level on Logger[org.springframework.core.io.support.PathMatchingResourcePatternResolver] onto the JUL framework
+22:39:28,098 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting level of logger [org.springframework.core.io.support.PathMatchingResourcePatternResolver] to INFO
+22:39:28,098 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting level of logger [org.springframework.core.env.PropertySourcesPropertyResolver] to INFO
+22:39:28,098 |-INFO in ch.qos.logback.classic.jul.LevelChangePropagator@73854a8b - Propagating INFO level on Logger[org.springframework.core.env.PropertySourcesPropertyResolver] onto the JUL framework
+22:39:28,098 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting level of logger [org.springframework.aop.framework.autoproxy.BeanFactoryAdvisorRetrievalHelper] to INFO
+22:39:28,098 |-INFO in ch.qos.logback.classic.jul.LevelChangePropagator@73854a8b - Propagating INFO level on Logger[org.springframework.aop.framework.autoproxy.BeanFactoryAdvisorRetrievalHelper] onto the JUL framework
+22:39:28,098 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting level of logger [org.springframework.beans.factory.annotation.InjectionMetadata] to INFO
+22:39:28,098 |-INFO in ch.qos.logback.classic.jul.LevelChangePropagator@73854a8b - Propagating INFO level on Logger[org.springframework.beans.factory.annotation.InjectionMetadata] onto the JUL framework
+22:39:28,098 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting level of logger [org.springframework.orm.jpa] to INFO
+22:39:28,098 |-INFO in ch.qos.logback.classic.jul.LevelChangePropagator@73854a8b - Propagating INFO level on Logger[org.springframework.orm.jpa] onto the JUL framework
+22:39:28,099 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting level of logger [org.hibernate] to INFO
+22:39:28,099 |-INFO in ch.qos.logback.classic.jul.LevelChangePropagator@73854a8b - Propagating INFO level on Logger[org.hibernate] onto the JUL framework
+22:39:28,099 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting level of logger [org.apache.http.impl.conn.PoolingHttpClientConnectionManager] to INFO
+22:39:28,099 |-INFO in ch.qos.logback.classic.jul.LevelChangePropagator@73854a8b - Propagating INFO level on Logger[org.apache.http.impl.conn.PoolingHttpClientConnectionManager] onto the JUL framework
+22:39:28,099 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting level of logger [org.apache.http.wire] to INFO
+22:39:28,099 |-INFO in ch.qos.logback.classic.jul.LevelChangePropagator@73854a8b - Propagating INFO level on Logger[org.apache.http.wire] onto the JUL framework
+22:39:28,099 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting level of logger [org.apache.http.headers] to INFO
+22:39:28,099 |-INFO in ch.qos.logback.classic.jul.LevelChangePropagator@73854a8b - Propagating INFO level on Logger[org.apache.http.headers] onto the JUL framework
+22:39:28,099 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting level of logger [springfox.documentation] to WARN
+22:39:28,099 |-INFO in ch.qos.logback.classic.jul.LevelChangePropagator@73854a8b - Propagating WARN level on Logger[springfox.documentation] onto the JUL framework
+22:39:28,099 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting level of logger [com.skplanet.iStore.infra.spring.mvc.CustomRequestMappingHandlerMapping] to WARN
+22:39:28,099 |-INFO in ch.qos.logback.classic.jul.LevelChangePropagator@73854a8b - Propagating WARN level on Logger[com.skplanet.iStore.infra.spring.mvc.CustomRequestMappingHandlerMapping] onto the JUL framework
+22:39:28,099 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting level of logger [org.springframework.context.support.PostProcessorRegistrationDelegate] to WARN
+22:39:28,099 |-INFO in ch.qos.logback.classic.jul.LevelChangePropagator@73854a8b - Propagating WARN level on Logger[org.springframework.context.support.PostProcessorRegistrationDelegate] onto the JUL framework
+22:39:28,100 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting level of logger [org.springframework.security.web.DefaultSecurityFilterChain] to WARN
+22:39:28,100 |-INFO in ch.qos.logback.classic.jul.LevelChangePropagator@73854a8b - Propagating WARN level on Logger[org.springframework.security.web.DefaultSecurityFilterChain] onto the JUL framework
+22:39:28,100 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting level of logger [org.springframework.web.servlet.handler.SimpleUrlHandlerMapping] to WARN
+22:39:28,100 |-INFO in ch.qos.logback.classic.jul.LevelChangePropagator@73854a8b - Propagating WARN level on Logger[org.springframework.web.servlet.handler.SimpleUrlHandlerMapping] onto the JUL framework
+22:39:28,100 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting level of logger [java.sql] to WARN
+22:39:28,100 |-INFO in ch.qos.logback.classic.jul.LevelChangePropagator@73854a8b - Propagating WARN level on Logger[java.sql] onto the JUL framework
+22:39:28,100 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting level of logger [jdbc.sqlonly] to OFF
+22:39:28,100 |-INFO in ch.qos.logback.classic.jul.LevelChangePropagator@73854a8b - Propagating OFF level on Logger[jdbc.sqlonly] onto the JUL framework
+22:39:28,100 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting level of logger [jdbc.sqltiming] to DEBUG
+22:39:28,100 |-INFO in ch.qos.logback.classic.jul.LevelChangePropagator@73854a8b - Propagating DEBUG level on Logger[jdbc.sqltiming] onto the JUL framework
+22:39:28,100 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting level of logger [jdbc.audit] to OFF
+22:39:28,100 |-INFO in ch.qos.logback.classic.jul.LevelChangePropagator@73854a8b - Propagating OFF level on Logger[jdbc.audit] onto the JUL framework
+22:39:28,100 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting level of logger [jdbc.resultset] to OFF
+22:39:28,100 |-INFO in ch.qos.logback.classic.jul.LevelChangePropagator@73854a8b - Propagating OFF level on Logger[jdbc.resultset] onto the JUL framework
+22:39:28,100 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting level of logger [jdbc.resultsettable] to OFF
+22:39:28,100 |-INFO in ch.qos.logback.classic.jul.LevelChangePropagator@73854a8b - Propagating OFF level on Logger[jdbc.resultsettable] onto the JUL framework
+22:39:28,100 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting level of logger [jdbc.connection] to OFF
+22:39:28,100 |-INFO in ch.qos.logback.classic.jul.LevelChangePropagator@73854a8b - Propagating OFF level on Logger[jdbc.connection] onto the JUL framework
+22:39:28,101 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting level of logger [org.mybatis] to INFO
+22:39:28,101 |-INFO in ch.qos.logback.classic.jul.LevelChangePropagator@73854a8b - Propagating INFO level on Logger[org.mybatis] onto the JUL framework
+22:39:28,101 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting level of logger [org.ibatis] to TRACE
+22:39:28,101 |-INFO in ch.qos.logback.classic.jul.LevelChangePropagator@73854a8b - Propagating TRACE level on Logger[org.ibatis] onto the JUL framework
+22:39:28,101 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting level of logger [kr.co.syrup.adreport] to TRACE
+22:39:28,101 |-INFO in ch.qos.logback.classic.jul.LevelChangePropagator@73854a8b - Propagating TRACE level on Logger[kr.co.syrup.adreport] onto the JUL framework
+22:39:28,102 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting level of logger [com.zaxxer.hikari] to INFO
+22:39:28,102 |-INFO in ch.qos.logback.classic.jul.LevelChangePropagator@73854a8b - Propagating INFO level on Logger[com.zaxxer.hikari] onto the JUL framework
+22:39:28,102 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting level of logger [com.zaxxer.hikari.HikariConfig] to DEBUG
+22:39:28,102 |-INFO in ch.qos.logback.classic.jul.LevelChangePropagator@73854a8b - Propagating DEBUG level on Logger[com.zaxxer.hikari.HikariConfig] onto the JUL framework
+22:39:28,102 |-INFO in ch.qos.logback.classic.joran.action.RootLoggerAction - Setting level of ROOT logger to ERROR
+22:39:28,102 |-INFO in ch.qos.logback.classic.jul.LevelChangePropagator@73854a8b - Propagating ERROR level on Logger[ROOT] onto the JUL framework
+22:39:28,102 |-INFO in ch.qos.logback.core.joran.action.AppenderRefAction - Attaching appender named [ASYNCSTDOUT] to Logger[ROOT]
+22:39:28,102 |-INFO in ch.qos.logback.classic.joran.action.RootLoggerAction - Setting level of ROOT logger to INFO
+22:39:28,102 |-INFO in ch.qos.logback.classic.jul.LevelChangePropagator@73854a8b - Propagating INFO level on Logger[ROOT] onto the JUL framework
+22:39:28,102 |-INFO in ch.qos.logback.core.joran.action.AppenderRefAction - Attaching appender named [ASYNCTAILSFILEOUT] to Logger[ROOT]
+22:39:28,102 |-INFO in ch.qos.logback.classic.joran.action.ConfigurationAction - End of configuration.
+22:39:28,102 |-INFO in org.springframework.boot.logging.logback.SpringBootJoranConfigurator@1aa4abde - Registering current configuration as safe fallback point
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::               (v2.5.14)
+
+[2025-02-18 22:39:28,133][][background-preinit][INFO ][][Version] HV000001: Hibernate Validator 6.2.3.Final
+[2025-02-18 22:39:28,133][][Test worker][WARN ][][DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer] 
+
+Found multiple occurrences of org.json.JSONObject on the class path:
+
+	jar:file:/Users/anjiho/.gradle/caches/modules-2/files-2.1/org.json/json/20160212/a742e3f85161835b95877478c5dd5b405cefaab9/json-20160212.jar!/org/json/JSONObject.class
+	jar:file:/Users/anjiho/.gradle/caches/modules-2/files-2.1/com.vaadin.external.google/android-json/0.0.20131108.vaadin1/fa26d351fe62a6a17f5cda1287c1c6110dec413f/android-json-0.0.20131108.vaadin1.jar!/org/json/JSONObject.class
+
+You may wish to exclude one of them to ensure predictable runtime behavior
+
+[2025-02-18 22:39:28,137][][Test worker][INFO ][][SyrupApiServiceTest] Starting SyrupApiServiceTest using Java 11.0.25 on Mac with PID 71711 (started by anjiho in /Users/anjiho/Documents/git/adreport-be_pc01131)
+[2025-02-18 22:39:28,137][][Test worker][DEBUG][][SyrupApiServiceTest] Running with Spring Boot v2.5.14, Spring v5.3.20
+[2025-02-18 22:39:28,138][][Test worker][INFO ][][SyrupApiServiceTest] The following 1 profile is active: &quot;local&quot;
+[2025-02-18 22:39:28,150][][Test worker][WARN ][][ConfigDataEnvironment] Property 'spring.profiles' imported from location 'class path resource [application-local.yml]' is invalid and should be replaced with 'spring.config.activate.on-profile' [origin: class path resource [application-local.yml] - 2:18]
+[2025-02-18 22:39:28,526][][Test worker][INFO ][][RepositoryConfigurationDelegate] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[2025-02-18 22:39:28,607][][Test worker][INFO ][][RepositoryConfigurationDelegate] Finished Spring Data repository scanning in 77 ms. Found 48 JPA repository interfaces.
+[2025-02-18 22:39:28,984][][Test worker][DEBUG][][HikariConfig] Driver class com.mysql.cj.jdbc.Driver found in Thread context class loader jdk.internal.loader.ClassLoaders$AppClassLoader@42110406
+[2025-02-18 22:39:28,988][][Test worker][WARN ][][HikariConfig] HikariCP - leakDetectionThreshold is less than 2000ms or more than maxLifetime, disabling it.
+[2025-02-18 22:39:28,988][][Test worker][WARN ][][HikariConfig] HikariCP - idleTimeout has been set but has no effect because the pool is operating as a fixed size pool.
+[2025-02-18 22:39:28,988][][Test worker][DEBUG][][HikariConfig] HikariCP - configuration:
+[2025-02-18 22:39:28,989][][Test worker][DEBUG][][HikariConfig] allowPoolSuspension................................false
+[2025-02-18 22:39:28,989][][Test worker][DEBUG][][HikariConfig] autoCommit................................true
+[2025-02-18 22:39:28,989][][Test worker][DEBUG][][HikariConfig] catalog................................none
+[2025-02-18 22:39:28,989][][Test worker][DEBUG][][HikariConfig] connectionInitSql................................none
+[2025-02-18 22:39:28,989][][Test worker][DEBUG][][HikariConfig] connectionTestQuery................................none
+[2025-02-18 22:39:28,990][][Test worker][DEBUG][][HikariConfig] connectionTimeout................................10000
+[2025-02-18 22:39:28,990][][Test worker][DEBUG][][HikariConfig] dataSource................................none
+[2025-02-18 22:39:28,990][][Test worker][DEBUG][][HikariConfig] dataSourceClassName................................none
+[2025-02-18 22:39:28,990][][Test worker][DEBUG][][HikariConfig] dataSourceJNDI................................none
+[2025-02-18 22:39:28,990][][Test worker][DEBUG][][HikariConfig] dataSourceProperties................................{password=&lt;masked&gt;}
+[2025-02-18 22:39:28,990][][Test worker][DEBUG][][HikariConfig] driverClassName................................&quot;com.mysql.cj.jdbc.Driver&quot;
+[2025-02-18 22:39:28,990][][Test worker][DEBUG][][HikariConfig] exceptionOverrideClassName................................none
+[2025-02-18 22:39:28,990][][Test worker][DEBUG][][HikariConfig] healthCheckProperties................................{}
+[2025-02-18 22:39:28,990][][Test worker][DEBUG][][HikariConfig] healthCheckRegistry................................none
+[2025-02-18 22:39:28,991][][Test worker][DEBUG][][HikariConfig] idleTimeout................................356000
+[2025-02-18 22:39:28,991][][Test worker][DEBUG][][HikariConfig] initializationFailTimeout................................1
+[2025-02-18 22:39:28,991][][Test worker][DEBUG][][HikariConfig] isolateInternalQueries................................false
+[2025-02-18 22:39:28,991][][Test worker][DEBUG][][HikariConfig] jdbcUrl................................jdbc:mysql://192.168.31.190:3306/db?autoReconnect=true&amp;rewriteBatchedStatements=true
+[2025-02-18 22:39:28,991][][Test worker][DEBUG][][HikariConfig] keepaliveTime................................0
+[2025-02-18 22:39:28,991][][Test worker][DEBUG][][HikariConfig] leakDetectionThreshold................................0
+[2025-02-18 22:39:28,991][][Test worker][DEBUG][][HikariConfig] maxLifetime................................357000
+[2025-02-18 22:39:28,991][][Test worker][DEBUG][][HikariConfig] maximumPoolSize................................10
+[2025-02-18 22:39:28,991][][Test worker][DEBUG][][HikariConfig] metricRegistry................................none
+[2025-02-18 22:39:28,991][][Test worker][DEBUG][][HikariConfig] metricsTrackerFactory................................none
+[2025-02-18 22:39:28,991][][Test worker][DEBUG][][HikariConfig] minimumIdle................................10
+[2025-02-18 22:39:28,992][][Test worker][DEBUG][][HikariConfig] password................................&lt;masked&gt;
+[2025-02-18 22:39:28,992][][Test worker][DEBUG][][HikariConfig] poolName................................&quot;HikariCP&quot;
+[2025-02-18 22:39:28,992][][Test worker][DEBUG][][HikariConfig] readOnly................................false
+[2025-02-18 22:39:28,992][][Test worker][DEBUG][][HikariConfig] registerMbeans................................false
+[2025-02-18 22:39:28,992][][Test worker][DEBUG][][HikariConfig] scheduledExecutor................................none
+[2025-02-18 22:39:28,992][][Test worker][DEBUG][][HikariConfig] schema................................none
+[2025-02-18 22:39:28,992][][Test worker][DEBUG][][HikariConfig] threadFactory................................internal
+[2025-02-18 22:39:28,992][][Test worker][DEBUG][][HikariConfig] transactionIsolation................................default
+[2025-02-18 22:39:28,992][][Test worker][DEBUG][][HikariConfig] username................................&quot;user&quot;
+[2025-02-18 22:39:28,992][][Test worker][DEBUG][][HikariConfig] validationTimeout................................5000
+[2025-02-18 22:39:28,993][][Test worker][INFO ][][HikariDataSource] HikariCP - Starting...
+[2025-02-18 22:39:29,209][][Test worker][INFO ][][HikariDataSource] HikariCP - Start completed.
+[2025-02-18 22:39:29,209][][Test worker][INFO ][][DataSourceConfig] &gt;&gt;&gt; datasource : HikariDataSource (HikariCP)
+[2025-02-18 22:39:29,465][][Test worker][INFO ][][LogHelper] HHH000204: Processing PersistenceUnitInfo [name: default]
+[2025-02-18 22:39:29,487][][Test worker][INFO ][][Version] HHH000412: Hibernate ORM core version 5.4.33
+[2025-02-18 22:39:29,547][][Test worker][INFO ][][Version] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+[2025-02-18 22:39:29,592][][Test worker][INFO ][][Dialect] HHH000400: Using dialect: org.hibernate.dialect.MySQL57InnoDBDialect
+[2025-02-18 22:39:30,115][][Test worker][INFO ][][JtaPlatformInitiator] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+[2025-02-18 22:39:30,119][][Test worker][INFO ][][LocalContainerEntityManagerFactoryBean] Initialized JPA EntityManagerFactory for persistence unit 'default'
+[2025-02-18 22:39:31,803][][Test worker][WARN ][][JpaBaseConfiguration$JpaWebConfiguration] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+[2025-02-18 22:39:31,885][][Test worker][INFO ][][ProfileProperties] Current active Profile : local
+[2025-02-18 22:39:32,159][][Test worker][INFO ][][ApplicationConfig] Interceptors added!
+[2025-02-18 22:39:32,276][][Test worker][INFO ][][EndpointLinksResolver] Exposing 1 endpoint(s) beneath base path '/actuator'
+[2025-02-18 22:39:32,441][][Test worker][DEBUG][][CustomExceptionHandlerExceptionResolver] ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+[2025-02-18 22:39:32,482][][Test worker][INFO ][][SimpleJobLauncher] No TaskExecutor has been set, defaulting to synchronous executor.
+[2025-02-18 22:39:32,761][][Test worker][WARN ][][JpaBatchConfigurer] JPA does not support custom isolation levels, so locks may not be taken when launching Jobs
+[2025-02-18 22:39:32,776][][Test worker][INFO ][][JobRepositoryFactoryBean] No database type set, using meta data indicating: MYSQL
+[2025-02-18 22:39:32,787][][Test worker][INFO ][][SimpleJobLauncher] No TaskExecutor has been set, defaulting to synchronous executor.
+[2025-02-18 22:39:32,875][][Test worker][INFO ][][SpringBootMockServletContext] Initializing Spring TestDispatcherServlet ''
+[2025-02-18 22:39:32,875][][Test worker][INFO ][][TestDispatcherServlet] Initializing Servlet ''
+[2025-02-18 22:39:32,876][][Test worker][INFO ][][TestDispatcherServlet] Completed initialization in 1 ms
+[2025-02-18 22:39:33,165][][Test worker][INFO ][][SyrupApiServiceTest] Started SyrupApiServiceTest in 5.235 seconds (JVM running for 5.731)
+[2025-02-18 22:39:33,184][][Test worker][INFO ][][JobLauncherApplicationRunner] Running default command line with: []
+[2025-02-18 22:39:43,312][][Test worker][ERROR][][OkHttpService] API 호출 오류 : connect timed out, url : https://sodaradmindev.syrup.co.kr/member, params: null
+java.net.SocketTimeoutException: connect timed out
+	at java.base/java.net.PlainSocketImpl.socketConnect(Native Method)
+	at java.base/java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:412)
+	at java.base/java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:255)
+	at java.base/java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:237)
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)
+	at java.base/java.net.Socket.connect(Socket.java:609)
+	at okhttp3.internal.platform.Platform.connectSocket(Platform.kt:128)
+	at okhttp3.internal.connection.RealConnection.connectSocket(RealConnection.kt:295)
+	at okhttp3.internal.connection.RealConnection.connect(RealConnection.kt:207)
+	at okhttp3.internal.connection.ExchangeFinder.findConnection(ExchangeFinder.kt:226)
+	at okhttp3.internal.connection.ExchangeFinder.findHealthyConnection(ExchangeFinder.kt:106)
+	at okhttp3.internal.connection.ExchangeFinder.find(ExchangeFinder.kt:74)
+	at okhttp3.internal.connection.RealCall.initExchange$okhttp(RealCall.kt:255)
+	at okhttp3.internal.connection.ConnectInterceptor.intercept(ConnectInterceptor.kt:32)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.cache.CacheInterceptor.intercept(CacheInterceptor.kt:95)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.http.BridgeInterceptor.intercept(BridgeInterceptor.kt:83)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.http.RetryAndFollowUpInterceptor.intercept(RetryAndFollowUpInterceptor.kt:76)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.connection.RealCall.getResponseWithInterceptorChain$okhttp(RealCall.kt:201)
+	at okhttp3.internal.connection.RealCall.execute(RealCall.kt:154)
+	at kr.co.syrup.adreport.web.event.service.OkHttpService.callGetApi(OkHttpService.java:61)
+	at kr.co.syrup.adreport.web.event.service.SyrupApiServiceTest.sodarIAMemberCheckTest(SyrupApiServiceTest.java:44)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.junit.platform.commons.util.ReflectionUtils.invokeMethod(ReflectionUtils.java:688)
+	at org.junit.jupiter.engine.execution.MethodInvocation.proceed(MethodInvocation.java:60)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$ValidatingInvocation.proceed(InvocationInterceptorChain.java:131)
+	at org.junit.jupiter.engine.extension.TimeoutExtension.intercept(TimeoutExtension.java:149)
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestableMethod(TimeoutExtension.java:140)
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestMethod(TimeoutExtension.java:84)
+	at org.junit.jupiter.engine.execution.ExecutableInvoker$ReflectiveInterceptorCall.lambda$ofVoidMethod$0(ExecutableInvoker.java:115)
+	at org.junit.jupiter.engine.execution.ExecutableInvoker.lambda$invoke$0(ExecutableInvoker.java:105)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$InterceptedInvocation.proceed(InvocationInterceptorChain.java:106)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.proceed(InvocationInterceptorChain.java:64)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.chainAndInvoke(InvocationInterceptorChain.java:45)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.invoke(InvocationInterceptorChain.java:37)
+	at org.junit.jupiter.engine.execution.ExecutableInvoker.invoke(ExecutableInvoker.java:104)
+	at org.junit.jupiter.engine.execution.ExecutableInvoker.invoke(ExecutableInvoker.java:98)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeTestMethod$6(TestMethodTestDescriptor.java:210)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeTestMethod(TestMethodTestDescriptor.java:206)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:131)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:65)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$5(NodeTestTask.java:139)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$7(NodeTestTask.java:129)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:127)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:126)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:84)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1541)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:38)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$5(NodeTestTask.java:143)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$7(NodeTestTask.java:129)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:127)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:126)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:84)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1541)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:38)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$5(NodeTestTask.java:143)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$7(NodeTestTask.java:129)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:127)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:126)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:84)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:32)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:51)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:108)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:88)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:54)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:67)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:52)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:96)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:75)
+	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor$CollectAllTestClassesExecutor.processAllTestClasses(JUnitPlatformTestClassProcessor.java:99)
+	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor$CollectAllTestClassesExecutor.access$000(JUnitPlatformTestClassProcessor.java:79)
+	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor.stop(JUnitPlatformTestClassProcessor.java:75)
+	at org.gradle.api.internal.tasks.testing.SuiteTestClassProcessor.stop(SuiteTestClassProcessor.java:61)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:36)
+	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:24)
+	at org.gradle.internal.dispatch.ContextClassLoaderDispatch.dispatch(ContextClassLoaderDispatch.java:33)
+	at org.gradle.internal.dispatch.ProxyDispatchAdapter$DispatchingInvocationHandler.invoke(ProxyDispatchAdapter.java:94)
+	at com.sun.proxy.$Proxy2.stop(Unknown Source)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.stop(TestWorker.java:133)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:36)
+	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:24)
+	at org.gradle.internal.remote.internal.hub.MessageHubBackedObjectConnection$DispatchWrapper.dispatch(MessageHubBackedObjectConnection.java:182)
+	at org.gradle.internal.remote.internal.hub.MessageHubBackedObjectConnection$DispatchWrapper.dispatch(MessageHubBackedObjectConnection.java:164)
+	at org.gradle.internal.remote.internal.hub.MessageHub$Handler.run(MessageHub.java:414)
+	at org.gradle.internal.concurrent.ExecutorPolicy$CatchAndRecordFailures.onExecute(ExecutorPolicy.java:64)
+	at org.gradle.internal.concurrent.ManagedExecutorImpl$1.run(ManagedExecutorImpl.java:48)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at org.gradle.internal.concurrent.ThreadFactoryImpl$ManagedThreadRunnable.run(ThreadFactoryImpl.java:56)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+[2025-02-18 22:39:43,331][][Test worker][INFO ][][OkHttpService] 
+***********************************
+*** HttpRequest API CALL RESULT ***
+= URL : https://sodaradmindev.syrup.co.kr/member
+= METHOD : GET
+= REQ HEADERS : {&quot;Cookie&quot;:&quot;ISSESSIONID=K4Ibo7tRu093xsDZAfnx60GvqdhRkP9oW5uvjRQo6UfN7gELNFz5TRdsITai; SITETYPE=IA&quot;}
+= REQ : 
+= RES : 
+= TOTAL RUN TIME : 10.036548792sec
+***********************************
+[2025-02-18 22:39:43,332][][Test worker][ERROR][][SyrupApiServiceTest] null
+java.lang.NullPointerException: null
+	at kr.co.syrup.adreport.web.event.service.SyrupApiServiceTest.sodarIAMemberCheckTest(SyrupApiServiceTest.java:49)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.junit.platform.commons.util.ReflectionUtils.invokeMethod(ReflectionUtils.java:688)
+	at org.junit.jupiter.engine.execution.MethodInvocation.proceed(MethodInvocation.java:60)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$ValidatingInvocation.proceed(InvocationInterceptorChain.java:131)
+	at org.junit.jupiter.engine.extension.TimeoutExtension.intercept(TimeoutExtension.java:149)
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestableMethod(TimeoutExtension.java:140)
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestMethod(TimeoutExtension.java:84)
+	at org.junit.jupiter.engine.execution.ExecutableInvoker$ReflectiveInterceptorCall.lambda$ofVoidMethod$0(ExecutableInvoker.java:115)
+	at org.junit.jupiter.engine.execution.ExecutableInvoker.lambda$invoke$0(ExecutableInvoker.java:105)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$InterceptedInvocation.proceed(InvocationInterceptorChain.java:106)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.proceed(InvocationInterceptorChain.java:64)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.chainAndInvoke(InvocationInterceptorChain.java:45)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.invoke(InvocationInterceptorChain.java:37)
+	at org.junit.jupiter.engine.execution.ExecutableInvoker.invoke(ExecutableInvoker.java:104)
+	at org.junit.jupiter.engine.execution.ExecutableInvoker.invoke(ExecutableInvoker.java:98)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeTestMethod$6(TestMethodTestDescriptor.java:210)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeTestMethod(TestMethodTestDescriptor.java:206)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:131)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:65)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$5(NodeTestTask.java:139)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$7(NodeTestTask.java:129)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:127)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:126)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:84)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1541)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:38)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$5(NodeTestTask.java:143)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$7(NodeTestTask.java:129)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:127)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:126)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:84)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1541)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:38)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$5(NodeTestTask.java:143)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$7(NodeTestTask.java:129)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:127)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:126)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:84)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:32)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:51)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:108)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:88)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:54)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:67)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:52)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:96)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:75)
+	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor$CollectAllTestClassesExecutor.processAllTestClasses(JUnitPlatformTestClassProcessor.java:99)
+	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor$CollectAllTestClassesExecutor.access$000(JUnitPlatformTestClassProcessor.java:79)
+	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor.stop(JUnitPlatformTestClassProcessor.java:75)
+	at org.gradle.api.internal.tasks.testing.SuiteTestClassProcessor.stop(SuiteTestClassProcessor.java:61)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:36)
+	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:24)
+	at org.gradle.internal.dispatch.ContextClassLoaderDispatch.dispatch(ContextClassLoaderDispatch.java:33)
+	at org.gradle.internal.dispatch.ProxyDispatchAdapter$DispatchingInvocationHandler.invoke(ProxyDispatchAdapter.java:94)
+	at com.sun.proxy.$Proxy2.stop(Unknown Source)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.stop(TestWorker.java:133)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:36)
+	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:24)
+	at org.gradle.internal.remote.internal.hub.MessageHubBackedObjectConnection$DispatchWrapper.dispatch(MessageHubBackedObjectConnection.java:182)
+	at org.gradle.internal.remote.internal.hub.MessageHubBackedObjectConnection$DispatchWrapper.dispatch(MessageHubBackedObjectConnection.java:164)
+	at org.gradle.internal.remote.internal.hub.MessageHub$Handler.run(MessageHub.java:414)
+	at org.gradle.internal.concurrent.ExecutorPolicy$CatchAndRecordFailures.onExecute(ExecutorPolicy.java:64)
+	at org.gradle.internal.concurrent.ManagedExecutorImpl$1.run(ManagedExecutorImpl.java:48)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at org.gradle.internal.concurrent.ThreadFactoryImpl$ManagedThreadRunnable.run(ThreadFactoryImpl.java:56)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+</pre>
+</span>
+</div>
+</div>
+<div id="footer">
+<p>
+<div>
+<label class="hidden" id="label-for-line-wrapping-toggle" for="line-wrapping-toggle">Wrap lines
+<input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
+</label>
+</div>Generated by 
+<a href="http://www.gradle.org">Gradle 6.8.3</a> at 2025. 2. 18. 오후 10:39:45</p>
+</div>
+</div>
+</body>
+</html>

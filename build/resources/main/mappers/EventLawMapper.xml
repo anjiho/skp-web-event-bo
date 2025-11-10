@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="kr.co.syrup.adreport.web.event.mybatis.mapper.EventLawMapper">
+
+   <insert id="updateEventLawInfo">
+        UPDATE event_law_info
+        <set>
+           <if test="lawType != '' and lawType != null">law_type = #{lawType},</if>
+           <if test="contents != '' and contents != null">contents = #{contents},</if>
+           <if test="startDate != null">start_date = #{startDate},</if>
+           <if test="endDate != null">end_date = #{endDate},</if>
+            <if test="createdBy != '' and createdBy != null">created_by = #{createdBy},</if>
+        </set>
+        <where>
+            idx = #{idx}
+        </where>
+   </insert>
+
+    <select id="selectEventLawInfoListByType" resultType="kr.co.syrup.adreport.web.event.mybatis.vo.EventLawInfoVO">
+        SELECT * FROM event_law_info
+         <if test="lawType != '' and lawType != null">
+             <where>
+                 law_type = #{lawType}
+             </where>
+         </if>
+        ORDER BY version DESC
+    </select>
+
+<!--   ALTER TABLE `wevt`.`event_law_info` ADD COLUMN `created_by` VARCHAR(10) NULL AFTER `event_type`; -->
+
+
+</mapper>

@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="true">
+    <property name="log.dir" value="${user.home}/logs"/>
+    <springProfile name="dev,alp">
+        <property name="log.dir" value="/app/tomcat/logs"/>
+    </springProfile>
+    <springProfile name="prod">
+        <property name="log.dir" value="/app/tomcat/logs"/>
+    </springProfile>
+    <property name="log.fileName" value="svr_ADDTc-was1.out"/>
+
+    <define name="DEFAULT_HOSTNAME" class="kr.co.syrup.adreport.framework.log.HostnamePropertyDefiner"/>
+
+<!--    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">-->
+<!--        <encoder>-->
+<!--            <pattern>[%d][%X{context.transactionId}][%thread][%-5level][%X{member.username}][%c{0}] %m%n</pattern>-->
+<!--        </encoder>-->
+<!--    </appender>-->
+
+    <!-- Console -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+            <layout class="kr.co.syrup.adreport.framework.filters.CustomPatternLayout">
+                <maskPattern>(?i)\"phoneNumber\\{0,1}\"\s*:\s*\\{0,1}\"(.*?)\"</maskPattern><!-- 핸드폰번호 pattern -->
+                <maskPattern>(?i)\"phone\\{0,1}\"\s*:\s*\\{0,1}\"(.*?)\"</maskPattern><!-- 핸드폰번호 pattern -->
+                <maskPattern>(?i)\"userPhoneNumber\\{0,1}\"\s*:\s*\\{0,1}\"(.*?)\"</maskPattern><!-- 핸드폰번호 pattern -->
+                <maskPattern>(?i)\"mdn\\{0,1}\"\s*:\s*\\{0,1}\"(.*?)\"</maskPattern><!-- 핸드폰번호 pattern -->
+                <maskPattern>(?i)\"attendValue\\{0,1}\"\s*:\s*\\{0,1}\"(.*?)\"</maskPattern><!-- 핸드폰번호 pattern -->
+                <maskPattern>\"memberBirth\"\s*:\s*\"(.*?)\"</maskPattern><!-- 주소 pattern -->
+                <maskPattern>(?i)\"email\"\s*:\s*\"(.*?)\"</maskPattern> <!-- Email Arg pattern -->
+                <maskPattern>(?i)\"name\"\s*:\s*\"(.*?)\"</maskPattern><!-- 이름 pattern -->
+                <maskPattern>(?i)\"userName\"\s*:\s*\"(.*?)\"</maskPattern><!-- 이름 pattern -->
+                <maskPattern>(?i)\"userNm\"\s*:\s*\"(.*?)\"</maskPattern><!-- 이름 pattern -->
+                <maskPattern>(?i)\"addr\"\s*:\s*\"(.*?)\"</maskPattern><!-- 주소 pattern -->
+                <maskPattern>(?i)\"address\"\s*:\s*\"(.*?)\"</maskPattern><!-- 주소 pattern -->
+                <maskPattern>(?i)\"addressDetail\"\s*:\s*\"(.*?)\"</maskPattern><!-- 주소상세 pattern -->
+                <pattern>[%d][%X{context.transactionId}][%thread][%-5level][%X{member.username}][%c{0}] %m%n</pattern>
+            </layout>
+        </encoder>
+    </appender>
+
+    <appender name="ASYNCSTDOUT" class="ch.qos.logback.classic.AsyncAppender">
+        <queueSize>500</queueSize>
+        <appender-ref ref="STDOUT"/>
+    </appender>
+
+    <appender name="TAILSFILEOUT" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.dir}/${log.fileName}</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${log.dir}/${log.fileName}.%d{yyyy-MM-dd}.log</FileNamePattern>
+        </rollingPolicy>
+<!--        <encoder>-->
+<!--            <pattern>[%d][%X{context.transactionId}][%thread][%-5level][%X{member.username}][%c{0}] %m%n</pattern>-->
+<!--        </encoder>-->
+        <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+            <layout class="kr.co.syrup.adreport.framework.filters.CustomPatternLayout">
+                <maskPattern>(?i)\"phoneNumber\\{0,1}\"\s*:\s*\\{0,1}\"(.*?)\"</maskPattern><!-- 핸드폰번호 pattern -->
+                <maskPattern>(?i)\"phone\\{0,1}\"\s*:\s*\\{0,1}\"(.*?)\"</maskPattern><!-- 핸드폰번호 pattern -->
+                <maskPattern>(?i)\"userPhoneNumber\\{0,1}\"\s*:\s*\\{0,1}\"(.*?)\"</maskPattern><!-- 핸드폰번호 pattern -->
+                <maskPattern>(?i)\"attendValue\\{0,1}\"\s*:\s*\\{0,1}\"(.*?)\"</maskPattern><!-- 핸드폰번호 pattern -->
+                <maskPattern>(?i)\"mdn\\{0,1}\"\s*:\s*\\{0,1}\"(.*?)\"</maskPattern><!-- 핸드폰번호 pattern -->
+                <maskPattern>\"memberBirth\"\s*:\s*\"(.*?)\"</maskPattern><!-- 주소 pattern -->
+                <maskPattern>(?i)\"email\"\s*:\s*\"(.*?)\"</maskPattern> <!-- Email Arg pattern -->
+                <maskPattern>(?i)\"name\"\s*:\s*\"(.*?)\"</maskPattern><!-- 이름 pattern -->
+                <maskPattern>(?i)\"userName\"\s*:\s*\"(.*?)\"</maskPattern><!-- 이름 pattern -->
+                <maskPattern>(?i)\"userNm\"\s*:\s*\"(.*?)\"</maskPattern><!-- 이름 pattern -->
+                <maskPattern>(?i)\"addr\"\s*:\s*\"(.*?)\"</maskPattern><!-- 주소 pattern -->
+                <maskPattern>(?i)\"address\"\s*:\s*\"(.*?)\"</maskPattern><!-- 주소 pattern -->
+                <maskPattern>(?i)\"addressDetail\"\s*:\s*\"(.*?)\"</maskPattern><!-- 주소상세 pattern -->
+                <pattern>[%d][%X{context.transactionId}][%thread][%-5level][%X{member.username}][%c{0}] %m%n</pattern>
+            </layout>
+        </encoder>
+
+    </appender>
+
+    <!-- Tails log test -->
+    <appender name="ASYNCTAILSFILEOUT" class="ch.qos.logback.classic.AsyncAppender">
+        <queueSize>100</queueSize>
+        <includeCallerData>true</includeCallerData>
+        <appender-ref ref="TAILSFILEOUT"/>
+    </appender>
+
+    <!-- Loggers INFO -->
+    <logger name="org.springframework" level="INFO"/>
+    <logger name="org.springframework.core" level="info" />
+    <logger name="org.springframework.jndi" level="info" />
+    <logger name="org.springframework.beans" level="info" />
+    <logger name="org.springframework.beans.factory.support" level="INFO"/>
+    <logger name="org.springframework.security" level="INFO"/>
+    <logger name="org.springframework.context" level="info" />
+    <logger name="org.springframework.web" level="info" />
+    <logger name="org.springframework.web.context.support.AnnotationConfigWebApplicationContext" level="INFO" />
+    <logger name="org.springframework.context.annotation.ConfigurationClassBeanDefinitionReader" level="INFO" />
+    <logger name="org.springframework.scheduling.annotation.ScheduledAnnotationBeanPostProcessor" level="INFO" />
+    <logger name="org.springframework.aop.framework.CglibAopProxy" level="INFO" />
+    <logger name="org.springframework.core.io.support.PathMatchingResourcePatternResolver" level="INFO" />
+    <logger name="org.springframework.core.io.support.PathMatchingResourcePatternResolver" level="INFO" />
+    <logger name="org.springframework.core.env.PropertySourcesPropertyResolver" level="INFO" />
+    <logger name="org.springframework.aop.framework.autoproxy.BeanFactoryAdvisorRetrievalHelper" level="INFO" />
+    <logger name="org.springframework.beans.factory.annotation.InjectionMetadata" level="INFO" />
+    <logger name="org.springframework.orm.jpa" level="INFO" />
+
+    <springProfile name="local">
+        <logger name="org.hibernate" level="INFO"/>
+    </springProfile>
+
+    <logger name="org.apache.http.impl.conn.PoolingHttpClientConnectionManager" level="INFO" />
+    <logger name="org.apache.http.wire" level="INFO" />
+    <logger name="org.apache.http.headers" level="INFO" />
+
+    <!-- Loggers WARN -->
+
+    <logger name="springfox.documentation" level="WARN" />
+    <logger name="com.skplanet.iStore.infra.spring.mvc.CustomRequestMappingHandlerMapping" level="WARN" />
+    <logger name="org.springframework.context.support.PostProcessorRegistrationDelegate" level="WARN" />
+    <logger name="org.springframework.security.web.DefaultSecurityFilterChain" level="WARN" />
+    <logger name="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping" level="WARN" />
+    <logger name="java.sql" level="WARN" />
+    <!-- -->
+
+    <!-- Query Loggers -->
+    <logger name="jdbc.sqlonly" level="OFF" />
+    <logger name="jdbc.sqltiming" level="DEBUG"/>
+    <logger name="jdbc.audit" level="OFF"/>
+    <logger name="jdbc.resultset" level="OFF"/>
+    <logger name="jdbc.resultsettable" level="OFF"/>
+    <logger name="jdbc.connection" level="OFF"/>
+
+    <!-- Loggers TRACE -->
+    <springProfile name="local,dev">
+        <logger name="org.mybatis" level="INFO" />
+        <logger name="org.ibatis" level="TRACE" />
+        <logger name="kr.co.syrup.adreport" level="TRACE" />
+    </springProfile>
+    <springProfile name="alp">
+        <logger name="org.mybatis" level="INFO" />
+        <logger name="org.ibatis" level="INFO" />
+        <logger name="kr.co.syrup.adreport" level="INFO" />
+    </springProfile>
+    <springProfile name="prod">
+        <logger name="org.mybatis" level="INFO" />
+        <logger name="org.ibatis" level="INFO" />
+        <logger name="kr.co.syrup.adreport" level="INFO" />
+    </springProfile>
+
+    <logger name="com.zaxxer.hikari" level="INFO" />
+    <logger name="com.zaxxer.hikari.HikariConfig" level="DEBUG"/>
+
+    <springProfile name="local">
+        <root level="ERROR">
+            <appender-ref ref="ASYNCSTDOUT"/>
+        </root>
+    </springProfile>
+
+    <springProfile name="local,dev,alp">
+        <root level="INFO">
+            <appender-ref ref="ASYNCTAILSFILEOUT"/>
+        </root>
+    </springProfile>
+
+    <springProfile name="prod">
+        <root level="INFO">
+            <appender-ref ref="ASYNCTAILSFILEOUT"/>
+<!--            <appender-ref ref="ASYNCSTDOUT"/>-->
+        </root>
+    </springProfile>
+</configuration>

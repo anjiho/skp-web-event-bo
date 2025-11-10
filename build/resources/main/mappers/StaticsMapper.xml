@@ -1,0 +1,1144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="kr.co.syrup.adreport.web.event.mybatis.mapper.StaticsMapper">
+
+    <select id="selectTotalPageConnectStaticsCount" resultType="int">
+        SELECT count(*)
+        FROM event_log_connect
+        WHERE event_id = #{eventId}
+        <if test="searchDay != '' and searchDay != null">
+            AND created_day = #{searchDay}
+        </if>
+    </select>
+
+    <select id="selectArAttendStaticsCount" resultType="int">
+        SELECT count(*)
+        FROM event_log_connect
+        WHERE is_attend = true
+        AND event_id = #{eventId}
+        <if test="searchDay != '' and searchDay != null">
+            AND created_day = #{searchDay}
+        </if>
+    </select>
+
+    <select id="selectArCallStaticsCount" resultType="int">
+        SELECT count(*) as count
+        FROM event_log_attend_button
+        WHERE event_id = #{eventId}
+        <if test="successYn != '' and successYn != null">
+            AND success_yn = #{successYn}
+        </if>
+        <if test="searchDay != '' and searchDay != null">
+            AND created_day = #{searchDay}
+        </if>
+    </select>
+
+    <select id="selectAttendButtonStaticsCount" resultType="int">
+        SELECT count(*)
+        FROM event_log_attend_button
+        WHERE event_id = #{eventId}
+        <if test="searchDay != '' and searchDay != null">
+            AND created_day = #{searchDay}
+        </if>
+    </select>
+
+    <select id="selectSuccessWinningStaticsCount" resultType="int">
+        SELECT count(*)
+        FROM event_log_winning_success
+        WHERE event_id = #{eventId}
+        <if test="searchDay != '' and searchDay != null">
+            AND created_day = #{searchDay}
+        </if>
+    </select>
+
+    <select id="selectTotalWinningStaticsCount" resultType="int">
+        SELECT count(*)
+        FROM event_log_winning_success
+        WHERE event_id = #{eventId}
+        AND winning_type = #{winningType}
+        <if test="searchDay != '' and searchDay != null">
+            AND created_day = #{searchDay}
+        </if>
+    </select>
+
+    <select id="selectWinningStaticsCountByWinningTypeAndEventWinningSort" resultType="int">
+        SELECT count(*)
+        FROM event_log_winning_success
+        WHERE event_id = #{eventId}
+        AND winning_type = #{winningType}
+        <if test="eventWinningSort > 0 or eventWinningSort != null">
+            AND event_winning_sort = #{eventWinningSort}
+        </if>
+        <if test="searchDay != '' and searchDay != null">
+            AND created_day = #{searchDay}
+        </if>
+    </select>
+
+    <select id="selectWinningStaticsCountByWinningTypeAndEventWinningSortAndGiveAwayStatus" resultType="int">
+        SELECT count(*)
+        FROM event_log_winning_success
+        WHERE event_id = #{eventId}
+        <if test="eventWinningSort > 0">
+            AND event_winning_sort = #{eventWinningSort}
+        </if>
+        <if test="searchDay != '' and searchDay != null">
+            AND created_day = #{searchDay}
+        </if>
+        <if test="giveAwayStatus == true">
+            AND give_away_id is not null
+        </if>
+        <if test="giveAwayStatus == false">
+            AND give_away_id is null
+        </if>
+    </select>
+
+    <select id="selectHourlyPageConnectStaticsCount" resultType="kr.co.syrup.adreport.web.event.mybatis.vo.HourlyMapperVO">
+        SELECT created_hour as hour, count(*) as count
+        FROM event_log_connect
+        WHERE event_id = #{eventId}
+          AND created_day = #{searchDay}
+        GROUP BY created_hour
+        ORDER BY created_hour ASC
+    </select>
+
+    <select id="selectHourlyPageConnectStaticsCount2" resultType="kr.co.syrup.adreport.web.event.mybatis.vo.HourlyMapperVO">
+        SELECT
+            T.n as time, IFNULL(dayT.cnt, 0) as count
+        FROM
+            (
+                SELECT
+                    @N := @N + 1 as n
+                FROM
+                    temp_hour,
+                    (
+                        SELECT @N:=-1 FROM DUAL
+                    ) NN LIMIT 24
+            ) AS T
+
+                LEFT JOIN
+            (
+                SELECT
+                    created_hour as hh,
+                    COUNT(*) as cnt
+                FROM event_log_connect
+                WHERE event_id = #{eventId}
+                  AND created_day = #{searchDay}
+                GROUP BY hh
+            ) as dayT ON T.n = dayT.hh
+        ORDER BY T.n ASC
+    </select>
+
+    <select id="selectStampHourlyPageConnectStaticsCount" resultType="kr.co.syrup.adreport.web.event.mybatis.vo.HourlyMapperVO">
+        SELECT T.n as time, IFNULL(dayT.cnt, 0) as count
+        FROM
+        (
+        SELECT @N := @N + 1 as n FROM temp_hour, (SELECT @N := -1 FROM DUAL) NN LIMIT 24
+        ) as T
+        LEFT JOIN
+        (
+        SELECT  created_hour as hh, COUNT(*) as cnt
+        FROM stamp_event_log_connect
+        WHERE stp_id = #{stpId}
+        <if test="connectType != '' and connectType != null">
+            AND connect_type = #{connectType}
+        </if>
+        AND created_day = #{searchDay}
+        GROUP BY hh
+        ) as dayT
+        ON T.n = dayT.hh
+        ORDER BY T.n ASC
+    </select>
+
+    <select id="selectHourlyArCallStaticsCount" resultType="kr.co.syrup.adreport.web.event.mybatis.vo.HourlyMapperVO">
+        SELECT created_hour as hour, count(*) as count
+        FROM event_log_attend_button
+        WHERE event_id = #{eventId}
+          AND created_day = #{searchDay}
+        GROUP BY created_hour
+        ORDER BY created_hour ASC
+    </select>
+
+    <select id="selectHourlyArCallStaticsCount2" resultType="kr.co.syrup.adreport.web.event.mybatis.vo.HourlyMapperVO">
+        SELECT
+            T.n as time, IFNULL(dayT.cnt, 0) as count
+        FROM
+            (
+                SELECT @N := @N + 1 as n
+                FROM temp_hour,
+                     (
+                         SELECT @N:=-1 FROM DUAL
+                     ) NN LIMIT 24
+            ) AS T
+
+                LEFT JOIN
+            (
+                SELECT
+                    created_hour as hh,
+                    COUNT(*) as cnt
+                FROM event_log_attend_button
+                WHERE event_id = #{eventId}
+                  AND created_day = #{searchDay}
+                GROUP BY hh
+            ) as dayT ON T.n = dayT.hh
+        ORDER BY T.n ASC
+    </select>
+
+    <select id="selectHourlyArCallSuccessStaticsCount" resultType="kr.co.syrup.adreport.web.event.mybatis.vo.HourlyMapperVO">
+        SELECT created_hour as hour, count(*) as count
+        FROM event_log_exposure
+        WHERE event_id = #{eventId}
+          AND created_day = #{searchDay}
+        GROUP BY created_hour
+        ORDER BY created_hour ASC
+    </select>
+
+    <select id="selectHourlyWinningStaticsCount" resultType="kr.co.syrup.adreport.web.event.mybatis.vo.HourlyMapperVO">
+        SELECT created_hour as hour, count(*) as count
+        FROM event_log_winning_success
+        WHERE event_id = #{eventId}
+        <if test="giveAwayStatus != null and giveAwayStatus != ''">
+            <if test="giveAwayStatus == true">
+                AND give_away_id is not null
+            </if>
+            <if test="giveAwayStatus == false">
+                AND give_away_id is null
+            </if>
+        </if>
+        AND created_day = #{searchDay}
+        GROUP BY created_hour
+        ORDER BY created_hour ASC
+    </select>
+
+    <select id="selectHourlyWinningStaticsCount2" resultType="kr.co.syrup.adreport.web.event.mybatis.vo.HourlyMapperVO">
+        SELECT T.n as time, IFNULL(dayT.cnt, 0) as count
+        FROM
+        (
+        SELECT @N := @N + 1 as n
+        FROM temp_hour,
+        (
+        SELECT @N:=-1 FROM DUAL
+        ) NN LIMIT 24
+        ) AS T
+
+        LEFT JOIN
+        (
+        SELECT
+        created_hour as hh,
+        COUNT(*) as cnt
+        FROM event_log_winning_success
+        WHERE event_id = #{eventId}
+        AND created_day = #{searchDay}
+        <if test="giveAwayStatus != null and giveAwayStatus != ''">
+            <if test="giveAwayStatus == true">
+                AND give_away_id is not null
+            </if>
+            <if test="giveAwayStatus == false">
+                AND give_away_id is null
+            </if>
+        </if>
+        AND created_day = #{searchDay}
+        GROUP BY hh
+
+        ) as dayT ON T.n = dayT.hh
+        ORDER BY T.n ASC
+    </select>
+
+    <select id="selectHourlyWinningStaticsCountByWinningSuccessTable" resultType="kr.co.syrup.adreport.web.event.mybatis.vo.HourlyMapperVO">
+        SELECT T.n as time, IFNULL(dayT.cnt, 0) as count
+        FROM
+        (
+        SELECT @N := @N + 1 as n
+        FROM temp_hour,
+        (
+        SELECT @N:=-1 FROM DUAL
+        ) NN LIMIT 24
+        ) AS T
+
+        LEFT JOIN
+        (
+        SELECT
+        created_hour as hh,
+        COUNT(*) as cnt
+        FROM event_log_winning_success
+        WHERE event_id = #{eventId}
+        AND created_day = #{searchDay}
+        <if test="giveAwayStatus != null and giveAwayStatus != ''">
+            <if test="giveAwayStatus == true">
+                AND give_away_id is not null
+            </if>
+            <if test="giveAwayStatus == false">
+                AND give_away_id is null
+            </if>
+        </if>
+        AND created_day = #{searchDay}
+        GROUP BY hh
+
+        ) as dayT ON T.n = dayT.hh
+        ORDER BY T.n ASC
+    </select>
+
+    <select id="selectStampHourlyWinningStaticsCountByWinningSuccessTable" resultType="kr.co.syrup.adreport.web.event.mybatis.vo.HourlyMapperVO">
+        SELECT T.n as time, IFNULL(dayT.cnt, 0) as count
+        FROM
+        (
+        SELECT @N := @N + 1 as n
+        FROM temp_hour,
+        (SELECT @N:=-1 FROM DUAL) NN LIMIT 24
+        ) AS T
+
+        LEFT JOIN
+        (
+        SELECT created_hour as hh, COUNT(*) as cnt
+        FROM stamp_event_log_winning_success
+        WHERE stp_id = #{stpId}
+        AND created_day = #{searchDay}
+        <if test="giveAwayStatus != null and giveAwayStatus != ''">
+            <if test="giveAwayStatus == true">
+                AND stp_give_away_id > 0
+            </if>
+            <if test="giveAwayStatus == false">
+                AND stp_give_away_id = 0
+            </if>
+        </if>
+        AND created_day = #{searchDay}
+        GROUP BY hh
+        ) as dayT ON T.n = dayT.hh
+        ORDER BY T.n ASC
+    </select>
+
+    <select id="selectHourlyWinningStaticsCountN" resultType="kr.co.syrup.adreport.web.event.mybatis.vo.HourlyMapperVO">
+        SELECT created_hour as hour, count(*) as count
+        FROM event_log_winning_success
+        WHERE event_id = #{eventId}
+        <if test="giveAwayStatus != null and giveAwayStatus != ''">
+            <if test="giveAwayStatus == true">
+                AND give_away_id is not null
+            </if>
+            <if test="giveAwayStatus == false">
+                AND give_away_id is null
+            </if>
+        </if>
+        <if test="eventWinningSort > 0">
+            AND event_winning_sort = #{eventWinningSort}
+        </if>
+        AND created_day = #{searchDay}
+        GROUP BY created_hour
+        ORDER BY created_hour ASC
+    </select>
+
+    <select id="selectEventLogWinningCountByArEventWinningId" resultType="int">
+        SELECT count(*)
+        FROM event_log_winning_success
+        WHERE event_id = #{eventId}
+        AND ar_event_winning_id = #{arEventWinningId}
+        AND created_day = #{searchDay}
+        <if test="hour != '' and hour != null">
+            AND created_hour = #{hour}
+        </if>
+    </select>
+
+    <select id="selectEventLogWinningCount" resultType="int">
+        SELECT count(*)
+        FROM event_log_winning_success
+        WHERE event_id = #{eventId}
+        AND winning_type = #{winningType}
+        <if test="eventWinningSort > 0 or eventWinningSort != null">
+            AND event_winning_sort = #{eventWinningSort}
+        </if>
+        AND created_day = #{searchDay}
+        <if test="hour != '' and hour != null">
+            AND created_hour = #{hour}
+        </if>
+    </select>
+
+    <select id="selectEventLogAttendLogByGroupByHour" resultType="kr.co.syrup.adreport.web.event.mybatis.vo.HourlyMapperVO">
+        SELECT count(*) as count, created_hour as hour
+        FROM event_log_attend_button
+        WHERE event_id = #{eventId}
+          AND success_yn = #{successYn}
+          AND created_day = #{searchDay}
+        GROUP BY created_hour
+        ORDER BY created_hour ASC
+    </select>
+
+    <select id="selectEventLogAttendLogByGroupByHour2" resultType="kr.co.syrup.adreport.web.event.mybatis.vo.HourlyMapperVO">
+        SELECT
+            T.n as time, IFNULL(dayT.cnt, 0) as count
+        FROM
+            (
+                SELECT @N := @N + 1 as n
+                FROM temp_hour,
+                     (
+                         SELECT @N:=-1 FROM DUAL
+                     ) NN LIMIT 24
+            ) AS T
+
+                LEFT JOIN
+            (
+                SELECT
+                    created_hour as hh,
+                    COUNT(*) as cnt
+                FROM event_log_attend_button
+                WHERE event_id = #{eventId}
+                  AND success_yn = #{successYn}
+                  AND created_day = #{searchDay}
+                GROUP BY hh
+            ) as dayT ON T.n = dayT.hh
+        ORDER BY T.n ASC
+    </select>
+
+    <select id="selectEventLogWinningGroupByHour" resultType="kr.co.syrup.adreport.web.event.mybatis.vo.WinningHourlyMapperVO">
+        SELECT
+            TT.n as hour, CONCAT(TT.cnt, '/', (TT.cnt - TT.cnt2)) as cnt, TT.cnt as totalCnt
+        FROM (
+                 SELECT
+                     T.n, IFNULL(dayT.cnt, 0) as cnt, IFNULL(dayTT.cnt, 0) as cnt2
+                 FROM
+                     (
+                         SELECT
+                             @N := @N + 1 as n
+                         FROM
+                             temp_hour,
+                             (
+                                 SELECT @N:=-1 FROM DUAL
+                             ) NN LIMIT 24
+                     ) AS T
+
+                         LEFT JOIN
+                     (
+                         SELECT
+                             created_hour as hh,
+                             COUNT(*) as cnt
+                         FROM event_log_winning_success
+                         WHERE event_id = #{eventId}
+                           AND event_winning_sort = #{eventWinningSort}
+                           AND created_day = #{searchDay}
+                         GROUP BY hh
+                     ) as dayT ON T.n = dayT.hh
+
+                         LEFT JOIN
+                     (
+                         SELECT
+                             A.created_hour as hh,
+                             COUNT(*) as cnt
+                         FROM event_log_winning_success A
+                                  LEFT JOIN event_give_away_delivery B
+                                            ON A.give_away_id = B.give_away_id
+                         WHERE A.event_id = #{eventId}
+                           AND A.event_winning_sort = #{eventWinningSort}
+                           AND A.created_day = #{searchDay}
+                           AND B.event_log_winning_id is null
+                         GROUP BY hh
+                     ) as dayTT ON T.n = dayTT.hh
+                 ORDER BY n ASC
+             ) TT
+    </select>
+
+    <select id="selectStampEventLogWinningGroupByHour" resultType="kr.co.syrup.adreport.web.event.mybatis.vo.WinningHourlyMapperVO">
+        SELECT
+            TT.n as hour, CONCAT(TT.cnt, '/', (TT.cnt - TT.cnt2)) as cnt, TT.cnt as totalCnt
+        FROM (
+                 SELECT
+                     T.n, IFNULL(dayT.cnt, 0) as cnt, IFNULL(dayTT.cnt, 0) as cnt2
+                 FROM
+                     (
+                         SELECT
+                             @N := @N + 1 as n
+                         FROM
+                             temp_hour,
+                             (
+                                 SELECT @N:=-1 FROM DUAL
+                             ) NN LIMIT 24
+                     ) AS T
+
+                         LEFT JOIN
+                     (
+                         SELECT created_hour as hh, COUNT(*) as cnt
+                         FROM stamp_event_log_winning_success
+                         WHERE stp_id = #{stpId}
+                           AND event_winning_sort = #{eventWinningSort}
+                           AND created_day = #{searchDay}
+                         GROUP BY hh
+                     ) as dayT ON T.n = dayT.hh
+
+                         LEFT JOIN
+                     (
+                         SELECT A.created_hour as hh, COUNT(*) as cnt
+                         FROM stamp_event_log_winning_success A
+                                  LEFT JOIN stamp_event_give_away_delivery B
+                                            ON A.stp_give_away_id = B.stp_give_away_id
+                         WHERE A.stp_id = #{stpId}
+                           AND A.event_winning_sort = #{eventWinningSort}
+                           AND A.created_day = #{searchDay}
+                           AND B.stp_event_log_winning_id IS NULL
+                         GROUP BY hh
+                     ) as dayTT ON T.n = dayTT.hh
+                 ORDER BY n ASC
+             ) TT
+    </select>
+
+    <select id="selectGiveAwayDeliveryList" resultType="kr.co.syrup.adreport.web.event.mybatis.vo.GiveAwayDeliveryListMapperVO">
+        SELECT
+        A.product_name, A.name, A.phone_number, A.zip_code, A.address, A.address_detail, A.member_birth, A.created_date,
+        ifnull(C.nft_coupon_id, '정보없음') as nft_coupon_id,
+        case
+        when B.is_use = '0' then 'NO'
+        when B.is_use = '1' then 'YES'
+        else '정보없음'
+        end as is_use,
+        ifnull(E.nft_token_id, '정보없음') as nft_token_id,
+        ifnull(F.nft_wallet_address, '정보없음') as nft_wallet_address,
+        B.use_date
+        FROM event_give_away_delivery A
+        LEFT OUTER JOIN ar_event_nft_coupon_repository B
+        ON A.give_away_id = B.give_away_id
+        LEFT OUTER JOIN ar_event_nft_coupon_info C
+        ON B.nft_coupon_info_id = C.id
+        LEFT OUTER JOIN ar_event_nft_repository D
+        ON D.give_away_id = A.give_away_id
+        LEFT OUTER JOIN ar_event_nft_token_info E
+        ON E.id = D.ar_event_nft_token_info_id
+        LEFT OUTER JOIN ar_event_nft_wallet F
+        ON D.ar_event_nft_wallet_id = F.ar_event_nft_wallet_id
+        WHERE A.event_id = #{eventId}
+        <if test="startDate != '' and startDate != null">
+            AND DATE(A.created_date) BETWEEN #{startDate} AND #{endDate}
+        </if>
+    </select>
+
+    <select id="selectGiveAwayDeliveryList2" resultType="kr.co.syrup.adreport.web.event.mybatis.vo.GiveAwayDeliveryListMapperVO">
+        SELECT
+        A.give_away_id, A.product_name, A.name, A.phone_number, A.zip_code, A.address, A.address_detail, A.member_birth, A.created_date,
+        ifnull(C.nft_coupon_id, '정보없음') as nft_coupon_id,
+        case
+        when B.is_use = '0' then 'NO'
+        when B.is_use = '1' then 'YES'
+        else '정보없음'
+        end as is_use,
+        ifnull(E.nft_token_id, '정보없음') as nft_token_id,
+        ifnull(F.nft_wallet_address, '정보없음') as nft_wallet_address,
+        B.use_date
+        FROM event_give_away_delivery A
+        LEFT OUTER JOIN ar_event_nft_coupon_repository B
+        ON A.give_away_id = B.give_away_id
+        LEFT OUTER JOIN ar_event_nft_coupon_info C
+        ON B.nft_coupon_info_id = C.id
+        LEFT OUTER JOIN ar_event_nft_repository D
+        ON D.give_away_id = A.give_away_id
+        LEFT OUTER JOIN ar_event_nft_token_info E
+        ON E.id = D.ar_event_nft_token_info_id
+        LEFT OUTER JOIN ar_event_nft_wallet F
+        ON D.ar_event_nft_wallet_id = F.ar_event_nft_wallet_id
+        WHERE A.event_id = #{eventId}
+        <if test="startDate != '' and startDate != null">
+            AND DATE(A.created_date) BETWEEN #{startDate} AND #{endDate}
+        </if>
+        LIMIT #{start}, #{limitCount}
+    </select>
+
+    <select id="selectStampGiveAwayDeliveryList" resultType="kr.co.syrup.adreport.web.event.mybatis.vo.GiveAwayDeliveryListMapperVO">
+        SELECT
+        A.stp_give_away_id, G.product_name, A.name, A.phone_number, A.zip_code, A.address, A.address_detail, A.member_birth, A.created_date,
+        ifnull(C.nft_coupon_id, '정보없음') as nft_coupon_id,
+        case
+        when B.is_use = '0' then 'NO'
+        when B.is_use = '1' then 'YES'
+        else '정보없음'
+        end as is_use,
+        ifnull(E.nft_token_id, '정보없음') as nft_token_id,
+        ifnull(F.nft_wallet_address, '정보없음') as nft_wallet_address
+        FROM stamp_event_give_away_delivery A
+        LEFT OUTER JOIN ar_event_nft_coupon_repository B
+        ON A.stp_give_away_id = B.stp_give_away_id
+        LEFT OUTER JOIN ar_event_nft_coupon_info C
+        ON B.nft_coupon_info_id = C.id
+        LEFT OUTER JOIN ar_event_nft_repository D
+        ON D.stp_give_away_id = A.stp_give_away_id
+        LEFT OUTER JOIN ar_event_nft_token_info E
+        ON E.id = D.ar_event_nft_token_info_id
+        LEFT OUTER JOIN ar_event_nft_wallet F
+        ON D.ar_event_nft_wallet_id = F.ar_event_nft_wallet_id
+        LEFT OUTER JOIN ar_event_winning G
+        ON A.ar_event_winning_id = G.ar_event_winning_id
+        WHERE A.event_id = #{eventId}
+        <if test="startDate != '' and startDate != null">
+            AND DATE(A.created_date) BETWEEN #{startDate} AND #{endDate}
+        </if>
+        LIMIT #{start}, #{limitCount}
+    </select>
+
+    <select id="countGiveAwayDelivery" resultType="int">
+        SELECT count(*)
+        FROM event_give_away_delivery
+        WHERE event_id = #{eventId}
+    </select>
+
+    <select id="selectPerformanceStaticsList" resultType="string">
+        SELECT CONCAT(IFNULL(Z.cnt, 0), '/', IFNULL(ZZ.cnt, 0)) as cnt
+        FROM
+        (
+        SELECT
+        <if test="eventWinningSort == 0">
+            '0' as event_winning_sort,
+        </if>
+        <if test="eventWinningSort > 0">
+            event_winning_sort,
+        </if>
+        count(*) as cnt
+        FROM event_log_winning_success
+        WHERE event_id = #{eventId}
+        <if test="eventWinningSort > 0">
+            AND event_winning_sort = #{eventWinningSort}
+        </if>
+        AND give_away_id IS NULL
+        ) Z
+        LEFT JOIN
+        (
+        SELECT
+        <if test="eventWinningSort == 0">
+            '0' as event_winning_sort,
+        </if>
+        <if test="eventWinningSort > 0">
+            event_winning_sort,
+        </if>
+        count(*) as cnt
+        FROM event_log_winning_success
+        WHERE event_id = #{eventId}
+        <if test="eventWinningSort > 0">
+            AND event_winning_sort = #{eventWinningSort}
+        </if>
+        AND created_day = #{searchDay}
+        AND give_away_id IS NULL
+        ) ZZ
+        ON Z.event_winning_sort = ZZ.event_winning_sort
+
+        UNION ALL
+
+        SELECT CONCAT(IFNULL(Z.cnt, 0), '/', IFNULL(ZZ.cnt, 0)) as cnt
+        FROM
+        (
+        SELECT
+        <if test="eventWinningSort == 0">
+            '0' as event_winning_sort,
+        </if>
+        <if test="eventWinningSort > 0">
+            event_winning_sort,
+        </if>
+        count(*) as cnt
+        FROM event_log_winning_success
+        WHERE event_id = #{eventId}
+        <if test="eventWinningSort > 0">
+            AND event_winning_sort = #{eventWinningSort}
+        </if>
+        AND give_away_id IS NOT NULL
+        ) Z
+        LEFT JOIN
+        (
+        SELECT
+        <if test="eventWinningSort == 0">
+            '0' as event_winning_sort,
+        </if>
+        <if test="eventWinningSort > 0">
+            event_winning_sort,
+        </if>
+        count(*) as cnt
+        FROM event_log_winning_success
+        WHERE event_id = #{eventId}
+        <if test="eventWinningSort > 0">
+            AND event_winning_sort = #{eventWinningSort}
+        </if>
+        AND created_day = #{searchDay}
+        AND give_away_id IS NOT NULL
+        ) ZZ
+        ON Z.event_winning_sort = ZZ.event_winning_sort
+
+    </select>
+
+    <select id="selectSubscriptionPerformanceStatics" resultType="int">
+        SELECT count(*)
+        FROM event_log_winning_SUBSCRIPTION
+        WHERE ar_event_winning_id IN (
+
+        SELECT ar_event_winning_id
+        FROM ar_event_winning
+        WHERE ar_event_id = #{arEventId}
+        <if test="arEventWinningId != '' and arEventWinningId != null">
+            AND ar_event_winning_id = #{arEventWinningId}
+        </if>
+
+        )
+    </select>
+
+    <select id="selectNftRepositoryStatics" resultType="kr.co.syrup.adreport.web.event.mybatis.vo.AccumulateStandardCntMapperVO">
+        SELECT
+        (
+        SELECT count(*)
+        FROM AR_EVENT_NFT_REPOSITORY
+        WHERE give_away_id IN
+        (
+        SELECT give_away_id
+        FROM event_give_away_delivery
+        WHERE event_id = #{eventId}
+        <if test="arEventWinningId != '' and arEventWinningId != null">
+            AND ar_event_winning_id = #{arEventWinningId}
+        </if>
+
+        )
+        -- 지갑정보입력 기준
+        <if test="searchType =='WALLET'">
+            AND ar_event_nft_wallet_id IS NOT NULL
+        </if>
+        -- 소유권이전완료 기준
+        <if test="searchType =='OWNERSHIP'">
+            AND holder_trance_status > 0
+        </if>
+        ) as accumulateCnt,
+        (
+        SELECT count(*)
+        FROM AR_EVENT_NFT_REPOSITORY
+        WHERE give_away_id IN
+        (
+
+        SELECT give_away_id
+        FROM event_give_away_delivery
+        WHERE event_id = #{eventId}
+        <if test="arEventWinningId != '' and arEventWinningId != null">
+            AND ar_event_winning_id = #{arEventWinningId}
+        </if>
+        <if test="searchDay != '' and searchDay != null">
+            AND DATE(created_date) = #{searchDay}
+        </if>
+        )
+        -- 지갑정보입력 기준
+        <if test="searchType =='WALLET'">
+            AND ar_event_nft_wallet_id IS NOT NULL
+        </if>
+        -- 소유권이전완료 기준
+        <if test="searchType =='OWNERSHIP'">
+            AND holder_trance_status > 0
+        </if>
+        ) as standardCnt
+    </select>
+
+    <select id="selectSurveyConnectionStaticsGroupByGender" resultType="kr.co.syrup.adreport.web.event.mybatis.vo.SurveyConnectionStaticsMapperVO">
+        SELECT
+            T.gender, concat(T.cnt1, '/', T.cnt1_1) as attendCnt, concat(T.cnt2, '/', T.cnt2_1) as successCnt
+        FROM (
+                 SELECT A.gender,
+                        ifnull((
+                                   SELECT count(Z.gender) FROM survey_log_attend Z WHERE Z.event_id = A.event_id AND Z.gender = A.gender GROUP BY Z.gender
+                               ), 0) as cnt1,
+                        ifnull((
+                                   SELECT count(Z.gender) FROM survey_log_attend Z WHERE Z.event_id = A.event_id AND Z.gender = A.gender  AND date(Z.created_date) = #{searchDay} GROUP BY Z.gender
+                               ), 0) as cnt1_1,
+                        ifnull((
+                                   SELECT count(ZZ.gender) FROM survey_log_attend ZZ WHERE ZZ.event_id = A.event_id AND ZZ.gender = A.gender AND is_submit = true GROUP BY ZZ.gender
+                               ), 0) as cnt2,
+                        ifnull((
+                                   SELECT count(ZZ.gender) FROM survey_log_attend ZZ WHERE ZZ.event_id = A.event_id AND ZZ.gender = A.gender AND is_submit = true AND date(ZZ.created_date) = #{searchDay} GROUP BY ZZ.gender
+                               ), 0) as cnt2_1
+                 FROM
+                     survey_log_attend A
+                 WHERE A.event_id = #{eventId}
+                   AND A.gender IS NOT NULL
+                 GROUP BY A.gender
+             ) T
+        ORDER BY T.gender DESC
+    </select>
+
+    <select id="selectSurveyConnectionStaticsGroupByAge" resultType="kr.co.syrup.adreport.web.event.mybatis.vo.SurveyConnectionStaticsMapperVO">
+        SELECT
+            T.age, concat(T.cnt1, '/', T.cnt1_1) as attendCnt, concat(T.cnt2, '/', T.cnt2_1) as successCnt
+        FROM (
+                 SELECT A.age,
+                        ifnull((
+                                   SELECT count(Z.age) from survey_log_attend Z WHERE Z.event_id = A.event_id AND Z.age = A.age GROUP BY Z.age
+                               ), 0) as cnt1,
+                        ifnull((
+                                   SELECT count(Z.age) from survey_log_attend Z WHERE Z.event_id = A.event_id AND Z.age = A.age  AND date(Z.created_date) = #{searchDay} GROUP BY Z.age
+                               ), 0) as cnt1_1,
+                        ifnull((
+                                   SELECT count(ZZ.age) from survey_log_attend ZZ WHERE ZZ.event_id = A.event_id AND ZZ.age = A.age AND is_submit = true GROUP BY ZZ.age
+                               ), 0) as cnt2,
+                        ifnull((
+                                   SELECT count(ZZ.age) from survey_log_attend ZZ WHERE ZZ.event_id = A.event_id AND ZZ.age = A.age AND is_submit = true AND date(ZZ.created_date) = #{searchDay} GROUP BY ZZ.age
+                               ), 0) as cnt2_1
+                 FROM
+                     survey_log_attend A
+                 WHERE A.event_id = #{eventId}
+                   AND A.age IS NOT NULL
+                 GROUP BY A.age
+             ) T
+        ORDER BY T.age ASC
+    </select>
+
+    <select id="selectSurveyConnectionStaticsGroupByAge2" resultType="kr.co.syrup.adreport.web.event.mybatis.vo.SurveyConnectionStaticsMapperVO">
+        SELECT T.age, CONCAT(T.cnt, '/', T.cnt2) as attendCnt
+        FROM (
+        SELECT A.age,count(*) as cnt,
+        (
+        SELECT count(*) as cnt
+        FROM survey_log_attend Z
+        WHERE Z.age is NOT NULL
+        AND Z.event_id = A.event_id
+        AND Z.age = A.age
+        AND DATE(created_date) = #{searchDay}
+        <if test="isSubmit != null">
+            <if test="isSubmit == true">
+                AND is_submit = true
+            </if>
+        </if>
+        ) as cnt2
+        FROM survey_log_attend A
+        WHERE A.age is NOT NULL
+        AND A.event_id = #{eventId}
+        AND A.age = #{age}
+        <if test="isSubmit != null">
+            <if test="isSubmit == true">
+                AND is_submit = true
+            </if>
+        </if>
+        ) T
+    </select>
+
+    <select id="selectSurveySuccessSubmit" resultType="String">
+        SELECT concat(B.cnt1, '/', B.cnt2)
+        FROM
+            (
+                SELECT count(*) as cnt1,
+                       (
+                           SELECT count(*) FROM survey_log_attend Z
+                           WHERE Z.event_id = A.event_id
+                             AND Z.is_submit = true
+                             AND date(Z.created_date) = #{searchDay}
+                       ) as cnt2
+                FROM survey_log_attend A
+                WHERE A.event_id = #{eventId}
+            ) B
+    </select>
+
+    <select id="selectCommonLogPvStatics" resultType="kr.co.syrup.adreport.web.event.mybatis.vo.CommonLogPvMapperVO">
+        SELECT Z.count, IFNULL( date_format( Z.date, '%Y.%m.%d' ), 'total') as date, Z.log_key  FROM (
+                                                                                                         SELECT count(*) as count, DATE(created_date) as date, log_key
+                                                                                                         FROM common_log_pv
+                                                                                                         WHERE event_name = #{eventName}
+                                                                                                           AND log_key = #{logKey}
+                                                                                                           AND DATE(created_date) BETWEEN #{startDate} AND #{endDate}
+                                                                                                         GROUP BY date(created_date) WITH ROLLUP
+                                                                                                     )Z
+    </select>
+
+    <select id="selectSurveyLogByGender" resultType="kr.co.syrup.adreport.web.event.mybatis.vo.SurveyConnectionStaticsMapperVO">
+        SELECT gender, count(*) as cnt FROM survey_log_attend
+        WHERE event_id = #{eventId}
+        AND gender = #{gender}
+        <if test="searchDay != '' and searchDay != null">
+            AND DATE(created_date) = #{searchDay}
+        </if>
+        <if test="isSubmit != null">
+            <if test="isSubmit == true">
+                AND is_submit = true
+            </if>
+        </if>
+    </select>
+
+    <select id="selectSurveyLogByAge" resultType="kr.co.syrup.adreport.web.event.mybatis.vo.SurveyConnectionStaticsMapperVO">
+        SELECT gender, count(*) as cnt FROM survey_log_attend
+        WHERE event_id = #{eventId}
+        AND age = #{age}
+        <if test="searchDay != '' and searchDay != null">
+            AND DATE(created_date) = #{searchDay}
+        </if>
+        <if test="isSubmit != null">
+            <if test="isSubmit == true">
+                AND is_submit = true
+            </if>
+        </if>
+    </select>
+
+    <select id="selectPhotoPrintResultStatics" resultType="kr.co.syrup.adreport.web.event.mybatis.vo.PhotoPrintResultMapperVO">
+        WITH
+            event_log_pv_with as (
+                SELECT event_id, action_id, created_date FROM event_log_pv
+                WHERE event_id = #{eventId}
+                  AND page_id = '/main/photo'
+            ),
+            event_log_pv_with_date as (
+                SELECT action_id, created_date FROM event_log_pv_with
+                WHERE date(created_date) = #{searchDate}
+            ),
+            main_photo_all as (
+                SELECT count(*) as main_photo_all  FROM event_log_pv_with
+                WHERE action_id = ''
+            ),
+            main_photo_date as (
+                SELECT count(*) as main_photo_date FROM event_log_pv_with_date
+                WHERE action_id = ''
+            ),
+
+            save_click_all as (
+                SELECT count(*) as save_click_all  FROM event_log_pv_with
+                WHERE action_id = 'tap.btn_1'
+            ),
+            save_click_date as (
+                SELECT count(*) as save_click_date FROM event_log_pv_with_date
+                WHERE action_id = 'tap.btn_1'
+            ),
+
+            share_click_all as (
+                SELECT count(*) as share_click_all  FROM event_log_pv_with
+                WHERE action_id = 'tap.btn_2'
+            ),
+            share_click_date as (
+                SELECT count(*) as share_click_date FROM event_log_pv_with_date
+                WHERE action_id = 'tap.btn_2'
+            ),
+
+            hashtag_click_all as (
+                SELECT count(*) as hashtag_click_all  FROM event_log_pv_with
+                WHERE action_id = 'tap.btn_3'
+            ),
+            hashtag_click_date as (
+                SELECT count(*) as hashtag_click_date FROM event_log_pv_with_date
+                WHERE action_id = 'tap.btn_3'
+            ),
+
+            print_click_all as (
+                SELECT count(*) as print_click_all  FROM event_log_pv_with
+                WHERE action_id = 'tap.btn_5'
+            ),
+            print_click_date as (
+                SELECT count(*) as print_click_date FROM event_log_pv_with_date
+                WHERE action_id = 'tap.btn_5'
+            )
+
+        SELECT CONCAT(main_photo_all, '/', main_photo_date) as main_photo_cnt,
+               CONCAT(save_click_all, '/', save_click_date) as save_click_cnt,
+               CONCAT(share_click_all, '/', share_click_date) as share_click_cnt,
+               CONCAT(hashtag_click_all, '/', hashtag_click_date) as hashtag_click_cnt,
+               CONCAT(print_click_all, '/', print_click_date) as print_click_cnt
+
+        FROM
+            main_photo_all,
+            main_photo_date,
+            save_click_all,
+            save_click_date,
+            share_click_all,
+            share_click_date,
+            hashtag_click_all,
+            hashtag_click_date,
+            print_click_all,
+            print_click_date
+    </select>
+
+    <select id="selectPhotoBoxStatics" resultType="kr.co.syrup.adreport.web.event.mybatis.vo.PhotoBoxStaticsMapperVO">
+        WITH
+            event_log_pv_with as (
+                SELECT event_id, action_id, created_date FROM event_log_pv
+                WHERE event_id = #{eventId}
+                  AND page_id = '/main/photobox'
+            ),
+            event_log_pv_with_date as (
+                SELECT action_id, created_date FROM event_log_pv_with
+                WHERE date(created_date) = #{searchDate}
+            ),
+            photobox_all as (
+                SELECT count(*) as photobox_all  FROM event_log_pv_with
+                WHERE action_id = ''
+            ),
+            photobox_date as (
+                SELECT count(*) as photobox_date FROM event_log_pv_with_date
+                WHERE action_id = ''
+            ),
+
+            photo_log_print_with as (
+                SELECT * FROM photo_log_print_count
+                WHERE event_id = #{eventId}
+            ),
+            photo_log_print_with_date as (
+                SELECT * FROM photo_log_print_with
+                WHERE date(created_date) = #{searchDate}
+            ),
+            photo_log_request_all as (
+                SELECT count(*) as photo_log_request_all FROM photo_log_print_with
+            ),
+            photo_log_request_all_date as (
+                SELECT count(*) as photo_log_request_all_date FROM photo_log_print_with_date
+            ),
+            photo_log_success_all as (
+                SELECT count(*) as photo_log_success_all FROM photo_log_print_with WHERE print_result_status != 'FAIL'
+            ),
+            photo_log_success_all_date as (
+                SELECT count(*) as photo_log_success_all_date FROM photo_log_print_with_date WHERE print_result_status != 'FAIL'
+            ),
+            photo_log_fail_all as (
+                SELECT count(*) as photo_log_fail_all FROM photo_log_print_with WHERE print_result_status = 'FAIL'
+            ),
+            photo_log_fail_all_date as (
+                SELECT count(*) as photo_log_fail_all_date FROM photo_log_print_with_date WHERE print_result_status = 'FAIL'
+            )
+
+        SELECT
+            CONCAT(photobox_all, '/', photobox_date) as photobox_cnt,
+            CONCAT(photo_log_request_all, '/', photo_log_request_all_date) as print_request_cnt,
+            CONCAT(photo_log_success_all, '/', photo_log_success_all_date) as print_success_cnt,
+            CONCAT(photo_log_fail_all, '/', photo_log_fail_all_date) as print_fail_cnt
+        FROM
+            photobox_all,
+            photobox_date,
+            photo_log_request_all,
+            photo_log_request_all_date,
+            photo_log_success_all,
+            photo_log_success_all_date,
+            photo_log_fail_all,
+            photo_log_fail_all_date
+    </select>
+
+    <select id="selectStampTrStatics" resultType="String">
+        SELECT CONCAT( IFNULL(Z.cnt, 0), '/',  IFNULL(ZZ.cnt, 0) ) as cnt FROM
+            (
+                SELECT count(*) as cnt, stp_pan_tr_id
+                FROM stamp_event_log_tr
+                WHERE stp_id = #{stpId}
+                  AND stp_pan_tr_id = #{stpPanTrId}
+            ) Z
+                LEFT JOIN
+            (
+                SELECT count(*) as cnt, stp_pan_tr_id
+                FROM stamp_event_log_tr
+                WHERE stp_id = #{stpId}
+                  AND stp_pan_tr_id = #{stpPanTrId}
+                  AND date(created_date) = #{searchDate}
+            ) ZZ
+            ON Z.stp_pan_tr_id = ZZ.stp_pan_tr_id
+    </select>
+
+    <select id="selectStampPerformanceStaticsList" resultType="string">
+        SELECT CONCAT(IFNULL(Z.cnt, 0), '/', IFNULL(ZZ.cnt, 0)) as cnt
+        FROM
+        (
+        SELECT
+        <if test="eventWinningSort == 0"> '0' as event_winning_sort, </if>
+        <if test="eventWinningSort > 0"> event_winning_sort, </if>
+        count(*) as cnt
+        FROM stamp_event_log_winning_success
+        WHERE stp_id = #{stpId}
+        <if test="eventWinningSort > 0">
+            AND event_winning_sort = #{eventWinningSort}
+        </if>
+        AND stp_give_away_id = 0
+        ) Z
+        LEFT JOIN
+        (
+        SELECT
+        <if test="eventWinningSort == 0">'0' as event_winning_sort,</if>
+        <if test="eventWinningSort > 0">event_winning_sort,</if>
+        count(*) as cnt
+        FROM stamp_event_log_winning_success
+        WHERE stp_id = #{stpId}
+        <if test="eventWinningSort > 0">
+            AND event_winning_sort = #{eventWinningSort}
+        </if>
+        AND created_day = #{searchDay}
+        AND stp_give_away_id = 0
+        ) ZZ
+        ON Z.event_winning_sort = ZZ.event_winning_sort
+
+        UNION ALL
+
+        SELECT CONCAT(IFNULL(Z.cnt, 0), '/', IFNULL(ZZ.cnt, 0)) as cnt
+        FROM
+        (
+        SELECT
+        <if test="eventWinningSort == 0">'0' as event_winning_sort,</if>
+        <if test="eventWinningSort > 0">event_winning_sort,</if>
+        count(*) as cnt
+        FROM stamp_event_log_winning_success
+        WHERE stp_id = #{stpId}
+        <if test="eventWinningSort > 0">
+            AND event_winning_sort = #{eventWinningSort}
+        </if>
+        AND stp_give_away_id > 0
+        ) Z
+        LEFT JOIN
+        (
+        SELECT
+        <if test="eventWinningSort == 0">'0' as event_winning_sort,</if>
+        <if test="eventWinningSort > 0">event_winning_sort,</if>
+        count(*) as cnt
+        FROM stamp_event_log_winning_success
+        WHERE stp_id = #{stpId}
+        <if test="eventWinningSort > 0">
+            AND event_winning_sort = #{eventWinningSort}
+        </if>
+        AND created_day = #{searchDay}
+        AND stp_give_away_id > 0
+        ) ZZ
+        ON Z.event_winning_sort = ZZ.event_winning_sort
+
+    </select>
+
+    <select id="selectTotalPageStampConnectStaticsCount" resultType="int">
+        SELECT count(*)
+        FROM stamp_event_log_connect
+        WHERE stp_id = #{stpId}
+        AND connect_type = #{connectType}
+        <if test="searchDay != '' and searchDay != null">
+            AND created_day = #{searchDay}
+        </if>
+    </select>
+
+    <select id="selectWinningButtonAddFileNameListByEventId" resultType="kr.co.syrup.adreport.web.event.mybatis.vo.EventGiveAwayDeliveryButtonAddMapperVO">
+        SELECT ar_event_winning_button_add_id, field_name FROM ar_event_winning_button_add
+        WHERE ar_event_winning_button_id IN (
+            SELECT ar_event_winning_button_id
+            FROM ar_event_winning_button A
+                     INNER JOIN ar_event_winning B
+                                ON A.ar_event_winning_id = B.ar_event_winning_id
+                     INNER JOIN ar_event C
+                                ON B.ar_event_id = C.ar_event_id
+            WHERE event_id = #{eventId}
+        )
+    </select>
+
+    <select id="selectEventGiveAwayDeliveryButtonAddByGiveAwayId" resultType="kr.co.syrup.adreport.web.event.mybatis.vo.EventGiveAwayDeliveryButtonAddMapperVO">
+        SELECT B.ar_event_winning_button_add_id, IFNULL(A.field_value, '정보없음') as field_value FROM event_give_away_delivery_button_add A
+                                                                                                       LEFT JOIN ar_event_winning_button_add B
+                                                                                                                 ON A.ar_event_winning_button_add_id = B.ar_event_winning_button_add_id
+        WHERE give_away_id = #{giveAwayId}
+    </select>
+
+    <select id="selectStampEventGiveAwayDeliveryButtonAddByStpGiveAwayId" resultType="kr.co.syrup.adreport.web.event.mybatis.vo.EventGiveAwayDeliveryButtonAddMapperVO">
+        SELECT B.ar_event_winning_button_add_id, IFNULL(A.field_value, '정보없음') as field_value
+        FROM stamp_event_give_away_delivery_button_add A
+                 LEFT JOIN ar_event_winning_button_add B
+                           ON A.ar_event_winning_button_add_id = B.ar_event_winning_button_add_id
+        WHERE A.stp_give_away_id = #{stpGiveAwayId}
+    </select>
+
+    <insert id="saveAnswerList" parameterType="map">
+        INSERT INTO survey_answer_statics
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <foreach collection="titleList" item="title">
+                    ${title},
+                </foreach>
+            </trim>
+        VALUES
+        <foreach collection="answerList" item="answer" separator=",">
+         (
+            <foreach collection="answer" item="value" separator=",">
+                #{value}
+            </foreach>
+         )
+        </foreach>
+    </insert>
+
+    <select id="selectAnswerStaticsListByEventId" resultType="map">
+        SELECT * FROM survey_answer_statics
+        WHERE event_id = #{eventId}
+        <if test="start != null">
+            limit #{start}, #{limit}
+        </if>
+    </select>
+
+</mapper>

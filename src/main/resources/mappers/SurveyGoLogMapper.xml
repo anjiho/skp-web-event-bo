@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="kr.co.syrup.adreport.survey.go.mybatis.mapper.SurveyGoLogMapper">
+
+    <select id="countBySurveyLogAttendByEventIdAndGenderAndAge" resultType="Integer">
+        SELECT ifnull(count(survey_log_attend_id), 0)
+        FROM survey_log_attend
+        WHERE event_id = #{eventId}
+          <if test="isAllGender == true">
+              AND gender IS NOT NULL
+          </if>
+          <if test="isAllGender == false">
+            AND gender = #{gender}
+          </if>
+          <if test="isAllAge == true">
+              AND age IS NOT NULL
+          </if>
+          <if test="isAllAge == false">
+              AND age = #{age}
+          </if>
+    </select>
+
+    <select id="countSurveyLogAttendByEventIdAndPhoneNumberOrAttendCode" resultType="int">
+        SELECT count(*)
+        FROM survey_log_attend
+        WHERE event_id = #{eventId}
+        <if test="phoneNumber != '' and phoneNumber != null">
+            AND phone_number = #{phoneNumber}
+        </if>
+        <if test="attendCode != '' and attendCode != null">
+            AND attend_code = #{attendCode}
+        </if>
+        <if test='todayYn == "Y"'>
+            AND DATE(created_date) = DATE(now())
+        </if>
+    </select>
+
+    <select id="selectSurveyLogAttendResultByAttendIdAndArEventId" resultType="kr.co.syrup.adreport.survey.go.mybatis.vo.SurveyLogAttendResultResVO">
+        SELECT ZZ.survey_log_attend_id,
+               ZZ.survey_subject_id,
+               ZZ.survey_example_id,
+               ZZ.example_sort,
+               ZZ.is_answer,
+               ZZ.question_answer,
+               ZZ.created_date,
+               ZZ.ar_event_id,
+               ZZ.subject_sort,
+
+               CASE
+                   WHEN ZZ.example_choice_type = 'OX' THEN CONCAT (ZZ.example_sort, '(', IF( ZZ.example_sort = 1, 'O', 'X' ), ')' )
+                   WHEN ZZ.example_choice_type = 'IMG' THEN CONCAT('이미지형', '(', ZZ.example_sort, ')')
+                   WHEN ZZ.example_choice_type = 'SCALE' THEN CONCAT('척도형', '(', ZZ.example_sort, ')')
+                   ELSE CONCAT(ZZ.example_sort, '(', ZZ.example_title, ')')
+               END as example_title
+        FROM (
+                 SELECT Z.*,
+                        (
+                            SELECT example_title
+                            FROM survey_example T
+                            INNER JOIN survey_subject TT
+                            ON T.survey_subject_id = TT.survey_subject_id
+                            WHERE T.sort = Z.example_sort
+                            AND TT.sort = Z.subject_sort
+                            AND TT.ar_event_id = #{arEventId}
+                        ) as example_title,
+                        (
+                            SELECT example_choice_type
+                            FROM survey_example T
+                            INNER JOIN survey_subject TT
+                            ON T.survey_subject_id = TT.survey_subject_id
+                            WHERE T.sort = Z.example_sort
+                            AND TT.sort = Z.subject_sort
+                            AND TT.ar_event_id = #{arEventId}
+                        ) as example_choice_type
+                 FROM (
+                        SELECT A.survey_log_attend_id,
+                              A.survey_subject_id,
+                              A.survey_example_id,
+                              A.example_sort,
+                              A.is_answer,
+                              A.question_answer,
+                              A.created_date,
+                              B.ar_event_id,
+                              (SELECT subject_sort FROM survey_subject R WHERE R.ar_event_id = B.ar_event_id AND R.sort = A.subject_sort) as subject_sort
+                        FROM survey_log_attend_result A
+                        LEFT JOIN survey_log_attend B
+                        ON A.survey_log_attend_id = B.survey_log_attend_id
+                        WHERE B.ar_event_id = #{arEventId}
+                        AND B.survey_log_attend_id = #{surveyLogAttendId}
+                       ) Z
+            )ZZ
+    </select>
+
+    <select id="selectSurveyLogAttendResultByAttendIdAndArEventId2" resultType="kr.co.syrup.adreport.survey.go.mybatis.vo.SurveyLogAttendResultResVO">
+        SELECT ZZ.survey_log_attend_id,
+               ZZ.survey_subject_id,
+               ZZ.survey_example_id,
+               ZZ.example_sort,
+               ZZ.is_answer,
+               ZZ.question_answer,
+               ZZ.created_date,
+               ZZ.ar_event_id,
+               ZZ.subject_sort,
+
+               CASE
+                   WHEN ZZ.example_choice_type = 'OX' THEN CONCAT (ZZ.example_sort, '(', IF( ZZ.example_sort = 1, 'O', 'X' ), ')' )
+                   WHEN ZZ.example_choice_type = 'IMG' THEN CONCAT('이미지형', '(', ZZ.example_sort, ')')
+                   WHEN ZZ.example_choice_type = 'SCALE' THEN CONCAT('척도형', '(', ZZ.example_sort, ')')
+                   ELSE CONCAT(ZZ.example_sort, '(', ZZ.example_title, ')')
+                   END as example_title
+        FROM (
+                 SELECT Z.*,
+                        (
+                            SELECT example_title
+                            FROM survey_example T
+                                     INNER JOIN survey_subject TT
+                                                ON T.survey_subject_id = TT.survey_subject_id
+                            WHERE T.sort = Z.example_sort
+                              AND TT.sort = Z.subject_sort
+                              AND TT.ar_event_id = #{arEventId}
+                        ) as example_title,
+                        (
+                            SELECT example_choice_type
+                            FROM survey_example T
+                                     INNER JOIN survey_subject TT
+                                                ON T.survey_subject_id = TT.survey_subject_id
+                            WHERE T.sort = Z.example_sort
+                              AND TT.sort = Z.subject_sort
+                              AND TT.ar_event_id = #{arEventId}
+                        ) as example_choice_type
+                 FROM (
+                          SELECT A.survey_log_attend_id,
+                                 A.survey_subject_id,
+                                 A.survey_example_id,
+                                 A.example_sort,
+                                 A.is_answer,
+                                 A.question_answer,
+                                 A.created_date,
+                                 B.ar_event_id,
+                                 (SELECT subject_sort FROM survey_subject R WHERE R.ar_event_id = B.ar_event_id AND R.sort = A.subject_sort) as subject_sort
+                          FROM survey_log_attend_result A
+                                   LEFT JOIN survey_log_attend B
+                                             ON A.survey_log_attend_id = B.survey_log_attend_id
+                          WHERE B.ar_event_id = #{arEventId}
+                            AND B.survey_log_attend_id IN
+                            <foreach collection="surveyLogAttendIdList" item="surveyLogAttendId" separator="," open="(" close=")">
+                                #{surveyLogAttendId}
+                            </foreach>
+                      ) Z
+             )ZZ
+    </select>
+
+    <select id="selectSurveyLogAttendResultByAttendIdInAndArEventId" resultType="kr.co.syrup.adreport.survey.go.mybatis.vo.SurveyLogAttendResultResVO">
+        SELECT ZZ.survey_log_attend_id,
+               ZZ.survey_subject_id,
+               ZZ.survey_example_id,
+               ZZ.example_sort,
+               ZZ.is_answer,
+               ZZ.question_answer,
+               ZZ.created_date,
+               ZZ.ar_event_id,
+               ZZ.subject_sort,
+
+               CASE
+                   WHEN ZZ.example_choice_type = 'OX' THEN CONCAT (ZZ.example_sort, '(', IF( ZZ.example_sort = 1, 'O', 'X' ), ')' )
+                   WHEN ZZ.example_choice_type = 'IMG' THEN CONCAT('이미지형', '(', ZZ.example_sort, ')')
+                   WHEN ZZ.example_choice_type = 'SCALE' THEN CONCAT('척도형', '(', ZZ.example_sort, ')')
+                   ELSE CONCAT(ZZ.example_sort, '(', ZZ.example_title, ')')
+                   END as example_title
+        FROM (
+                 SELECT Z.*,
+                        (
+                            SELECT example_title
+                            FROM survey_example T
+                                     INNER JOIN survey_subject TT
+                                                ON T.survey_subject_id = TT.survey_subject_id
+                            WHERE T.sort = Z.example_sort
+                              AND TT.sort = Z.subject_sort
+                              AND TT.ar_event_id = #{arEventId}
+                        ) as example_title,
+                        (
+                            SELECT example_choice_type
+                            FROM survey_example T
+                                     INNER JOIN survey_subject TT
+                                                ON T.survey_subject_id = TT.survey_subject_id
+                            WHERE T.sort = Z.example_sort
+                              AND TT.sort = Z.subject_sort
+                              AND TT.ar_event_id = #{arEventId}
+                        ) as example_choice_type
+                 FROM (
+                          SELECT A.survey_log_attend_id,
+                                 A.survey_subject_id,
+                                 A.survey_example_id,
+                                 A.example_sort,
+                                 A.is_answer,
+                                 A.question_answer,
+                                 A.created_date,
+                                 B.ar_event_id,
+                                 (SELECT subject_sort FROM survey_subject R WHERE R.ar_event_id = B.ar_event_id AND R.sort = A.subject_sort) as subject_sort
+                          FROM survey_log_attend_result A
+                                   LEFT JOIN survey_log_attend B
+                                             ON A.survey_log_attend_id = B.survey_log_attend_id
+                          WHERE B.ar_event_id = #{arEventId}
+                            <choose>
+                                <when test="surveyLogAttendIdList.size != 0">
+                                    AND B.survey_log_attend_id IN
+                                    <foreach collection="surveyLogAttendIdList" item="surveyLogAttendId" separator="," open="(" close=")">
+                                        #{surveyLogAttendId}
+                                    </foreach>
+                                </when>
+                            </choose>
+                      ) Z
+             )ZZ
+    </select>
+
+    <update id="updateSurveyLogAttend">
+        UPDATE survey_log_attend
+        <set>
+            <if test="gender != '' and gender != null">
+                gender = #{gender},
+            </if>
+            <if test="age != null">
+                age = #{age},
+            </if>
+            <if test="isSubmit != null">
+                is_submit = #{isSubmit},
+            </if>
+            <if test="giveAwayId != null">
+                give_away_id = #{giveAwayId},
+            </if>
+            <if test="phoneNumber != null">
+                phone_number = #{phoneNumber},
+            </if>
+        </set>
+        <where>
+            survey_log_attend_id = #{surveyLogAttendId}
+        </where>
+    </update>
+
+    <insert id="insertSurveyLogAttendResult" parameterType="list">
+        INSERT INTO survey_log_attend_result
+        (survey_log_attend_id, survey_subject_id, survey_example_id, subject_sort, example_sort, is_answer, question_answer)
+        VALUES
+        <foreach collection="list" item="item" separator=",">
+        (
+            #{item.surveyLogAttendId},
+            #{item.surveySubjectId},
+            #{item.surveyExampleId},
+            #{item.subjectSort},
+            #{item.exampleSort},
+            #{item.isAnswer},
+            #{item.questionAnswer}
+        )
+        </foreach>
+    </insert>
+</mapper>

@@ -1,0 +1,520 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="kr.co.syrup.adreport.stamp.event.mybatis.mapper.StampSodarMapper">
+    
+    <resultMap id="selectStampAlimtokInfoMap" type="kr.co.syrup.adreport.stamp.event.dto.response.StampAlimtokInfoResDto">
+        <result property="stpAlimtokId" column="stp_alimtok_id"/>
+        <result property="stpId" column="stp_id"/>
+        <result property="stpAlimtokTxt" column="stp_alimtok_txt"/>
+        <result property="stpAlimtokSendType" column="stp_alimtok_send_type"/>
+        <collection property="stampAlimtokButtonList" javaType="java.util.ArrayList" resultMap="stampAlimtokButtonMap"/>
+    </resultMap>
+    <resultMap id="stampAlimtokButtonMap" type="kr.co.syrup.adreport.stamp.event.model.StampAlimtokButtonModel">
+        <result property="stpAlimtokBtnId" column="stp_alimtok_btn_id"/>
+        <result property="stpAlimtokBtnTxt" column="stp_alimtok_btn_txt"/>
+        <result property="stpAlimtokBtnUrl" column="stp_alimtok_btn_url"/>
+        <result property="stpAlimtokBtnSort" column="stp_alimtok_btn_sort"/>
+    </resultMap>
+
+    <insert id="upsertStampEventMain" parameterType="kr.co.syrup.adreport.stamp.event.model.StampEventMainModel">
+        -- 해당 PK가 없으면 Insert 있으면 Update
+        INSERT INTO STAMP_EVENT_MAIN
+        (stp_id,
+         event_id,
+         stp_event_title,
+         stp_main_setting_yn,
+         stp_attend_auth_condition,
+         stp_attend_code_reg_type,
+         stp_attend_code_digit,
+         stp_attend_code_count,
+         stp_attend_code_file_name,
+         stp_attend_code_mis_txt,
+         alimtok_send_yn,
+         duplicate_winning_type,
+         duplicate_winning_limit_type,
+         duplicate_winning_count,
+         winning_raffle_start_point,
+         stp_winning_type,
+         stp_bg_img_url,
+         stp_main_bg_color_assign_type,
+         stp_main_bg_color_input_type,
+         stp_main_bg_color_red,
+         stp_main_bg_color_green,
+         stp_main_bg_color_blue,
+         stp_main_bg_color_hex,
+         stp_attend_sort_setting_yn,
+         created_by,
+         created_date)
+        VALUES
+            (#{stpId},
+             #{eventId},
+             #{stpEventTitle},
+             #{stpMainSettingYn},
+             #{stpAttendAuthCondition},
+             #{stpAttendCodeRegType},
+             #{stpAttendCodeDigit},
+             #{stpAttendCodeCount},
+             #{stpAttendCodeFileName},
+             #{stpAttendCodeMisTxt},
+             #{alimtokSendYn},
+             #{duplicateWinningType},
+             #{duplicateWinningLimitType},
+             #{duplicateWinningCount},
+             #{winningRaffleStartPoint},
+             #{stpWinningType},
+             #{stpBgImgUrl},
+             #{stpMainBgColorAssignType},
+             #{stpMainBgColorInputType},
+             #{stpMainBgColorRed},
+             #{stpMainBgColorGreen},
+             #{stpMainBgColorBlue},
+             #{stpMainBgColorHex},
+             #{stpAttendSortSettingYn},
+             #{createdBy},
+             NOW())
+            ON DUPLICATE KEY UPDATE
+                                 stp_event_title = #{stpEventTitle},
+                                 stp_main_setting_yn = #{stpMainSettingYn},
+                                 stp_attend_auth_condition = #{stpAttendAuthCondition},
+                                 stp_attend_code_reg_type = #{stpAttendCodeRegType},
+                                 stp_attend_code_digit = #{stpAttendCodeDigit},
+                                 stp_attend_code_count = #{stpAttendCodeCount},
+                                 stp_attend_code_file_name = #{stpAttendCodeFileName},
+                                 stp_attend_code_mis_txt = #{stpAttendCodeMisTxt},
+                                 alimtok_send_yn = #{alimtokSendYn},
+                                 duplicate_winning_type = #{duplicateWinningType},
+                                 duplicate_winning_limit_type = #{duplicateWinningLimitType},
+                                 duplicate_winning_count = #{duplicateWinningCount},
+                                 winning_raffle_start_point = #{winningRaffleStartPoint},
+                                 stp_winning_type = #{stpWinningType},
+                                 stp_bg_img_url = #{stpBgImgUrl},
+                                 stp_main_bg_color_assign_type = #{stpMainBgColorAssignType},
+                                 stp_main_bg_color_input_type = #{stpMainBgColorInputType},
+                                 stp_main_bg_color_red = #{stpMainBgColorRed},
+                                 stp_main_bg_color_green = #{stpMainBgColorGreen},
+                                 stp_main_bg_color_blue = #{stpMainBgColorBlue},
+                                 stp_main_bg_color_hex = #{stpMainBgColorHex},
+                                 stp_attend_sort_setting_yn = #{stpAttendSortSettingYn},
+                                 last_modified_by = #{lastModifiedBy},
+                                 last_modified_date = NOW()
+        <selectKey resultType="int" keyProperty="stpId" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+
+    <insert id="upsertStampEventPan" parameterType="kr.co.syrup.adreport.stamp.event.model.StampEventPanModel">
+        -- 해당 PK가 없으면 Insert 있으면 Update
+        INSERT INTO STAMP_EVENT_PAN
+        (stp_pan_id,
+         stp_id,
+         stp_pan_title,
+         stp_event_title_use_yn,
+         stp_pan_theme,
+         stp_number,
+         stp_pan_img_url,
+         attend_sort_setting_yn,
+         stp_img_setting_type,
+         stp_pan_txt_color_assign_type,
+         stp_pan_txt_color_input_type,
+         stp_pan_txt_color_red,
+         stp_pan_txt_color_green,
+         stp_pan_txt_color_blue,
+         stp_pan_txt_color_hex,
+         information_provision_agreement_text_setting,
+         information_provision_recipient,
+         information_provision_consignor,
+         information_provision_purpose_use,
+         stp_pan_bg_img_url_1,
+         stp_pan_bg_img_url_2,
+         stp_pan_bg_color_assign_type,
+         stp_pan_bg_color_input_type,
+         stp_pan_bg_color_red,
+         stp_pan_bg_color_green,
+         stp_pan_bg_color_blue,
+         stp_pan_bg_color_hex,
+         stp_pan_add_txt_color_assign_type,
+         stp_pan_add_txt_color_input_type,
+         stp_pan_add_txt_color_red,
+         stp_pan_add_txt_color_green,
+         stp_pan_add_txt_color_blue,
+         stp_pan_add_txt_color_hex,
+         attend_sort_guide_txt,
+         attend_sort_end_txt,
+         attend_sort_txt_color_assign_type,
+         attend_sort_txt_color_input_type,
+         attend_sort_txt_color_red,
+         attend_sort_txt_color_green,
+         attend_sort_txt_color_blue,
+         attend_sort_txt_color_hex,
+         created_by,
+         created_date)
+        VALUES
+            (#{stpPanId},
+             #{stpId},
+             #{stpPanTitle},
+             #{stpEventTitleUseYn},
+             #{stpPanTheme},
+             #{stpNumber},
+             #{stpPanImgUrl},
+             #{attendSortSettingYn},
+             #{stpImgSettingType},
+             #{stpPanTxtColorAssignType},
+             #{stpPanTxtColorInputType},
+             #{stpPanTxtColorRed},
+             #{stpPanTxtColorGreen},
+             #{stpPanTxtColorBlue},
+             #{stpPanTxtColorHex},
+             #{informationProvisionAgreementTextSetting},
+             #{informationProvisionRecipient},
+             #{informationProvisionConsignor},
+             #{informationProvisionPurposeUse},
+             #{stpPanBgImgUrl1},
+             #{stpPanBgImgUrl2},
+             #{stpPanBgColorAssignType},
+             #{stpPanBgColorInputType},
+             #{stpPanBgColorRed},
+             #{stpPanBgColorGreen},
+             #{stpPanBgColorBlue},
+             #{stpPanBgColorHex},
+             #{stpPanAddTxtColorAssignType},
+             #{stpPanAddTxtColorInputType},
+             #{stpPanAddTxtColorRed},
+             #{stpPanAddTxtColorGreen},
+             #{stpPanAddTxtColorBlue},
+             #{stpPanAddTxtColorHex},
+             #{attendSortGuideTxt},
+             #{attendSortEndTxt},
+             #{attendSortTxtColorAssignType},
+             #{attendSortTxtColorInputType},
+             #{attendSortTxtColorRed},
+             #{attendSortTxtColorGreen},
+             #{attendSortTxtColorBlue},
+             #{attendSortTxtColorHex},
+             #{createdBy},
+             NOW())
+            ON DUPLICATE KEY UPDATE
+                                 stp_id = #{stpId},
+                                 stp_pan_title = #{stpPanTitle},
+                                 stp_event_title_use_yn = #{stpEventTitleUseYn},
+                                 stp_pan_theme = #{stpPanTheme},
+                                 stp_number = #{stpNumber},
+                                 stp_pan_img_url = #{stpPanImgUrl},
+                                 attend_sort_setting_yn = #{attendSortSettingYn},
+                                 stp_img_setting_type = #{stpImgSettingType},
+                                 stp_pan_txt_color_assign_type = #{stpPanTxtColorAssignType},
+                                 stp_pan_txt_color_input_type = #{stpPanTxtColorInputType},
+                                 stp_pan_txt_color_red = #{stpPanTxtColorRed},
+                                 stp_pan_txt_color_green = #{stpPanTxtColorGreen},
+                                 stp_pan_txt_color_blue = #{stpPanTxtColorBlue},
+                                 stp_pan_txt_color_hex = #{stpPanTxtColorHex},
+                                 information_provision_agreement_text_setting = #{informationProvisionAgreementTextSetting},
+                                 information_provision_recipient = #{informationProvisionRecipient},
+                                 information_provision_consignor = #{informationProvisionConsignor},
+                                 information_provision_purpose_use = #{informationProvisionPurposeUse},
+                                 stp_pan_bg_img_url_1 = #{stpPanBgImgUrl1},
+                                 stp_pan_bg_img_url_2 = #{stpPanBgImgUrl2},
+                                 stp_pan_bg_color_assign_type = #{stpPanBgColorAssignType},
+                                 stp_pan_bg_color_input_type = #{stpPanBgColorInputType},
+                                 stp_pan_bg_color_red = #{stpPanBgColorRed},
+                                 stp_pan_bg_color_green = #{stpPanBgColorGreen},
+                                 stp_pan_bg_color_blue = #{stpPanBgColorBlue},
+                                 stp_pan_bg_color_hex = #{stpPanBgColorHex},
+                                 stp_pan_add_txt_color_assign_type = #{stpPanAddTxtColorAssignType},
+                                 stp_pan_add_txt_color_input_type = #{stpPanAddTxtColorInputType},
+                                 stp_pan_add_txt_color_red = #{stpPanAddTxtColorRed},
+                                 stp_pan_add_txt_color_green = #{stpPanAddTxtColorGreen},
+                                 stp_pan_add_txt_color_blue = #{stpPanAddTxtColorBlue},
+                                 stp_pan_add_txt_color_hex = #{stpPanAddTxtColorHex},
+                                 attend_sort_guide_txt = #{attendSortGuideTxt},
+                                 attend_sort_end_txt = #{attendSortEndTxt},
+                                 attend_sort_txt_color_assign_type = #{attendSortTxtColorAssignType},
+                                 attend_sort_txt_color_input_type = #{attendSortTxtColorInputType},
+                                 attend_sort_txt_color_red = #{attendSortTxtColorRed},
+                                 attend_sort_txt_color_green = #{attendSortTxtColorGreen},
+                                 attend_sort_txt_color_blue = #{attendSortTxtColorBlue},
+                                 attend_sort_txt_color_hex = #{attendSortTxtColorHex},
+                                 last_modified_by = #{lastModifiedBy},
+                                 last_modified_date = NOW()
+        <selectKey resultType="int" keyProperty="stpPanId" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+
+    <insert id="insertStampPanTrList" parameterType="list">
+        INSERT INTO STAMP_EVENT_PAN_TR
+        (stp_pan_id,
+         stp_tr_sort,
+         stp_tr_txt,
+         stp_tr_type,
+         stp_tr_event_id,
+         stp_tr_pid,
+         stp_tr_location_msg_attend,
+         stp_tr_location_mis_msg_attend,
+         stp_tr_not_acc_img_url,
+         stp_tr_acc_img_url,
+         stp_tr_winning_attend_img_url,
+         created_by)
+        VALUES
+        <foreach collection="paramList" item="item" separator=",">
+            (
+                #{item.stpPanId},
+                #{item.stpTrSort},
+                #{item.stpTrTxt},
+                #{item.stpTrType},
+                #{item.stpTrEventId},
+                #{item.stpTrPid},
+                #{item.stpTrLocationMsgAttend},
+                #{item.stpTrLocationMisMsgAttend},
+                #{item.stpTrNotAccImgUrl},
+                #{item.stpTrAccImgUrl},
+                #{item.stpTrWinningAttendImgUrl},
+                #{item.createdBy}
+            )
+        </foreach>
+    </insert>
+
+    <select id="selectStampEventPanTrListByStpId" resultType="kr.co.syrup.adreport.stamp.event.model.StampEventPanTrModel">
+        SELECT * FROM stamp_event_pan_tr
+        WHERE stp_pan_id = (
+            SELECT stp_pan_id FROM stamp_event_pan WHERE stp_id = #{stpId}
+        )
+        ORDER BY stp_tr_sort ASC
+    </select>
+
+    <update id="updateStampPanTr" parameterType="list">
+        UPDATE STAMP_EVENT_PAN_TR
+        SET
+            <if test="stpPanId > 0">stp_pan_id = #{stpPanId},</if>
+            <if test="stpTrSort > 0">stp_tr_sort = #{stpTrSort},</if>
+            <if test="stpTrTxt != '' and stpTrTxt != null">stp_tr_txt = #{stpTrTxt},</if>
+            <if test="stpTrType != '' and stpTrType != null">stp_tr_type = #{stpTrType},</if>
+            <if test="stpTrEventId != '' and stpTrEventId != null">stp_tr_event_id = #{stpTrEventId},</if>
+            <if test="stpTrPid != '' and stpTrPid != null">stp_tr_pid = #{stpTrPid},</if>
+            <if test="stpTrLocationMsgAttend != '' and stpTrLocationMsgAttend != null">stp_tr_location_msg_attend = #{stpTrLocationMsgAttend},</if>
+            <if test="stpTrLocationMisMsgAttend != '' and stpTrLocationMisMsgAttend != null">stp_tr_location_mis_msg_attend = #{stpTrLocationMisMsgAttend},</if>
+            <if test="stpTrNotAccImgUrl != '' and stpTrNotAccImgUrl != null">stp_tr_not_acc_img_url = #{stpTrNotAccImgUrl},</if>
+            <if test="stpTrAccImgUrl != '' and stpTrAccImgUrl != null">stp_tr_acc_img_url = #{stpTrAccImgUrl},</if>
+            <if test="stpTrWinningAttendImgUrl != '' and stpTrWinningAttendImgUrl != null">stp_tr_winning_attend_img_url = #{stpTrWinningAttendImgUrl},</if>
+            last_modified_by = #{lastModifiedBy},
+            last_modified_date = NOW()
+            WHERE stp_pan_tr_id = #{stpPanTrId}
+    </update>
+
+    <delete id="deleteStampPanTrByIdIn" parameterType="list">
+        DELETE FROM STAMP_EVENT_PAN_TR
+        WHERE stp_pan_tr_id IN
+        <foreach collection="idList" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <insert id="upsertStampAlimtok" parameterType="kr.co.syrup.adreport.stamp.event.model.StampAlimtokModel">
+        -- 해당 PK가 없으면 Insert 있으면 Update
+        INSERT INTO STAMP_ALIMTOK
+        (stp_alimtok_id,
+         stp_id,
+         stp_first_acc_txt,
+         stp_first_winning_txt,
+         created_by,
+         created_date)
+        VALUES
+            (#{stpAlimtokId},
+             #{stpId},
+             #{stpFirstAccTxt},
+             #{stpFirstWinningTxt},
+             #{createdBy},
+             NOW())
+            ON DUPLICATE KEY UPDATE
+                                 stp_id = #{stpId},
+                                 stp_first_acc_txt = #{stpFirstAccTxt},
+                                 stp_first_winning_txt = #{stpFirstWinningTxt},
+                                 last_modified_by = #{lastModifiedBy},
+                                 last_modified_date = NOW()
+        <selectKey resultType="int" keyProperty="stpAlimtokId" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+
+    <insert id="insertStampAlimtok" parameterType="kr.co.syrup.adreport.stamp.event.model.StampAlimtokModel">
+        INSERT INTO STAMP_ALIMTOK
+        (stp_id, stp_alimtok_txt, stp_alimtok_send_type, created_by, created_date)
+        VALUES
+        (#{stpId}, #{stpAlimtokTxt}, #{stpAlimtokSendType}, #{createdBy}, NOW())
+        <selectKey resultType="int" keyProperty="stpAlimtokId" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+
+    <update id="updateStampAlimtok" parameterType="kr.co.syrup.adreport.stamp.event.model.StampAlimtokModel">
+        UPDATE STAMP_ALIMTOK
+        SET
+        <if test="stpAlimtokTxt != '' and stpAlimtokTxt != null">stp_alimtok_txt = #{stpAlimtokTxt},</if>
+        <if test="stpAlimtokSendType != '' and stpAlimtokSendType != null">stp_alimtok_send_type = #{stpAlimtokSendType},</if>
+        last_modified_by = #{lastModifiedBy},
+        last_modified_date = NOW()
+        WHERE stp_alimtok_id = #{stpAlimtokId}
+    </update>
+
+    <insert id="upsertStampAlimtokButton" parameterType="kr.co.syrup.adreport.stamp.event.model.StampAlimtokButtonModel">
+        -- 해당 PK가 없으면 Insert 있으면 Update
+        INSERT INTO STAMP_ALIMTOK_BUTTON
+        (stp_alimtok_btn_id,
+         stp_alimtok_id,
+         stp_alimtok_btn_txt,
+         stp_alimtok_btn_url,
+         created_by,
+         created_date)
+        VALUES
+            (#{stpAlimtokBtnId},
+             #{stpAlimtokId},
+             #{stpAlimtokBtnTxt},
+             #{stpAlimtokBtnUrl},
+             #{createdBy},
+             NOW())
+            ON DUPLICATE KEY UPDATE
+                                 stp_alimtok_id = #{stpAlimtokId},
+                                 stp_alimtok_btn_txt = #{stpAlimtokBtnTxt},
+                                 stp_alimtok_btn_url = #{stpAlimtokBtnUrl},
+                                 last_modified_by = #{lastModifiedBy},
+                                 last_modified_date = NOW()
+    </insert>
+
+    <insert id="insertStampAlimtokButtonList" parameterType="list">
+        INSERT INTO STAMP_ALIMTOK_BUTTON
+        (stp_alimtok_id, stp_alimtok_btn_txt, stp_alimtok_btn_url, stp_alimtok_btn_sort, created_by, created_date)
+        VALUES
+        <foreach collection="paramList" item="item" separator=",">
+        (#{item.stpAlimtokId}, #{item.stpAlimtokBtnTxt}, #{item.stpAlimtokBtnUrl}, #{item.stpAlimtokBtnSort}, #{item.createdBy}, NOW())
+        </foreach>
+    </insert>
+
+    <update id="updateStampAlimtokButton" parameterType="kr.co.syrup.adreport.stamp.event.model.StampAlimtokButtonModel">
+        UPDATE STAMP_ALIMTOK_BUTTON
+        <set>
+            <if test="stpAlimtokBtnTxt != '' and stpAlimtokBtnTxt != null">stp_alimtok_btn_txt = #{stpAlimtokBtnTxt},</if>
+            <if test="stpAlimtokBtnUrl != '' and stpAlimtokBtnUrl != null">stp_alimtok_btn_url = #{stpAlimtokBtnUrl},</if>
+            stp_alimtok_btn_sort = #{stpAlimtokBtnSort},
+            last_modified_by = #{lastModifiedBy},
+            last_modified_date = NOW()
+        </set>
+        <where>
+            stp_alimtok_btn_id = #{stpAlimtokBtnId}
+        </where>
+    </update>
+
+    <delete id="deleteStampAlimtokButtonIdIn" parameterType="list">
+        DELETE FROM STAMP_ALIMTOK_BUTTON
+        WHERE stp_alimtok_btn_id IN
+        <foreach collection="idList" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="selectWebEventBaseByStpId" resultType="kr.co.syrup.adreport.web.event.entity.WebEventBaseEntity">
+        SELECT B.* FROM stamp_event_main A
+                    INNER JOIN web_event_base B
+                    ON A.event_id = B.event_id
+                    WHERE A.stp_id = #{stpId}
+    </select>
+    
+    <select id="selectStampAlimtokInfoByStpId" resultMap="selectStampAlimtokInfoMap">
+        SELECT B.stp_alimtok_id, B.stp_id, B.stp_alimtok_txt, B.stp_alimtok_send_type,
+               A.stp_alimtok_btn_id, A.stp_alimtok_btn_txt, A.stp_alimtok_btn_url, A.stp_alimtok_btn_sort
+        FROM stamp_alimtok_button A
+        LEFT JOIN stamp_alimtok B
+        ON A.stp_alimtok_id = B.stp_alimtok_id
+        WHERE B.stp_id = #{stpId}
+    </select>
+
+    <select id="selectWebEventStampTypeList" resultType="kr.co.syrup.adreport.stamp.event.dto.WebEventBaseDto">
+        SELECT WB.EVENT_ID, WB.EVENT_TITLE, WB.MARKETING_ID, WB.EVENT_START_DATE, WB.EVENT_END_DATE
+        FROM WEB_EVENT_BASE WB
+        <if test="searchMode == null or searchMode == ''">
+            LEFT JOIN STAMP_EVENT_PAN_TR SEPT ON WB.EVENT_ID = SEPT.STP_TR_EVENT_ID
+        </if>
+        <if test="searchMode != null and searchMode != ''">
+            <if test="searchMode == 'FILTER'">
+                LEFT JOIN STAMP_EVENT_PAN_TR SEPT ON WB.EVENT_ID = SEPT.STP_TR_EVENT_ID
+            </if>
+        </if>
+        WHERE 1=1
+        <if test="searchMode == null or searchMode == ''">
+            AND SEPT.STP_TR_EVENT_ID IS NULL
+        </if>
+        <if test="searchMode != null and searchMode != ''">
+            <if test="searchMode == 'FILTER'">
+                AND SEPT.STP_TR_EVENT_ID IS NULL
+            </if>
+        </if>
+        AND WB.STP_CONNECT_YN = 'Y'
+        AND WB.CONTRACT_STATUS IN('03', '04')
+        AND MARKETING_ID IS NOT NULL
+        <if test="searchType != null and searchType != '' and searchWord != null and searchWord != ''">
+            <if test="searchType == '00'">
+                AND WB.EVENT_TITLE like CONCAT('%', #{searchWord}, '%')
+            </if>
+            <if test="searchType == '01'">
+                AND WB.EVENT_ID = #{searchWord}
+            </if>
+            <if test="searchType == '02'">
+                AND WB.MARKETING_ID = #{searchWord}
+            </if>
+        </if>
+        ORDER BY WB.MARKETING_ID DESC
+        LIMIT #{size} OFFSET #{offset}
+    </select>
+
+    <select id="selectWebEventStampTypeListCnt" resultType="java.lang.Long">
+        SELECT COUNT(*)
+        FROM WEB_EVENT_BASE WB
+        <if test="searchMode == null or searchMode == ''">
+            LEFT JOIN STAMP_EVENT_PAN_TR SEPT ON WB.EVENT_ID = SEPT.STP_TR_EVENT_ID
+        </if>
+        <if test="searchMode != null and searchMode != ''">
+            <if test="searchMode == 'FILTER'">
+                LEFT JOIN STAMP_EVENT_PAN_TR SEPT ON WB.EVENT_ID = SEPT.STP_TR_EVENT_ID
+            </if>
+        </if>
+        WHERE 1=1
+        <if test="searchMode == null or searchMode == ''">
+            AND SEPT.STP_TR_EVENT_ID IS NULL
+        </if>
+        <if test="searchMode != null and searchMode != ''">
+            <if test="searchMode == 'FILTER'">
+                AND SEPT.STP_TR_EVENT_ID IS NULL
+            </if>
+        </if>
+        AND WB.STP_CONNECT_YN = 'Y'
+        AND WB.CONTRACT_STATUS IN('03', '04')
+        AND MARKETING_ID IS NOT NULL
+        <if test="searchType != null and searchType != '' and searchWord != null and searchWord != ''">
+            <if test="searchType == '00'">
+                AND WB.EVENT_TITLE like CONCAT('%', #{searchWord}, '%')
+            </if>
+            <if test="searchType == '01'">
+                AND WB.EVENT_ID = #{searchWord}
+            </if>
+            <if test="searchType == '02'">
+                AND WB.MARKETING_ID = #{searchWord}
+            </if>
+        </if>
+    </select>
+
+    <select id="selectStpTrEventIdListByStpTrEventIdNotIn" resultType="string">
+        SELECT distinct stp_tr_event_id
+        FROM stamp_event_pan_tr
+        WHERE stp_tr_event_id IS NOT NULL
+        AND stp_tr_event_id NOT IN
+        <foreach collection="stpTrEventIds" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </select>
+
+    <select id="selectStampEventPanByStampEventId" resultType="kr.co.syrup.adreport.stamp.event.dto.StampEventPanDto">
+        SELECT A.* FROM stamp_event_pan A
+        INNER JOIN stamp_event_main B
+        ON A.stp_id = B.stp_id
+        WHERE B.event_id = #{eventId}
+    </select>
+
+</mapper>
